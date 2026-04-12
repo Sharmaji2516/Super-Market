@@ -112,8 +112,8 @@ function renderProductsUI(products) {
     
     html += `
       <div class="product-card animate-on-scroll ${!inStock ? 'out-of-stock' : ''}">
-        ${product.offer ? `<div class="product-badge">${product.offer}</div>` : ''}
         <div class="product-img-wrapper">
+          ${product.offer ? `<div class="product-badge">${product.offer}</div>` : ''}
           <img src="${product.image}" alt="${product.name}" class="product-img" style="${!inStock ? 'filter: grayscale(1); opacity: 0.6;' : ''}">
           ${!inStock ? '<div class="out-of-stock-overlay">OUT OF STOCK</div>' : ''}
         </div>
