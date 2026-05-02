@@ -311,8 +311,7 @@ function renderProductsUI(products) {
           <p class="product-desc">${product.desc}</p>
           <div class="product-footer">
             <div class="product-price">
-              ₹${product.price} / ${product.unit}
-              ${product.oldPrice ? `<span class="old-price">₹${product.oldPrice}</span>` : ''}
+              ₹${product.price} ${product.unit ? `/ ${product.unit}` : ''}
             </div>
             <div class="stock-status-pill ${inStock ? 'in-stock' : 'no-stock'}">
               <i class="fa-solid ${inStock ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
