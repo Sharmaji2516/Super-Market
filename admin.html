@@ -236,6 +236,10 @@
             <textarea class="admin-input" id="new-desc" rows="2" placeholder="Describe the product..."></textarea>
           </div>
           <div class="input-group full">
+            <label>Video URL (Optional)</label>
+            <input type="text" class="admin-input" id="new-videoLink" placeholder="e.g. Google Drive or YouTube link">
+          </div>
+          <div class="input-group full">
             <label>Image URL</label>
             <div style="display: flex; gap: 10px; margin-bottom: 5px;">
               <input type="text" class="admin-input" id="new-image" placeholder="assets/images/product.jpg">
@@ -453,6 +457,7 @@
       const unit = document.getElementById('new-unit').value;
       const offer = document.getElementById('new-offer').value;
       const desc = document.getElementById('new-desc').value;
+      const videoLink = document.getElementById('new-videoLink').value;
       const image = document.getElementById('new-image').value;
 
       if (!name || !price) {
@@ -475,6 +480,7 @@
         unit,
         offer,
         desc,
+        videoLink,
         image,
         inStock: true
       };

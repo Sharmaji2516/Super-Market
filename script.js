@@ -320,8 +320,8 @@ function renderProductsUI(products) {
           </div>
           ${product.videoLink ? `
             <div class="external-link-wrapper">
-              <a href="${product.videoLink}" target="_blank" class="product-external-link">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Official Page
+              <a href="${product.videoLink}" target="_blank" class="product-external-link" style="background: rgba(239, 68, 68, 0.1); color: #dc2626;">
+                <i class="fa-solid fa-circle-play"></i> Watch Product Video
               </a>
             </div>
           ` : ''}
