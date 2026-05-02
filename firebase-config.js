@@ -12,14 +12,16 @@ const firebaseConfig = {
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-import { getFirestore, doc, getDoc, setDoc, collection, getDocs, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const storage = getStorage(app);
 
 // Helper functions for our products
 export async function getProductsFromFirebase() {
@@ -49,6 +51,16 @@ export async function saveProductToFirebase(product) {
         console.log("Product saved successfully!");
     } catch (e) {
         console.error("Error saving product: ", e);
+    }
+}
+
+export async function deleteProductFromFirebase(id) {
+    try {
+        const docRef = doc(db, "products", id.toString());
+        await deleteDoc(docRef);
+        console.log("Product deleted successfully!");
+    } catch (e) {
+        console.error("Error deleting product: ", e);
     }
 }
 
@@ -84,4 +96,4 @@ export function listenForProducts(callback) {
     });
 }
 
-export { auth, db };
+export { auth, db, storage, ref, uploadBytes, getDownloadURL };

@@ -315,6 +315,39 @@ body {
   color: white; font-weight: 900; font-size: 1.2rem;
 }
 
+.external-link-wrapper {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.product-external-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--primary-bg);
+  color: var(--primary);
+  padding: 0.9rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  border: 1px solid rgba(27, 94, 32, 0.1);
+  text-decoration: none;
+}
+
+.product-external-link:hover {
+  background: var(--primary);
+  color: white !important;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(27, 94, 32, 0.1);
+}
+
+.product-external-link i {
+  font-size: 0.85rem;
+}
+
 /* --- Contact Page Specific --- */
 .contact-hero {
   padding: 10rem 0 5rem;
@@ -495,3 +528,52 @@ textarea.form-input { min-height: 150px; resize: vertical; }
   opacity: 1; transform: translateY(0);
 }
 @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- ChittorTech Developer Credit --- */
+.dev-credit-wrapper {
+  margin-top: 3rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.dev-credit-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.03);
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: var(--transition);
+  text-decoration: none !important;
+}
+
+.dev-credit-link:hover {
+  background: rgba(76, 175, 80, 0.1);
+  border-color: var(--primary-light);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.dev-credit-logo {
+  height: 28px;
+  width: auto;
+  border-radius: 4px;
+}
+
+.dev-credit-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.8);
+}
+
+.dev-credit-text b {
+  color: var(--primary-light);
+  font-weight: 700;
+  margin-left: 4px;
+}
