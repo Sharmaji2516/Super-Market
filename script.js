@@ -287,9 +287,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       alert('Thank you! Redirecting to WhatsApp...');
     });
   }
-});
-
-function renderProductsUI(products) {
+});function renderProductsUI(products) {
   const productsContainer = document.getElementById('products-container');
   if (!productsContainer) return;
   
@@ -311,19 +309,18 @@ function renderProductsUI(products) {
           <p class="product-desc">${product.desc}</p>
           <div class="product-footer">
             <div class="product-price">
-              ₹${product.price} ${product.unit ? `/ ${product.unit}` : ''}
+              ₹${product.price}
+              ${product.unit ? `<span>/ per ${product.unit}</span>` : ''}
             </div>
             <div class="stock-status-pill ${inStock ? 'in-stock' : 'no-stock'}">
               <i class="fa-solid ${inStock ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
-              ${inStock ? 'In Stock' : 'Out of Stock'}
+              ${inStock ? 'In Stock' : 'No Stock'}
             </div>
           </div>
           ${product.videoLink ? `
-            <div class="external-link-wrapper">
-              <a href="${product.videoLink}" target="_blank" class="product-external-link" style="background: rgba(239, 68, 68, 0.1); color: #dc2626;">
-                <i class="fa-solid fa-circle-play"></i> Watch Product Video
-              </a>
-            </div>
+            <a href="${product.videoLink}" target="_blank" class="product-external-link">
+              <i class="fa-solid fa-play-circle"></i> Watch Product Video
+            </a>
           ` : ''}
         </div>
       </div>

@@ -36,74 +36,46 @@
   </header>
 
   <section class="section">
-    <div class="container contact-container">
-      <div class="contact-wrapper animate-on-scroll">
+    <div class="container" style="max-width: 900px;">
+      <div class="contact-wrapper animate-on-scroll" style="grid-template-columns: 1fr;">
         <!-- Info Panel -->
-        <div class="contact-info-panel">
-          <div>
-            <h3 style="color: white; margin-bottom: 1.5rem; font-size: 1.8rem;">Contact Info</h3>
-            <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">Visit us in person or reach out through any of these channels. We respond very quickly!</p>
+        <div class="contact-info-panel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; text-align: center;">
+          <div style="grid-column: 1 / -1;">
+            <h3 style="color: white; margin-bottom: 1.5rem; font-size: 2.5rem; font-weight: 900;">Get in Touch</h3>
+            <p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem; font-size: 1.2rem;">Visit our store or reach out to us directly through any of these channels.</p>
           </div>
 
-          <div class="info-item">
+          <div class="info-item" style="flex-direction: column; align-items: center; gap: 1rem;">
             <i class="fa-solid fa-location-dot"></i>
             <div>
-              <h4>Our Location</h4>
+              <h4 style="font-size: 1.4rem;">Our Location</h4>
               <p>29 Rajive Colony, Meera Market, <br>Chittorgarh, Rajasthan - 312001</p>
             </div>
           </div>
 
-          <div class="info-item">
+          <div class="info-item" style="flex-direction: column; align-items: center; gap: 1rem;">
             <i class="fa-solid fa-phone"></i>
             <div>
-              <h4>Call Support</h4>
+              <h4 style="font-size: 1.4rem;">Call Support</h4>
               <p>+91 9680580008<br>+91 9636328022</p>
             </div>
           </div>
 
-          <div class="info-item">
+          <div class="info-item" style="flex-direction: column; align-items: center; gap: 1rem;">
             <i class="fa-solid fa-envelope"></i>
             <div>
-              <h4>Email Address</h4>
-              <p>sonu18soni@gmail.com</p>
+              <h4 style="font-size: 1.4rem;">Email Us</h4>
+              <p>Chittorgarhsonu@gmail.com</p>
             </div>
           </div>
 
-          <div class="info-item">
+          <div class="info-item" style="flex-direction: column; align-items: center; gap: 1rem;">
             <i class="fa-solid fa-clock"></i>
             <div>
-              <h4>Store Hours</h4>
+              <h4 style="font-size: 1.4rem;">Store Hours</h4>
               <p>Open Daily: 8:00 AM - 10:00 PM</p>
             </div>
           </div>
-        </div>
-
-        <!-- Form Panel -->
-        <div class="contact-form-panel">
-          <span class="form-subtitle">Direct Inquiry</span>
-          <h3 class="form-title">Send us a Message</h3>
-          
-          <form id="contactForm" class="contact-form">
-            <div class="form-group">
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 700; font-size: 0.9rem;">First Name</label>
-              <input type="text" id="firstName" class="form-input" placeholder="Enter first name" required>
-            </div>
-            <div class="form-group">
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 700; font-size: 0.9rem;">Last Name</label>
-              <input type="text" id="lastName" class="form-input" placeholder="Enter last name" required>
-            </div>
-            <div class="form-group full">
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 700; font-size: 0.9rem;">Email Address</label>
-              <input type="email" id="email" class="form-input" placeholder="example@email.com" required>
-            </div>
-            <div class="form-group full">
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 700; font-size: 0.9rem;">How can we help?</label>
-              <textarea id="message" class="form-input" placeholder="Type your message here..." required></textarea>
-            </div>
-            <div class="form-group full" style="margin-top: 1rem;">
-              <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1.2rem;">Send Message</button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
@@ -136,7 +108,7 @@
           <h4>Get Support</h4>
           <p><i class="fa-solid fa-location-dot"></i> 29 Rajive Colony, Meera Market, Chittorgarh</p>
           <p><i class="fa-solid fa-phone"></i> +91 9680580008, +91 9636328022</p>
-          <p><i class="fa-solid fa-envelope"></i> sonu18soni@gmail.com</p>
+          <p><i class="fa-solid fa-envelope"></i> Chittorgarhsonu@gmail.com</p>
           <p><i class="fa-solid fa-clock"></i> Daily: 8:00 AM - 10:00 PM</p>
         </div>
       </div>
