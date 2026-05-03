@@ -70,8 +70,9 @@ body {
 
 .nav-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .logo {
@@ -97,6 +98,8 @@ body {
   display: flex;
   gap: 2.5rem;
   align-items: center;
+  position: absolute;
+  right: 0;
 }
 
 .nav-links a {
@@ -686,47 +689,129 @@ textarea.form-input { min-height: 180px; resize: vertical; }
   border-top: 1px solid rgba(255,255,255,0.05); 
 }
 
-/* --- ChittorTech Developer Credit --- */
-.dev-credit-wrapper {
-  margin-bottom: 2.5rem;
+/* --- Premium Developer Footer Section --- */
+.premium-footer {
+  padding-top: 4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.dev-credit-link {
+.ct-badge {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(255,255,255,0.03);
-  padding: 0.6rem 1.2rem;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.8rem 2rem;
   border-radius: 100px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
   transition: var(--transition);
-  text-decoration: none !important;
 }
 
-.dev-credit-link:hover {
-  background: rgba(5, 150, 105, 0.1);
+.ct-badge:hover {
+  background: rgba(255, 255, 255, 0.05);
   border-color: var(--primary-light);
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-.dev-credit-logo {
-  height: 22px;
-  width: auto;
-  border-radius: 4px;
+.ct-logo-box {
+  background: white;
+  padding: 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
 }
 
-.dev-credit-text {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.8);
+.ct-logo-box img {
+  width: 100%;
+  height: auto;
 }
 
-.dev-credit-text b {
-  color: var(--primary-light);
+.ct-badge-text {
+  text-align: left;
+}
+
+.ct-badge-text span {
+  display: block;
+  font-size: 0.75rem;
   font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ct-badge-text h5 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+}
+
+.trust-badges {
+  margin-bottom: 2.5rem;
+}
+
+.trust-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #10b981; /* Green from image */
+}
+
+.trust-item i {
+  font-size: 0.6rem;
+}
+
+.footer-divider {
+  width: 100%;
+  max-width: 400px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+  margin: 1.5rem 0;
+  border: none;
+}
+
+.footer-contact-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  transition: var(--transition);
+}
+
+.footer-contact-link:hover {
+  color: white;
+}
+
+.footer-contact-link i {
+  font-size: 1.5rem;
+  color: #94a3b8;
+}
+
+.copyright-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 /* --- Mobile Optimizations --- */
@@ -737,6 +822,15 @@ textarea.form-input { min-height: 180px; resize: vertical; }
 }
 
 @media (max-width: 768px) {
+  .nav-container {
+    justify-content: center;
+    position: relative;
+  }
+  
+  .logo {
+    margin-right: 0; /* Clear any implicit margin */
+  }
+
   .nav-links {
     position: fixed; top: 0; right: -100%;
     width: 100%; height: 100vh; 
@@ -750,7 +844,14 @@ textarea.form-input { min-height: 180px; resize: vertical; }
   
   .nav-links a { font-size: 1.8rem; font-weight: 800; }
   
-  .menu-btn { display: flex; align-items: center; justify-content: center; z-index: 1001; }
+  .menu-btn { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 1001; 
+    position: absolute;
+    right: 0;
+  }
   
   .hero { padding: 12rem 0 6rem; }
   .hero h1 { font-size: 3rem; }
