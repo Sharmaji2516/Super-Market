@@ -70,7 +70,7 @@ body {
 
 .nav-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
 }
@@ -103,8 +103,6 @@ body {
   display: flex;
   gap: 2.5rem;
   align-items: center;
-  position: absolute;
-  right: 0;
 }
 
 .nav-links a {
