@@ -38,7 +38,19 @@
 
   <!-- Products Section -->
   <section class="section">
-    <div class="container">
+      <!-- Premium Search Section -->
+      <div class="search-section animate-on-scroll">
+        <div class="search-wrapper">
+          <div class="search-box">
+            <input type="text" id="productSearch" placeholder="What are you looking for today?" autocomplete="off">
+            <button id="searchBtn" class="search-btn">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <span>Search</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Container populated via JS -->
       <div id="products-container" class="products-grid all-products">
         <!-- Javascript will inject 15-20 products here -->

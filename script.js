@@ -1,5 +1,7 @@
 import { getProductsFromFirebase, initializeProducts, listenForProducts } from './firebase-config.js';
 
+let allProducts = []; // To store products for filtering
+
 // Products Data - Initial state (Backup)
 const initialProducts = [
   {
@@ -238,20 +240,47 @@ document.addEventListener('DOMContentLoaded', async () => {
     for (const ip of initialProducts) {
       if (!products.find(p => p.id == ip.id)) {
         console.log(`Product ${ip.name} (ID: ${ip.id}) missing from Firebase, initializing...`);
-        // Import saveProductToFirebase if needed, but it's already in scope if we add it or use initializeProducts
         await initializeProducts([ip]);
         updated = true;
       }
     }
     
-    // If we updated, the listener will fire again, so we can return here
     if (updated) return;
     
+    allProducts = products;
     renderProductsUI(products);
 
     // Update animations for new elements
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
   });
+
+  // Search Logic
+  const searchInput = document.getElementById('productSearch');
+  const searchBtn = document.getElementById('searchBtn');
+
+  const performSearch = () => {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const filtered = allProducts.filter(p => 
+      p.name.toLowerCase().includes(searchTerm) || 
+      (p.category && p.category.toLowerCase().includes(searchTerm)) ||
+      (p.desc && p.desc.toLowerCase().includes(searchTerm))
+    );
+    renderProductsUI(filtered);
+    
+    // Update animations for new elements
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+  };
+
+  if (searchInput) {
+    searchInput.addEventListener('input', performSearch);
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') performSearch();
+    });
+  }
+
+  if (searchBtn) {
+    searchBtn.addEventListener('click', performSearch);
+  }
 
   // Navbar Background on Scroll
   const navbar = document.querySelector('.navbar');
@@ -274,27 +303,26 @@ document.addEventListener('DOMContentLoaded', async () => {
       const email = document.getElementById('email').value;
       const message = document.getElementById('message').value;
       
-      const whatsappNumber = "917014974762"; // Primary contact number
+      const whatsappNumber = "917014974762"; 
       const fullText = `*Name:* ${firstName} ${lastName}%0A*Message:* ${message}`;
       
       const waUrl = `https://wa.me/${whatsappNumber}?text=${fullText}`;
-      
-      // Open WhatsApp in new tab
       window.open(waUrl, '_blank');
       
-      // Reset form
       contactForm.reset();
       alert('Thank you! Redirecting to WhatsApp...');
     });
   }
-});function renderProductsUI(products) {
+});
+
+function renderProductsUI(products) {
   const productsContainer = document.getElementById('products-container');
   if (!productsContainer) return;
   
   let html = '';
   // Convert IDs to numbers for sorting if they are strings from Firebase
   products.sort((a, b) => Number(a.id) - Number(b.id)).forEach(product => {
-    const inStock = product.inStock !== false; // Default to true if undefined
+    const inStock = product.inStock !== false;
     
     html += `
       <div class="product-card animate-on-scroll ${!inStock ? 'out-of-stock' : ''}">
@@ -327,9 +355,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
   });
 
+  if (products.length === 0) {
+    html = `
+      <div class="no-results animate-on-scroll">
+        <i class="fa-solid fa-box-open"></i>
+        <h3>No products found</h3>
+        <p>Try searching with a different name or category.</p>
+      </div>
+    `;
+    productsContainer.style.display = 'block';
+  } else {
+    productsContainer.style.display = 'grid';
+  }
+
   productsContainer.innerHTML = html;
 }
-
-
-
-
