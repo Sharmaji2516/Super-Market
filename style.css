@@ -82,7 +82,8 @@ body {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  letter-spacing: -0.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .logo i {
@@ -92,7 +93,11 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-.logo span { color: var(--accent-dark); }
+.logo span { 
+  color: var(--accent-dark); 
+  font-weight: 300;
+  margin-left: 2px;
+}
 
 .nav-links {
   display: flex;
@@ -337,33 +342,39 @@ body {
 
 .feature-card {
   background: white;
-  padding: 4rem 3rem;
+  padding: 2.5rem;
   border-radius: var(--border-radius);
   text-align: center;
   transition: var(--transition);
   border: 1px solid rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.feature-img-box {
+  width: 100%;
+  height: 200px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.feature-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.feature-card:hover .feature-img-box img {
+  transform: scale(1.05);
 }
 
 .feature-card:hover { 
   transform: translateY(-15px); 
   box-shadow: var(--shadow-lg);
   border-color: rgba(5, 150, 105, 0.1);
-}
-
-.feature-icon {
-  width: 80px; height: 80px;
-  background: rgba(5, 150, 105, 0.05); 
-  color: var(--primary);
-  border-radius: 24px; 
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2.2rem; margin: 0 auto 2.5rem; 
-  transition: var(--transition);
-}
-
-.feature-card:hover .feature-icon {
-  background: var(--primary);
-  color: white;
-  transform: rotate(10deg);
 }
 
 /* --- Product Cards --- */
@@ -822,13 +833,21 @@ textarea.form-input { min-height: 180px; resize: vertical; }
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 0;
+  }
   .nav-container {
     justify-content: center;
     position: relative;
   }
   
   .logo {
-    margin-right: 0; /* Clear any implicit margin */
+    margin-right: 0;
+    font-size: 1.3rem;
+    gap: 0.4rem;
+  }
+  .logo i {
+    font-size: 1.1rem;
   }
 
   .nav-links {
@@ -962,12 +981,29 @@ textarea.form-input { min-height: 180px; resize: vertical; }
   color: var(--text-muted);
   font-size: 1.1rem;
   line-height: 1.7;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+
+.policy-item:last-child {
+  border-bottom: none;
 }
 
 .policy-item i {
   color: var(--primary);
   font-size: 1.1rem;
   margin-top: 0.3rem;
+}
+
+.policy-point h4 {
+  color: var(--text-main);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.policy-point p {
+  margin: 0;
 }
 
 @media (max-width: 768px) {

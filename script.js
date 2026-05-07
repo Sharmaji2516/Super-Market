@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const email = document.getElementById('email').value;
       const message = document.getElementById('message').value;
       
-      const whatsappNumber = "919680580008"; // Primary contact number
+      const whatsappNumber = "917014974762"; // Primary contact number
       const fullText = `*Name:* ${firstName} ${lastName}%0A*Message:* ${message}`;
       
       const waUrl = `https://wa.me/${whatsappNumber}?text=${fullText}`;
