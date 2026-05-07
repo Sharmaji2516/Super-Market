@@ -436,7 +436,7 @@
       }
       
       let html = '';
-      productsToRender.sort((a,b) => Number(a.id) - Number(b.id)).forEach(p => {
+      productsToRender.sort((a,b) => Number(b.id) - Number(a.id)).forEach(p => {
         const isInStock = p.inStock !== false; // Default true
         html += `
           <div class="product-list-item">

@@ -320,8 +320,8 @@ function renderProductsUI(products) {
   if (!productsContainer) return;
   
   let html = '';
-  // Convert IDs to numbers for sorting if they are strings from Firebase
-  products.sort((a, b) => Number(a.id) - Number(b.id)).forEach(product => {
+  // Sort by ID descending to show newest products first
+  products.sort((a, b) => Number(b.id) - Number(a.id)).forEach(product => {
     const inStock = product.inStock !== false;
     
     html += `
