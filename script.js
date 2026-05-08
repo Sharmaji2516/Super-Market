@@ -272,7 +272,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   if (searchInput) {
-    searchInput.addEventListener('input', performSearch);
     searchInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') performSearch();
     });
