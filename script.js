@@ -248,6 +248,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (updated) return;
     
     allProducts = products;
+    
+    // Populate categories dynamically
+    const categoryFilter = document.getElementById('categoryFilter');
+    if (categoryFilter) {
+      const categories = [...new Set(products.map(p => p.category).filter(Boolean))];
+      categoryFilter.innerHTML = '<option value="all">All Categories</option>' + 
+        categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+    }
+
     renderProductsUI(products);
 
     // Update animations for new elements
@@ -256,29 +265,130 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Search Logic
   const searchInput = document.getElementById('productSearch');
-  const searchBtn = document.getElementById('searchBtn');
+  const categoryFilter = document.getElementById('categoryFilter');
+  const clearSearchBtn = document.getElementById('clearSearchBtn');
+  const searchHistoryList = document.getElementById('searchHistoryList'); // Revertible Feature
 
   const performSearch = () => {
-    const searchTerm = searchInput.value.toLowerCase().trim();
-    const filtered = allProducts.filter(p => 
-      p.name.toLowerCase().includes(searchTerm) || 
-      (p.category && p.category.toLowerCase().includes(searchTerm)) ||
-      (p.desc && p.desc.toLowerCase().includes(searchTerm))
-    );
+    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const selectedCategory = categoryFilter ? categoryFilter.value : 'all';
+    
+    if (clearSearchBtn) {
+      clearSearchBtn.style.display = searchTerm ? 'block' : 'none';
+    }
+
+    const filtered = allProducts.filter(p => {
+      const matchesName = p.name.toLowerCase().includes(searchTerm) || 
+                          (p.desc && p.desc.toLowerCase().includes(searchTerm));
+      const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
+      return matchesName && matchesCategory;
+    });
+    
     renderProductsUI(filtered);
     
     // Update animations for new elements
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
   };
 
+  // --- Search History Logic (Revertible Feature) ---
+  const MAX_HISTORY = 5;
+  
+  const getHistory = () => JSON.parse(localStorage.getItem('searchHistory') || '[]');
+  
+  const saveHistory = (term) => {
+    if (!term) return;
+    let history = getHistory();
+    history = history.filter(item => item !== term); // Remove duplicate
+    history.unshift(term); // Add to start
+    if (history.length > MAX_HISTORY) history.pop();
+    localStorage.setItem('searchHistory', JSON.stringify(history));
+    renderHistory();
+  };
+
+  const deleteHistoryItem = (term) => {
+    let history = getHistory();
+    history = history.filter(item => item !== term);
+    localStorage.setItem('searchHistory', JSON.stringify(history));
+    renderHistory();
+  };
+
+  const renderHistory = () => {
+    if (!searchHistoryList) return;
+    const history = getHistory();
+    if (history.length === 0) {
+      searchHistoryList.style.display = 'none';
+      return;
+    }
+    
+    searchHistoryList.innerHTML = history.map(term => `
+      <div class="search-history-item" data-term="${term}">
+        <div class="search-history-text">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>${term}</span>
+        </div>
+        <i class="fa-solid fa-xmark search-history-delete" data-term="${term}"></i>
+      </div>
+    `).join('');
+    
+    // Add click events
+    searchHistoryList.querySelectorAll('.search-history-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.classList.contains('search-history-delete')) {
+          e.stopPropagation();
+          deleteHistoryItem(e.target.dataset.term);
+          return;
+        }
+        searchInput.value = item.dataset.term;
+        performSearch();
+        searchHistoryList.style.display = 'none';
+      });
+    });
+  };
+
   if (searchInput) {
+    searchInput.addEventListener('input', performSearch);
+    
+    searchInput.addEventListener('focus', () => {
+      renderHistory();
+      const history = getHistory();
+      if (history.length > 0) {
+        searchHistoryList.style.display = 'block';
+      }
+    });
+
+    searchInput.addEventListener('blur', () => {
+      // Delay to allow clicking on history items
+      setTimeout(() => {
+        if (searchHistoryList) searchHistoryList.style.display = 'none';
+      }, 200);
+      
+      // Save history on blur if not empty
+      const term = searchInput.value.trim();
+      if (term.length >= 2) {
+        saveHistory(term);
+      }
+    });
+
     searchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') performSearch();
+      if (e.key === 'Enter') {
+        const term = searchInput.value.trim();
+        if (term.length >= 2) {
+          saveHistory(term);
+        }
+        searchInput.blur();
+      }
     });
   }
 
-  if (searchBtn) {
-    searchBtn.addEventListener('click', performSearch);
+  if (categoryFilter) {
+    categoryFilter.addEventListener('change', performSearch);
+  }
+
+  if (clearSearchBtn) {
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      performSearch();
+    });
   }
 
   // Navbar Background on Scroll

@@ -42,11 +42,21 @@
       <div class="search-section animate-on-scroll">
         <div class="search-wrapper">
           <div class="search-box">
-            <input type="text" id="productSearch" placeholder="What are you looking for today?" autocomplete="off">
-            <button id="searchBtn" class="search-btn">
-              <i class="fa-solid fa-magnifying-glass"></i>
-              <span>Search</span>
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="productSearch" placeholder="Search by name..." autocomplete="off">
+            <button id="clearSearchBtn" class="clear-btn" style="display: none;">
+              <i class="fa-solid fa-xmark"></i>
             </button>
+            <!-- Search History (Revertible Feature) -->
+            <div id="searchHistoryList" class="search-history-dropdown"></div>
+          </div>
+          
+          <div class="category-box">
+            <i class="fa-solid fa-filter filter-icon"></i>
+            <select id="categoryFilter">
+              <option value="all">All Categories</option>
+              <!-- Populated via JS -->
+            </select>
           </div>
         </div>
       </div>
