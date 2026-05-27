@@ -246,24 +246,83 @@
         </div>
       </div>
 
-      <div id="quick-guide" style="margin-bottom: 25px; padding: 20px; background: #f8fafc; border-radius: 15px; border-left: 5px solid var(--primary-light); font-size: 0.9rem; line-height: 1.6;">
-        <h4 style="margin-bottom: 10px; color: var(--primary);"><i class="fa-solid fa-lightbulb"></i> Admin Quick Guide</h4>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div id="quick-guide" style="margin-bottom: 35px; padding: 25px; background: white; border-radius: 20px; border-left: 6px solid var(--primary); box-shadow: var(--shadow-md); border: 1px solid rgba(0, 0, 0, 0.05); font-size: 0.95rem; line-height: 1.6;">
+        <h3 style="margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.3rem;">
+          <i class="fa-solid fa-lightbulb" style="color: var(--accent);"></i> Admin Quick Guide
+        </h3>
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 25px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
           <div>
-            <strong style="color: var(--primary);">1. Images:</strong>
-            <ol style="margin: 5px 0 0 15px; padding: 0;">
-              <li>Go to <a href="https://postimages.org/" target="_blank" style="color: #2563eb; font-weight: 600;">Postimages.org</a>.</li>
-              <li>Upload your photo and copy the <b>"Direct Link"</b>.</li>
-              <li>Paste it into the <b>Image URL</b> field below.</li>
-            </ol>
+            <h4 style="color: var(--primary); font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; font-size: 1.1rem;">
+              <i class="fa-solid fa-image"></i> 1. Product Images
+            </h4>
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+              <!-- Method A -->
+              <div style="background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <span style="font-weight: 800; color: var(--text-main); font-size: 0.9rem; display: block; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Method A (Postimages)</span>
+                <ul style="margin: 0; padding: 0; list-style-type: none; display: flex; flex-direction: column; gap: 8px;">
+                  <li style="display: flex; align-items: flex-start;">
+                    <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 1</span>
+                    <span>Go to <a href="https://postimages.org/" target="_blank" style="color: #2563eb; font-weight: 600; text-decoration: underline;">Postimages.org</a>.</span>
+                  </li>
+                  <li style="display: flex; align-items: flex-start;">
+                    <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 2</span>
+                    <span>Upload your photo and copy the <b>"Direct Link"</b>.</span>
+                  </li>
+                  <li style="display: flex; align-items: flex-start;">
+                    <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 3</span>
+                    <span>Paste it into the <b>Image URL</b> field below.</span>
+                  </li>
+                </ul>
+              </div>
+              <!-- Method B -->
+              <div style="background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <span style="font-weight: 800; color: var(--text-main); font-size: 0.9rem; display: block; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Method B (FreeImage.host)</span>
+                <ul style="margin: 0; padding: 0; list-style-type: none; display: flex; flex-direction: column; gap: 8px;">
+                  <li style="display: flex; align-items: flex-start;">
+                    <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 1</span>
+                    <span>Go to <a href="https://freeimage.host/" target="_blank" style="color: #2563eb; font-weight: 600; text-decoration: underline;">FreeImage.host</a>.</span>
+                  </li>
+                  <li style="display: flex; align-items: flex-start;">
+                    <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 2</span>
+                    <span>Click to browse and upload the image from your computer.</span>
+                  </li>
+                  <li style="display: flex; align-items: flex-start;">
+                    <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 3</span>
+                    <span>Once uploaded, right-click the image.</span>
+                  </li>
+                  <li style="display: flex; align-items: flex-start;">
+                    <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 4</span>
+                    <span>Once the image opens in a new tab, left-click on the image and select <b>"Copy image address"</b> (or <b>"Copy image link"</b>).</span>
+                  </li>
+                  <li style="display: flex; align-items: flex-start;">
+                    <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 5</span>
+                    <span>Return to the Admin Dashboard and paste the link into the <b>Image URL</b> field below.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div>
-            <strong style="color: var(--primary);">2. Videos:</strong>
-            <ol style="margin: 5px 0 0 15px; padding: 0;">
-              <li>Upload your video to <b>YouTube</b> (set as "Unlisted" if preferred).</li>
-              <li>Copy the video URL from the browser address bar.</li>
-              <li>Paste it into the <b>Video URL</b> field below.</li>
-            </ol>
+            <h4 style="color: var(--primary); font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; font-size: 1.1rem;">
+              <i class="fa-solid fa-video"></i> 2. Product Videos
+            </h4>
+            <div style="background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; height: calc(100% - 37px);">
+              <span style="font-weight: 800; color: var(--text-main); font-size: 0.9rem; display: block; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">YouTube Upload</span>
+              <ul style="margin: 0; padding: 0; list-style-type: none; display: flex; flex-direction: column; gap: 12px;">
+                <li style="display: flex; align-items: flex-start;">
+                  <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 1</span>
+                  <span>Upload your video to <b>YouTube</b> (set as "Unlisted" if preferred).</span>
+                </li>
+                <li style="display: flex; align-items: flex-start;">
+                  <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 2</span>
+                  <span>Copy the video URL from your browser address bar.</span>
+                </li>
+                <li style="display: flex; align-items: flex-start;">
+                  <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: rgba(5, 150, 105, 0.08); color: var(--primary); border-radius: 6px; margin-right: 8px; margin-top: 2px; flex-shrink: 0;">Step 3</span>
+                  <span>Paste it into the <b>Video URL</b> field below.</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
