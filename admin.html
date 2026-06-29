@@ -510,10 +510,10 @@
                   ${isInStock ? 'IN STOCK' : 'OUT OF STOCK'}
                 </span>
                 <label class="toggle-switch">
-                  <input type="checkbox" ${isInStock ? 'checked' : ''} onchange="handleStockChange(${p.id}, this.checked)">
+                  <input type="checkbox" ${isInStock ? 'checked' : ''} onchange="handleStockChange('${p.id}', this.checked)">
                   <span class="slider"></span>
                 </label>
-                <button class="btn-secondary" onclick="discardProduct(${p.id})" style="background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px;">
+                <button class="btn-secondary" onclick="discardProduct('${p.id}')" style="background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px;">
                   <i class="fa-solid fa-trash-can"></i> Discard
                 </button>
               </div>
@@ -546,7 +546,7 @@
                   <input type="text" class="admin-input" id="image-${p.id}" value="${p.image}" placeholder="e.g. assets/images/product.jpg">
                   <label class="btn btn-secondary" style="margin: 0; white-space: nowrap; cursor: pointer; padding: 10px 15px; border-radius: 8px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem;">
                     <i class="fa-solid fa-cloud-arrow-up"></i> Upload
-                    <input type="file" style="display: none;" onchange="handleImageUpload(${p.id}, this.files[0])" accept="image/*">
+                    <input type="file" style="display: none;" onchange="handleImageUpload('${p.id}', this.files[0])" accept="image/*">
                   </label>
                 </div>
               </div>
