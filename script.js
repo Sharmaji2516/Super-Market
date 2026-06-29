@@ -235,17 +235,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Initial products render / Real-time sync
   listenForProducts(async (products) => {
-    // Sync missing initial products to Firebase
-    let updated = false;
-    for (const ip of initialProducts) {
-      if (!products.find(p => p.id == ip.id)) {
-        console.log(`Product ${ip.name} (ID: ${ip.id}) missing from Firebase, initializing...`);
-        await initializeProducts([ip]);
-        updated = true;
+    // Sync initial products to Firebase ONLY if the database is completely empty
+    if (products.length === 0) {
+      // Check if running in dummy/offline mode where products won't write to DB
+      const isDummy = initializeProducts.toString().includes("Dummy");
+      if (isDummy) {
+        allProducts = initialProducts;
+        renderProductsUI(initialProducts);
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        return;
       }
+      
+      console.log("Firebase products database is empty. Initializing with default products...");
+      await initializeProducts(initialProducts);
+      return;
     }
-    
-    if (updated) return;
     
     allProducts = products;
     
