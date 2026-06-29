@@ -61,6 +61,7 @@ export async function deleteProductFromFirebase(id) {
         console.log("Product soft-deleted successfully!");
     } catch (e) {
         console.error("Error deleting product: ", e);
+        throw e;
     }
 }
 
