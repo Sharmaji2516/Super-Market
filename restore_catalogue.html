@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restore Catalogue</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 50px; background: #f8fafc; }
+    .btn { padding: 15px 30px; font-size: 1.2rem; background: #059669; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    .btn:hover { background: #047857; }
+    #status { margin-top: 20px; font-size: 1.1rem; color: #333; }
+  </style>
+</head>
+<body>
+  <h2>Catalogue Restore Utility</h2>
+  <p>You successfully deleted the products, and since we removed the auto-seeding, they stayed deleted!<br>
+  If you want to restore the original 16 default products to your database, click the button below.</p>
+  
+  <button class="btn" id="restoreBtn">Restore Default Products</button>
+  <div id="status"></div>
+
+  <script type="module">
+    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { db } from './firebase-config.js?v=1.0.3';
+
+    const initialProducts = [
+      { id: 1, name: "Aloe Vera Handmade Soap", category: "Herbal & Natural", price: 99, oldPrice: 130, unit: "piece", image: "assets/images/aloevera-shop.jpg", offer: "24% OFF", desc: "Pure handcrafted aloe vera soap with natural extracts.", inStock: true },
+      { id: 2, name: "Herbal Charcoal Aloe Vera Soap", category: "Herbal & Natural", price: 110, oldPrice: 149, unit: "piece", image: "assets/images/charcoal-soap.jpg", offer: "Best Seller", desc: "Deep-cleansing activated charcoal soap enriched with aloe vera.", inStock: true },
+      { id: 3, name: "Herbal Shampoo & Conditioner", category: "Hair Care", price: 199, oldPrice: 260, unit: "combo pack", image: "assets/images/shampoo-conditioner.jpg", offer: "Combo Deal", desc: "A powerful herbal duo for strong, shiny, and healthy hair.", inStock: true },
+      { id: 4, name: "Chittor Marka Filtered Mustard Oil", category: "Cooking Essentials", price: 180, oldPrice: 210, unit: "1L Bottle", image: "assets/images/Chittor Marka Filtered Mustard Oil.jpeg", offer: "Fresh & Pure", desc: "Traditionally extracted filtered mustard oil.", inStock: true },
+      { id: 5, name: "Cold Drinks & Energy Drinks", category: "Beverages", price: 45, oldPrice: 50, unit: "bottle", image: "assets/images/Cold Drinks and Energy Drinks.jpeg", offer: "Cool Down", desc: "A wide variety of chilled soft drinks and energy drinks.", inStock: true },
+      { id: 6, name: "Premium Deodorants & Perfumes", category: "Personal Care", price: 199, oldPrice: 299, unit: "piece", image: "assets/images/Deodrants and Perfumes.jpeg", offer: "Long Lasting", desc: "Stay fresh all day with our curated selection.", inStock: true },
+      { id: 7, name: "Eno Fruit Salt (3-in-1)", category: "Healthcare", price: 9, oldPrice: 10, unit: "sachet", image: "assets/images/Eno 3 in 1.jpeg", offer: "Quick Relief", desc: "Fast-acting Eno Fruit Salt for quick relief.", inStock: true },
+      { id: 8, name: "Laxmi 2-Burner Gas Stove", category: "Kitchen Appliances", price: 1499, oldPrice: 1899, unit: "piece", image: "assets/images/Laxmi Gas Stove.jpeg", offer: "ISI Marked", desc: "Durable and efficient 2-burner gas stove.", inStock: true },
+      { id: 9, name: "Modware Office Combo Set", category: "Home & Kitchen", price: 449, oldPrice: 599, unit: "set", image: "assets/images/Modware Office Kombo.jpeg", offer: "Combo Pack", desc: "Complete office lunch set from Modware.", inStock: true },
+      { id: 10, name: "Modware Insulated Water Jug", category: "Home & Kitchen", price: 349, oldPrice: 450, unit: "piece", image: "assets/images/Modware Water Jug .jpeg", offer: "Stay Hydrated", desc: "High-capacity insulated water jug.", inStock: true },
+      { id: 11, name: "Parle-G Gluco Biscuits", category: "Snacks & Biscuits", price: 25, oldPrice: 30, unit: "family pack", image: "assets/images/Parle-G Gluco Biscuit.jpeg", offer: "Energy Pack", desc: "The world's largest selling biscuit.", inStock: true },
+      { id: 12, name: "Premium Italian Pasta", category: "Snacks & Instant Food", price: 45, oldPrice: 60, unit: "pack", image: "assets/images/Pasta.jpeg", offer: "Easy Cook", desc: "Delicious and quick-to-cook pasta.", inStock: true },
+      { id: 13, name: "Philips Citrus Juicer Iron", category: "Home Appliances", price: 799, oldPrice: 999, unit: "piece", image: "assets/images/Philips Citrus Iron.jpeg", offer: "Compact", desc: "Efficient Philips iron with a non-stick soleplate.", inStock: true },
+      { id: 14, name: "Philips Classic Dry Iron", category: "Home Appliances", price: 1199, oldPrice: 1450, unit: "piece", image: "assets/images/Philips Classic Dry Iron.jpeg", offer: "Heavy Weight", desc: "Traditional heavy-weight dry iron from Philips.", inStock: true },
+      { id: 15, name: "Saffola Masala Oats", category: "Breakfast & Cereals", price: 155, oldPrice: 180, unit: "pack", image: "assets/images/Saffola Classic Masala Oats.jpeg", offer: "Healthy Choice", desc: "A tasty and healthy breakfast option.", inStock: true },
+      { id: 16, name: "Softy Premium Water Bottle", category: "Home & Kitchen", price: 99, oldPrice: 150, unit: "piece", image: "assets/images/Softy Water Bottle.jpeg", offer: "BPA Free", desc: "Stylish and durable BPA-free water bottle.", inStock: true }
+    ];
+
+    document.getElementById('restoreBtn').addEventListener('click', async () => {
+      const statusDiv = document.getElementById('status');
+      statusDiv.innerHTML = "Restoring... please wait.";
+      
+      try {
+        for (const p of initialProducts) {
+          // Setting isDeleted to false to ensure they reappear if they were soft-deleted
+          p.isDeleted = false;
+          const docRef = doc(db, "products", p.id.toString());
+          await setDoc(docRef, p);
+        }
+        statusDiv.innerHTML = "✅ Success! All 16 products have been restored. You can go back to the Admin Panel now.";
+      } catch (err) {
+        statusDiv.innerHTML = "❌ Error restoring products: " + err.message;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -57,8 +57,8 @@ export async function saveProductToFirebase(product) {
 export async function deleteProductFromFirebase(id) {
     try {
         const docRef = doc(db, "products", id.toString());
-        await deleteDoc(docRef);
-        console.log("Product deleted successfully!");
+        await updateDoc(docRef, { isDeleted: true });
+        console.log("Product soft-deleted successfully!");
     } catch (e) {
         console.error("Error deleting product: ", e);
     }
@@ -71,15 +71,6 @@ export async function updateProductStock(id, status) {
         console.log("Stock status updated!");
     } catch (e) {
         console.error("Error updating stock: ", e);
-    }
-}
-
-export async function initializeProducts(initialData) {
-    for (const p of initialData) {
-        const docRef = doc(db, "products", p.id.toString());
-        // Add inStock field if not present
-        if (p.inStock === undefined) p.inStock = true;
-        await setDoc(docRef, p);
     }
 }
 

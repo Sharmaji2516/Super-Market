@@ -428,7 +428,7 @@
   </footer>
 
   <script type="module">
-    import { auth, getProductsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, storage, ref, uploadBytes, getDownloadURL } from './firebase-config.js';
+    import { auth, getProductsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, storage, ref, uploadBytes, getDownloadURL } from './firebase-config.js?v=1.0.3';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     let productsArray = [];
@@ -442,7 +442,7 @@
       } else {
         // Logged in, start listening for products
         unsubscribeProducts = listenForProducts((products) => {
-          productsArray = products;
+          productsArray = products.filter(p => p.isDeleted !== true);
           filterAndRender();
         });
       }
