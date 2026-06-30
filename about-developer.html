@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Developer | Chittorgarh Hub</title>
+  <meta name="description"
+    content="Learn more about ChittorTech, the AI-Powered Software Development Company behind this platform.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      /* Overriding the default primary color to ChittorTech's cyan/blue */
+      --primary: #0099ff; /* Cyan-Blue matching logo */
+      --primary-rgb: 0, 153, 255;
+      --secondary: #0077cc; /* Slightly darker shade */
+      /* Light theme overrides */
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --bg-secondary: #ffffff;
+    }
+    body {
+      background-color: #f3f4f6; /* Very light cool grey */
+      color: var(--text-main);
+    }
+    
+    .developer-banner {
+      width: 100%;
+      border-radius: 16px;
+      margin: 0 0 3rem 0; /* Removed top margin */
+      box-shadow: 0 10px 30px rgba(0, 153, 255, 0.15);
+      overflow: hidden;
+    }
+    .developer-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .services-grid-dev {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .service-card-dev {
+      background: var(--bg-secondary);
+      padding: 2.5rem 2rem;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      transition: all 0.3s ease;
+      text-align: left;
+    }
+    .service-card-dev:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+      border-color: var(--primary);
+    }
+    .service-card-dev i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .service-card-dev:hover i {
+      transform: scale(1.15);
+      color: #00d2ff;
+    }
+    .service-card-dev h4 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+    .dev-cta-container {
+      text-align: center;
+      margin-top: 4rem;
+    }
+    .btn-dev {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-dev:hover {
+      background: var(--secondary);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px rgba(var(--primary-rgb), 0.4);
+    }
+    .btn-dev.pulsing {
+      animation: pulseShadow 2.5s infinite;
+    }
+
+    /* Animations & Highlights */
+    @keyframes fadeInUpDev {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulseShadow {
+      0% { box-shadow: 0 10px 20px rgba(0, 153, 255, 0.3); }
+      50% { box-shadow: 0 15px 35px rgba(0, 153, 255, 0.6); }
+      100% { box-shadow: 0 10px 20px rgba(0, 153, 255, 0.3); }
+    }
+    .animate-up {
+      opacity: 0;
+      animation: fadeInUpDev 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.3s; }
+    .delay-3 { animation-delay: 0.5s; }
+    .delay-4 { animation-delay: 0.7s; }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary), #00d2ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .dev-mission-card {
+      background: var(--bg-secondary);
+      border-left: 5px solid var(--primary);
+      padding: 2.5rem;
+      border-radius: 0 16px 16px 0;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      margin: 0 auto 3.5rem auto;
+      max-width: 850px;
+      text-align: left;
+    }
+    .dev-mission-card p {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    
+    .header-logo {
+      margin-top: 3rem;
+      max-width: 600px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+    }
+    
+    /* Override global header padding to reduce blue space */
+    .page-header {
+      padding: 8rem 0 2rem !important;
+      background: linear-gradient(135deg, #e5e7eb, #f3f4f6) !important;
+      color: #111827 !important;
+    }
+    .page-header h1 {
+      color: #111827 !important;
+    }
+    .page-header p {
+      color: #4b5563 !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-gem" style="color: var(--primary);"></i> CHITTORGARH<span>HUB</span>
+      </a>
+      <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="products.html">Our Services</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="about-developer.html" class="active">About Developer</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="container">
+      <h1 class="animate-on-scroll">About the Developers</h1>
+      <p class="animate-on-scroll" style="transition-delay: 0.2s">Engineered by ChittorTech</p>
+    </div>
+  </header>
+
+  <!-- Developer Content -->
+  <section class="section" style="padding-top: 2rem;">
+    <div class="container about-grid" style="grid-template-columns: 1fr;">
+      <div class="about-content animate-on-scroll">
+        
+        <!-- Logo replacing Banner -->
+        <div class="developer-banner animate-up">
+            <img src="chittortech_logo_1775884354186.png" id="devBannerImg" alt="ChittorTech Logo">
+        </div>
+
+        <h4 class="animate-up delay-1" style="text-align: center; color: var(--text-main); font-weight: 700; margin-bottom: 2.5rem; font-size: 1.3rem;">Best IT Company & Web Development Agency in Chittorgarh</h4>
+        
+        <div class="dev-mission-card animate-up delay-2">
+          <p>
+            ChittorTech is the leading IT startup in Chittorgarh, specializing in high-performance digital solutions and modern software architecture. We engineer custom web applications, SaaS booking systems, custom AI chatbots, and fluid cross-platform mobile apps to help businesses build faster and scale smarter.
+          </p>
+        </div>
+
+        <h3 class="animate-up delay-3" style="text-align: center; margin-bottom: 2.5rem; font-size: 2rem; color: var(--text-main);">Our <span class="gradient-text">Expertise</span></h3>
+        
+        <div class="services-grid-dev">
+            <!-- Service 1 -->
+            <div class="service-card-dev animate-up delay-3">
+                <i class="fas fa-globe"></i>
+                <h4>Business Websites</h4>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">Professional, fast, and mobile-responsive architectures.</p>
+            </div>
+            <!-- Service 2 -->
+            <div class="service-card-dev animate-up delay-4">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>Mobile Apps</h4>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">High-performance native Android & iOS applications.</p>
+            </div>
+            <!-- Service 3 -->
+            <div class="service-card-dev animate-up delay-4">
+                <i class="fas fa-shopping-cart"></i>
+                <h4>E-Commerce Solutions</h4>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">Robust e-commerce platforms with real-time sync.</p>
+            </div>
+            <!-- Service 4 -->
+            <div class="service-card-dev animate-up delay-4">
+                <i class="fas fa-code"></i>
+                <h4>Custom Software</h4>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">Tailor-made software, enterprise CRMs, and AI chatbots.</p>
+            </div>
+        </div>
+
+        <div class="dev-cta-container animate-up delay-4">
+            <a href="https://www.chittortech.online/" target="_blank" class="btn-dev pulsing">
+                Visit ChittorTech Website
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <h3>CHITTORGARH<span>HUB</span></h3>
+          <p>Our priority is Your Trust and Satisfaction. Dedicated to serving our community with love and care.</p>
+          <div class="social-links" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+            <a href="https://www.facebook.com/share/17CsmEXSUP/" target="_blank"
+              style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/chittorgarh.sonu?igsh=MXFlMDkxaHEzanRzNg==" target="_blank"
+              style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/917014974762" target="_blank" style="color: white; font-size: 1.2rem;"><i
+                class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Explore</h4>
+          <ul style="padding: 0;">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="products.html">Our Services</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="about-developer.html">About Developer</a></li>
+            <li><a href="login.html" style="color: var(--accent); font-weight: 700;"><i class="fa-solid fa-lock"></i>
+                Admin Login</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Get Support</h4>
+          <p><a href="https://www.google.com/maps/search/?api=1&query=29+Rajive+Colony+Meera+Market+Chittorgarh"
+              target="_blank" style="color: inherit;"><i class="fa-solid fa-location-dot"></i> 29 Rajive Colony, Meera
+              Market, Chittorgarh</a></p>
+          <p><a href="https://wa.me/917014974762" target="_blank" style="color: inherit; text-decoration: none;"><i class="fa-solid fa-phone"></i> +91 7014974762, +91 9680580008</a></p>
+          <p><a href="mailto:Chittorgarhsonu@gmail.com" style="color: inherit; text-decoration: none;"><i class="fa-solid fa-envelope"></i> Chittorgarhsonu@gmail.com</a></p>
+          <p><i class="fa-solid fa-clock"></i> Daily: 8:00 AM - 10:00 PM</p>
+        </div>
+      </div>
+      <div class="premium-footer">
+        <a href="https://www.chittortech.online/" target="_blank" class="ct-badge">
+          <div class="ct-logo-box">
+            <img src="chittortech_logo_1775884354186.png" alt="ChittorTech">
+          </div>
+          <div class="ct-badge-text">
+            <span>A PRODUCT OF</span>
+            <h5>ChittorTech</h5>
+          </div>
+        </a>
+
+        <div class="trust-badges">
+          <div class="trust-list">
+            <div class="trust-item">
+              <i class="fa-solid fa-circle"></i>
+              Recognized by iStart Rajasthan
+            </div>
+            <div class="trust-item">
+              <i class="fa-solid fa-circle"></i>
+              Registered MSME | Startup India
+            </div>
+          </div>
+        </div>
+
+        <hr class="footer-divider">
+
+        <a href="mailto:chittortech@gmail.com" class="footer-contact-link">
+          <i class="fa-solid fa-envelope"></i>
+          chittortech@gmail.com
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js?v=1.0.4"></script>
+</body>
+</html>
