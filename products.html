@@ -37,8 +37,16 @@
     </div>
   </header>
 
-  <!-- Products Section -->
-  <section class="section">
+  <!-- Dark Control Section -->
+  <section class="controls-dark-section">
+    <div class="container">
+      <!-- Visual Category Filter Panel -->
+      <div id="category-panel-container" class="category-panel-container animate-on-scroll">
+        <div id="category-scroll-wrapper" class="category-scroll-wrapper">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
       <!-- Premium Search Section -->
       <div class="search-section animate-on-scroll">
         <div class="search-wrapper">
@@ -61,7 +69,12 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
+  <!-- Products Section -->
+  <section class="section">
+    <div class="container">
       <!-- Container populated via JS -->
       <div id="products-container" class="products-grid all-products">
         <!-- Javascript will inject 15-20 products here -->

@@ -2,6 +2,43 @@ import { listenForProducts } from './firebase-config.js?v=1.0.3';
 
 let allProducts = []; // To store products for filtering
 
+const categoryIcons = {
+  "all": "fa-solid fa-border-all",
+  "chocolates": "fa-solid fa-cookie-bite",
+  "chocolate": "fa-solid fa-cookie-bite",
+  "beverages": "fa-solid fa-glass-water",
+  "drinks": "fa-solid fa-glass-water",
+  "snacks & biscuits": "fa-solid fa-cookie",
+  "snacks": "fa-solid fa-cookie",
+  "personal care": "fa-solid fa-pump-soap",
+  "maggi": "fa-solid fa-bowl-food",
+  "noodles": "fa-solid fa-bowl-food",
+  "bread": "fa-solid fa-bread-slice",
+  "bakery": "fa-solid fa-bread-slice",
+  "ice cream": "fa-solid fa-ice-cream",
+  "groceries": "fa-solid fa-basket-shopping",
+  "grocery": "fa-solid fa-basket-shopping"
+};
+
+const gradients = [
+  'linear-gradient(135deg, #059669 0%, #10b981 100%)', // emerald
+  'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)', // indigo
+  'linear-gradient(135deg, #e11d48 0%, #f43f5e 100%)', // rose
+  'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)', // amber
+  'linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%)', // purple
+  'linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%)'  // sky
+];
+
+const getGradientForCategory = (name) => {
+  if (name === 'all') return 'linear-gradient(135deg, #059669 0%, #34d399 100%)';
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % gradients.length;
+  return gradients[index];
+};
+
 // Products Data - Initial state removed (Seeding disabled)
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -50,9 +87,74 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Populate categories dynamically
     const categoryFilter = document.getElementById('categoryFilter');
     if (categoryFilter) {
+      const prevValue = categoryFilter.value || 'all';
       const categories = [...new Set(activeProducts.map(p => p.category).filter(Boolean))];
       categoryFilter.innerHTML = '<option value="all">All Categories</option>' + 
         categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+      
+      // Restore previous value if still valid
+      if (prevValue === 'all' || categories.includes(prevValue)) {
+        categoryFilter.value = prevValue;
+      } else {
+        categoryFilter.value = 'all';
+      }
+
+      // Calculate product counts per category
+      const categoryCounts = {};
+      activeProducts.forEach(p => {
+        if (p.category) {
+          categoryCounts[p.category] = (categoryCounts[p.category] || 0) + 1;
+        }
+      });
+
+      // Render dynamic visual category filter panel
+      const categoryScrollWrapper = document.getElementById('category-scroll-wrapper');
+      if (categoryScrollWrapper) {
+        let categoryList = ['all', ...categories];
+        
+        categoryScrollWrapper.innerHTML = categoryList.map(cat => {
+          const catLower = cat.toLowerCase().trim();
+          const gradient = getGradientForCategory(catLower);
+          
+          let innerContent = '';
+          const iconClass = categoryIcons[catLower];
+          if (iconClass) {
+            innerContent = `<i class="${iconClass}"></i>`;
+          } else {
+            // First 2 letters or first letter of the category name
+            innerContent = cat.charAt(0).toUpperCase();
+          }
+
+          const label = cat === 'all' ? 'All Categories' : cat;
+          const isActive = categoryFilter.value === cat;
+          const count = cat === 'all' ? activeProducts.length : (categoryCounts[cat] || 0);
+          
+          return `
+            <div class="category-card ${isActive ? 'active' : ''}" data-category="${cat}">
+              <div class="category-img-wrapper" style="background: ${gradient};">
+                ${innerContent}
+                <span class="category-count-badge">${count}</span>
+              </div>
+              <span class="category-name">${label}</span>
+            </div>
+          `;
+        }).join('');
+
+        // Attach click events
+        categoryScrollWrapper.querySelectorAll('.category-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const selectedCat = card.dataset.category;
+            
+            // Update active state in UI
+            categoryScrollWrapper.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            
+            // Update select dropdown value and trigger search
+            categoryFilter.value = selectedCat;
+            performSearch();
+          });
+        });
+      }
     }
 
     renderProductsUI(activeProducts);
@@ -179,7 +281,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (categoryFilter) {
-    categoryFilter.addEventListener('change', performSearch);
+    categoryFilter.addEventListener('change', () => {
+      performSearch();
+      // Sync visual category cards active state
+      const categoryScrollWrapper = document.getElementById('category-scroll-wrapper');
+      if (categoryScrollWrapper) {
+        categoryScrollWrapper.querySelectorAll('.category-card').forEach(card => {
+          if (card.dataset.category === categoryFilter.value) {
+            card.classList.add('active');
+          } else {
+            card.classList.remove('active');
+          }
+        });
+      }
+    });
   }
 
   if (clearSearchBtn) {
