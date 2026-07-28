@@ -88,4 +88,30 @@ export function listenForProducts(callback) {
     });
 }
 
+export async function saveCategoryOrderToFirebase(orderArray) {
+    try {
+        const docRef = doc(db, "settings", "categoryOrder");
+        await setDoc(docRef, { order: orderArray, updatedAt: Date.now() }, { merge: true });
+        console.log("Category order saved successfully!");
+    } catch (e) {
+        console.error("Error saving category order: ", e);
+        throw e;
+    }
+}
+
+export function listenForCategoryOrder(callback) {
+    const docRef = doc(db, "settings", "categoryOrder");
+    return onSnapshot(docRef, (docSnap) => {
+        if (docSnap.exists() && docSnap.data().order) {
+            callback(docSnap.data().order);
+        } else {
+            callback([]);
+        }
+    }, (error) => {
+        console.error("Error listening for category order: ", error);
+        callback([]);
+    });
+}
+
 export { auth, db, storage, ref, uploadBytes, getDownloadURL };
+

@@ -1,45 +1,39 @@
-import { listenForProducts } from './firebase-config.js?v=1.0.3';
+import { listenForProducts, listenForCategoryOrder } from './firebase-config.js?v=1.0.6';
 
 let allProducts = []; // To store products for filtering
+let activeCategory = 'all';
+let categoryCustomOrder = []; // Custom category priority sequence set by Admin
 
-const categoryIcons = {
-  "all": "fa-solid fa-border-all",
-  "chocolates": "fa-solid fa-cookie-bite",
-  "chocolate": "fa-solid fa-cookie-bite",
-  "beverages": "fa-solid fa-glass-water",
-  "drinks": "fa-solid fa-glass-water",
-  "snacks & biscuits": "fa-solid fa-cookie",
-  "snacks": "fa-solid fa-cookie",
-  "personal care": "fa-solid fa-pump-soap",
-  "maggi": "fa-solid fa-bowl-food",
-  "noodles": "fa-solid fa-bowl-food",
-  "bread": "fa-solid fa-bread-slice",
-  "bakery": "fa-solid fa-bread-slice",
-  "ice cream": "fa-solid fa-ice-cream",
-  "groceries": "fa-solid fa-basket-shopping",
-  "grocery": "fa-solid fa-basket-shopping"
-};
+// Helper to sort category names according to custom priority sequence (Case-Insensitive)
+function sortCategoriesByCustomOrder(categoriesArray) {
+  const orderUpper = (categoryCustomOrder || []).map(c => (c || '').toString().trim().toUpperCase());
+  return [...categoriesArray].sort((a, b) => {
+    const normA = (a || '').toString().trim().toUpperCase();
+    const normB = (b || '').toString().trim().toUpperCase();
 
-const gradients = [
-  'linear-gradient(135deg, #059669 0%, #10b981 100%)', // emerald
-  'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)', // indigo
-  'linear-gradient(135deg, #e11d48 0%, #f43f5e 100%)', // rose
-  'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)', // amber
-  'linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%)', // purple
-  'linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%)'  // sky
-];
+    const idxA = orderUpper.indexOf(normA);
+    const idxB = orderUpper.indexOf(normB);
 
-const getGradientForCategory = (name) => {
-  if (name === 'all') return 'linear-gradient(135deg, #059669 0%, #34d399 100%)';
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  const index = Math.abs(hash) % gradients.length;
-  return gradients[index];
-};
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    return a.localeCompare(b);
+  });
+}
 
-// Products Data - Initial state removed (Seeding disabled)
+// Icon mapping helper for category pills
+function getCategoryIcon(categoryName) {
+  const name = (categoryName || '').toLowerCase();
+  if (name.includes('ice cream')) return 'fa-solid fa-ice-cream';
+  if (name.includes('bread')) return 'fa-solid fa-bread-slice';
+  if (name.includes('maggi') || name.includes('noodle')) return 'fa-solid fa-bowl-food';
+  if (name.includes('chocolate')) return 'fa-solid fa-cookie-bite';
+  if (name.includes('biscuit')) return 'fa-solid fa-cookie';
+  if (name.includes('snack') || name.includes('chip')) return 'fa-solid fa-fire';
+  if (name.includes('drink') || name.includes('beverage') || name.includes('juice')) return 'fa-solid fa-glass-water';
+  if (name.includes('fruit') || name.includes('veg')) return 'fa-solid fa-carrot';
+  return 'fa-solid fa-basket-shopping';
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Mobile Navigation
@@ -76,88 +70,52 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }, observerOptions);
 
-  // Initial products render / Real-time sync
+  // --- 1. INSTANT LOAD: Load cached products & category order from LocalStorage ---
+  try {
+    const cachedOrder = localStorage.getItem('cachedCategoryOrder');
+    if (cachedOrder) {
+      categoryCustomOrder = JSON.parse(cachedOrder);
+    }
+    const cachedData = localStorage.getItem('cachedProducts');
+    if (cachedData) {
+      const parsedProducts = JSON.parse(cachedData);
+      if (Array.isArray(parsedProducts) && parsedProducts.length > 0) {
+        allProducts = parsedProducts;
+        populateCategoryDropdown(allProducts);
+        renderCategoryPills(allProducts, activeCategory);
+        renderProductsUI(allProducts);
+      }
+    }
+  } catch (e) {
+    console.warn("Local storage cache read error:", e);
+  }
+
+  // Listen for real-time Category Order from Firestore
+  listenForCategoryOrder((savedOrder) => {
+    categoryCustomOrder = savedOrder || [];
+    try {
+      localStorage.setItem('cachedCategoryOrder', JSON.stringify(categoryCustomOrder));
+    } catch(e) {}
+    populateCategoryDropdown(allProducts);
+    renderCategoryPills(allProducts, activeCategory);
+  });
+
+  // --- 2. REAL-TIME SYNC: Listen for products from Firestore ---
   listenForProducts(async (products) => {
-    
-    
     // Filter out soft-deleted products
     const activeProducts = products.filter(p => p.isDeleted !== true);
     allProducts = activeProducts;
     
-    // Populate categories dynamically
-    const categoryFilter = document.getElementById('categoryFilter');
-    if (categoryFilter) {
-      const prevValue = categoryFilter.value || 'all';
-      const categories = [...new Set(activeProducts.map(p => p.category).filter(Boolean))];
-      categoryFilter.innerHTML = '<option value="all">All Categories</option>' + 
-        categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
-      
-      // Restore previous value if still valid
-      if (prevValue === 'all' || categories.includes(prevValue)) {
-        categoryFilter.value = prevValue;
-      } else {
-        categoryFilter.value = 'all';
-      }
-
-      // Calculate product counts per category
-      const categoryCounts = {};
-      activeProducts.forEach(p => {
-        if (p.category) {
-          categoryCounts[p.category] = (categoryCounts[p.category] || 0) + 1;
-        }
-      });
-
-      // Render dynamic visual category filter panel
-      const categoryScrollWrapper = document.getElementById('category-scroll-wrapper');
-      if (categoryScrollWrapper) {
-        let categoryList = ['all', ...categories];
-        
-        categoryScrollWrapper.innerHTML = categoryList.map(cat => {
-          const catLower = cat.toLowerCase().trim();
-          const gradient = getGradientForCategory(catLower);
-          
-          let innerContent = '';
-          const iconClass = categoryIcons[catLower];
-          if (iconClass) {
-            innerContent = `<i class="${iconClass}"></i>`;
-          } else {
-            // First 2 letters or first letter of the category name
-            innerContent = cat.charAt(0).toUpperCase();
-          }
-
-          const label = cat === 'all' ? 'All Categories' : cat;
-          const isActive = categoryFilter.value === cat;
-          const count = cat === 'all' ? activeProducts.length : (categoryCounts[cat] || 0);
-          
-          return `
-            <div class="category-card ${isActive ? 'active' : ''}" data-category="${cat}">
-              <div class="category-img-wrapper" style="background: ${gradient};">
-                ${innerContent}
-                <span class="category-count-badge">${count}</span>
-              </div>
-              <span class="category-name">${label}</span>
-            </div>
-          `;
-        }).join('');
-
-        // Attach click events
-        categoryScrollWrapper.querySelectorAll('.category-card').forEach(card => {
-          card.addEventListener('click', () => {
-            const selectedCat = card.dataset.category;
-            
-            // Update active state in UI
-            categoryScrollWrapper.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            
-            // Update select dropdown value and trigger search
-            categoryFilter.value = selectedCat;
-            performSearch();
-          });
-        });
-      }
+    // Save to LocalStorage for instant rendering on next page visit
+    try {
+      localStorage.setItem('cachedProducts', JSON.stringify(activeProducts));
+    } catch (e) {
+      console.warn("Local storage cache write error:", e);
     }
-
-    renderProductsUI(activeProducts);
+    
+    populateCategoryDropdown(activeProducts);
+    renderCategoryPills(activeProducts, activeCategory);
+    performSearch();
 
     // Update animations for new elements
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
@@ -167,12 +125,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   const searchInput = document.getElementById('productSearch');
   const categoryFilter = document.getElementById('categoryFilter');
   const clearSearchBtn = document.getElementById('clearSearchBtn');
-  const searchHistoryList = document.getElementById('searchHistoryList'); // Revertible Feature
+  const searchHistoryList = document.getElementById('searchHistoryList');
+
+  function populateCategoryDropdown(products) {
+    if (!categoryFilter) return;
+    const rawCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
+    const categories = sortCategoriesByCustomOrder(rawCategories);
+
+    const currentVal = categoryFilter.value || 'all';
+    categoryFilter.innerHTML = '<option value="all">All Categories</option>' + 
+      categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+    categoryFilter.value = currentVal;
+  }
 
   const performSearch = () => {
     const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
-    const selectedCategory = categoryFilter ? categoryFilter.value : 'all';
-    
+    const selectedCategory = categoryFilter ? categoryFilter.value : activeCategory;
+    activeCategory = selectedCategory;
+
     if (clearSearchBtn) {
       clearSearchBtn.style.display = searchTerm ? 'block' : 'none';
     }
@@ -184,22 +154,78 @@ document.addEventListener('DOMContentLoaded', async () => {
       return matchesName && matchesCategory;
     });
     
+    renderCategoryPills(allProducts, selectedCategory);
     renderProductsUI(filtered);
     
     // Update animations for new elements
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
   };
 
-  // --- Search History Logic (Revertible Feature) ---
+  // Dynamic Category Pills Renderer
+  function renderCategoryPills(products, selectedCat) {
+    const wrapper = document.getElementById('categoryPillsWrapper');
+    const bar = document.getElementById('categoryPillsBar');
+    if (!wrapper || !bar || !products || products.length === 0) return;
+
+    // Count products per category
+    const counts = {};
+    products.forEach(p => {
+      if (p.category) {
+        counts[p.category] = (counts[p.category] || 0) + 1;
+      }
+    });
+
+    const rawCategories = Object.keys(counts);
+    const categories = sortCategoriesByCustomOrder(rawCategories);
+
+    let pillsHTML = `
+      <div class="category-pill ${selectedCat === 'all' ? 'active' : ''}" data-category="all">
+        <div class="pill-icon-box">
+          <i class="fa-solid fa-border-all"></i>
+          <span class="pill-badge">${products.length}</span>
+        </div>
+        <span class="pill-title">All Categories</span>
+      </div>
+    `;
+
+    categories.forEach(cat => {
+      const count = counts[cat];
+      const iconClass = getCategoryIcon(cat);
+      const isActive = selectedCat === cat;
+      pillsHTML += `
+        <div class="category-pill ${isActive ? 'active' : ''}" data-category="${cat}">
+          <div class="pill-icon-box">
+            <i class="${iconClass}"></i>
+            <span class="pill-badge">${count}</span>
+          </div>
+          <span class="pill-title">${cat}</span>
+        </div>
+      `;
+    });
+
+    bar.innerHTML = pillsHTML;
+    wrapper.style.display = 'block';
+
+    // Add click listeners to category pills
+    bar.querySelectorAll('.category-pill').forEach(pill => {
+      pill.onclick = () => {
+        const cat = pill.getAttribute('data-category');
+        activeCategory = cat;
+        if (categoryFilter) categoryFilter.value = cat;
+        performSearch();
+      };
+    });
+  }
+
+  // --- Search History Logic ---
   const MAX_HISTORY = 5;
-  
   const getHistory = () => JSON.parse(localStorage.getItem('searchHistory') || '[]');
   
   const saveHistory = (term) => {
     if (!term) return;
     let history = getHistory();
-    history = history.filter(item => item !== term); // Remove duplicate
-    history.unshift(term); // Add to start
+    history = history.filter(item => item !== term);
+    history.unshift(term);
     if (history.length > MAX_HISTORY) history.pop();
     localStorage.setItem('searchHistory', JSON.stringify(history));
     renderHistory();
@@ -230,7 +256,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       </div>
     `).join('');
     
-    // Add click events
     searchHistoryList.querySelectorAll('.search-history-item').forEach(item => {
       item.addEventListener('click', (e) => {
         if (e.target.classList.contains('search-history-delete')) {
@@ -257,12 +282,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     searchInput.addEventListener('blur', () => {
-      // Delay to allow clicking on history items
       setTimeout(() => {
         if (searchHistoryList) searchHistoryList.style.display = 'none';
       }, 200);
       
-      // Save history on blur if not empty
       const term = searchInput.value.trim();
       if (term.length >= 2) {
         saveHistory(term);
@@ -281,20 +304,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (categoryFilter) {
-    categoryFilter.addEventListener('change', () => {
-      performSearch();
-      // Sync visual category cards active state
-      const categoryScrollWrapper = document.getElementById('category-scroll-wrapper');
-      if (categoryScrollWrapper) {
-        categoryScrollWrapper.querySelectorAll('.category-card').forEach(card => {
-          if (card.dataset.category === categoryFilter.value) {
-            card.classList.add('active');
-          } else {
-            card.classList.remove('active');
-          }
-        });
-      }
-    });
+    categoryFilter.addEventListener('change', performSearch);
   }
 
   if (clearSearchBtn) {
@@ -350,13 +360,13 @@ function renderProductsUI(products) {
       <div class="product-card animate-on-scroll ${!inStock ? 'out-of-stock' : ''}">
         <div class="product-img-wrapper">
           ${product.offer ? `<div class="product-badge">${product.offer}</div>` : ''}
-          <img src="${product.image}" alt="${product.name}" class="product-img" style="${!inStock ? 'filter: grayscale(1); opacity: 0.6;' : ''}">
+          <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" style="${!inStock ? 'filter: grayscale(1); opacity: 0.6;' : ''}">
           ${!inStock ? '<div class="out-of-stock-overlay">OUT OF STOCK</div>' : ''}
         </div>
         <div class="product-content">
           <span class="product-category">${product.category}</span>
           <h3 class="product-title" style="${!inStock ? 'color: var(--text-muted);' : ''}">${product.name}</h3>
-          <p class="product-desc">${product.desc}</p>
+          <p class="product-desc">${product.desc || ''}</p>
           <div class="product-footer">
             <div class="product-price">
               ₹${product.price}
@@ -392,3 +402,4 @@ function renderProductsUI(products) {
 
   productsContainer.innerHTML = html;
 }
+

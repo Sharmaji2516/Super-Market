@@ -37,13 +37,13 @@
     </div>
   </header>
 
-  <!-- Dark Control Section -->
-  <section class="controls-dark-section">
+  <!-- Products Section -->
+  <section class="section">
     <div class="container">
-      <!-- Visual Category Filter Panel -->
-      <div id="category-panel-container" class="category-panel-container animate-on-scroll">
-        <div id="category-scroll-wrapper" class="category-scroll-wrapper">
-          <!-- Populated dynamically via JS -->
+      <!-- Category Pills Bar (Dynamic via JS) -->
+      <div id="categoryPillsWrapper" class="category-pills-wrapper animate-on-scroll" style="display: none;">
+        <div id="categoryPillsBar" class="category-pills-bar">
+          <!-- JS injects category pills here -->
         </div>
       </div>
 
@@ -69,21 +69,19 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Products Section -->
-  <section class="section">
-    <div class="container">
-      <!-- Container populated via JS -->
+      <!-- Container populated via JS with Skeleton Placeholders on first load -->
       <div id="products-container" class="products-grid all-products">
-        <!-- Javascript will inject 15-20 products here -->
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
       </div>
       
       <!-- Pagination logic also handled in JS -->
       <div id="pagination-container" class="pagination">
-        <!-- <a href="#" class="page-link active">1</a> -->
-        <!-- <a href="#" class="page-link">2</a> -->
       </div>
     </div>
   </section>
@@ -156,6 +154,6 @@
     </div>
   </footer>
 
-  <script type="module" src="app.js?v=1.0.4"></script>
+  <script type="module" src="app.js?v=1.0.6"></script>
 </body>
 </html>
