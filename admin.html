@@ -342,6 +342,36 @@
             <i class="fa-solid fa-floppy-disk"></i> Save Category Sequence
           </button>
         </div>
+
+        <!-- Step-by-Step Category Photo Guide -->
+        <div style="background: white; border: 1.5px solid #e9d5ff; padding: 18px 22px; border-radius: 16px; margin-bottom: 22px; box-shadow: 0 4px 14px rgba(126, 34, 206, 0.05);">
+          <div style="font-weight: 800; font-size: 1rem; margin-bottom: 14px; color: #7e22ce; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-camera" style="color: #a855f7; font-size: 1.1rem;"></i> How to Add Category Photos (फोटो कैसे लगाएं - 5 Easy Steps):
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; font-size: 0.82rem;">
+            <div style="background: #faf5ff; padding: 12px 14px; border-radius: 12px; border: 1px solid #f3e8ff;">
+              <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: #9333ea; color: white; border-radius: 6px; margin-bottom: 6px;">Step 1</span>
+              <span style="display: block; color: #581c87; font-weight: 700;">Click <b>"Open FreeImage.host"</b> below (या <a href="https://freeimage.host/" target="_blank" style="color: #2563eb; text-decoration: underline;">freeimage.host</a> पर जाएं)</span>
+            </div>
+            <div style="background: #faf5ff; padding: 12px 14px; border-radius: 12px; border: 1px solid #f3e8ff;">
+              <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: #9333ea; color: white; border-radius: 6px; margin-bottom: 6px;">Step 2</span>
+              <span style="display: block; color: #581c87; font-weight: 700;">Select your photo & click <b>"Upload"</b> button</span>
+            </div>
+            <div style="background: #faf5ff; padding: 12px 14px; border-radius: 12px; border: 1px solid #f3e8ff;">
+              <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: #9333ea; color: white; border-radius: 6px; margin-bottom: 6px;">Step 3</span>
+              <span style="display: block; color: #581c87; font-weight: 700;">Select <b>"HTML Full Linked"</b> under Embed codes</span>
+            </div>
+            <div style="background: #faf5ff; padding: 12px 14px; border-radius: 12px; border: 1px solid #f3e8ff;">
+              <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: #9333ea; color: white; border-radius: 6px; margin-bottom: 6px;">Step 4</span>
+              <span style="display: block; color: #581c87; font-weight: 700;">Copy the <b>Image Source URL</b> (or whole code)</span>
+              <span style="display: block; font-size: 0.7rem; color: #2563eb; font-weight: 700; margin-top: 4px; background: #eff6ff; padding: 3px 6px; border-radius: 4px; border: 1px solid #bfdbfe; word-break: break-all;">Example: https://iili.io/CvHE3k7.jpg</span>
+            </div>
+            <div style="background: #faf5ff; padding: 12px 14px; border-radius: 12px; border: 1px solid #f3e8ff;">
+              <span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; background: #9333ea; color: white; border-radius: 6px; margin-bottom: 6px;">Step 5</span>
+              <span style="display: block; color: #581c87; font-weight: 700;">Back to Admin Panel, <b>PASTE into box</b> & click <b>"Save Category Sequence"</b>!</span>
+            </div>
+          </div>
+        </div>
         
         <div id="category-order-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-top: 15px;">
           <p style="color: #94a3b8;"><i class="fa-solid fa-spinner fa-spin"></i> Loading categories...</p>
@@ -454,7 +484,26 @@
 
     let productsArray = [];
     let categoryOrderList = [];
+    let categoryImagesMap = {};
     let unsubscribeProducts = null;
+
+    function resolveDirectImageUrl(url) {
+      if (!url) return '';
+      let trimmed = url.trim();
+      
+      // 1. If string contains direct image URL (e.g. https://iili.io/CvHE3k7.jpg or from Markdown/HTML)
+      const directMatch = trimmed.match(/https?:\/\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp|gif)/i);
+      if (directMatch) {
+        return directMatch[0];
+      }
+
+      // 2. Auto-convert FreeImage.host viewer page link (e.g. https://freeimage.host/i/CvHE3k7) to direct image URL (https://iili.io/CvHE3k7.jpg)
+      const freeimageMatch = trimmed.match(/freeimage\.host\/i\/([a-zA-Z0-9]+)/i);
+      if (freeimageMatch && freeimageMatch[1]) {
+        return `https://iili.io/${freeimageMatch[1]}.jpg`;
+      }
+      return trimmed;
+    }
 
     // Check Authentication
     onAuthStateChanged(auth, (user) => {
@@ -469,8 +518,19 @@
           syncAndRenderCategoryOrder();
         });
 
-        listenForCategoryOrder((savedOrder) => {
-          categoryOrderList = savedOrder || [];
+        listenForCategoryOrder((savedData) => {
+          if (savedData) {
+            if (Array.isArray(savedData)) {
+              categoryOrderList = savedData;
+            } else {
+              categoryOrderList = savedData.order || [];
+              const rawImgs = savedData.images || {};
+              categoryImagesMap = {};
+              Object.keys(rawImgs).forEach(k => {
+                categoryImagesMap[k] = resolveDirectImageUrl(rawImgs[k]);
+              });
+            }
+          }
           syncAndRenderCategoryOrder();
         });
       }
@@ -507,6 +567,7 @@
       let html = '';
       categoryOrderList.forEach((cat, index) => {
         const count = catCounts[cat] || 0;
+        const currentImg = resolveDirectImageUrl(categoryImagesMap[cat] || '');
         
         let optionsHTML = '';
         for (let i = 1; i <= totalCategories; i++) {
@@ -515,18 +576,36 @@
         }
 
         html += `
-          <div style="background: white; border: 1.5px solid #e9d5ff; padding: 14px 18px; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 4px 12px rgba(126, 34, 206, 0.06);">
-            <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
-              <span style="background: #9333ea; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; flex-shrink: 0;">${index + 1}</span>
-              <div>
-                <span style="font-weight: 800; color: #4c1d95; font-size: 0.95rem; display: block; text-transform: uppercase;">${cat}</span>
-                <span style="font-size: 0.75rem; color: #7e22ce; font-weight: 600;">${count} product${count > 1 ? 's' : ''}</span>
+          <div style="background: white; border: 1.5px solid #e9d5ff; padding: 14px 18px; border-radius: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 12px rgba(126, 34, 206, 0.06);">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+              <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
+                <span style="background: #9333ea; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; flex-shrink: 0;">${index + 1}</span>
+                <div>
+                  <span style="font-weight: 800; color: #4c1d95; font-size: 0.95rem; display: block; text-transform: uppercase;">${cat}</span>
+                  <span style="font-size: 0.75rem; color: #7e22ce; font-weight: 600;">${count} product${count > 1 ? 's' : ''}</span>
+                </div>
+              </div>
+              <div style="flex-shrink: 0;">
+                <select onchange="window.changeCategoryRank(${index}, parseInt(this.value))" style="padding: 6px 10px; border-radius: 10px; border: 1.5px solid #c084fc; background: #faf5ff; color: #7e22ce; font-weight: 800; font-size: 0.85rem; outline: none; cursor: pointer;">
+                  ${optionsHTML}
+                </select>
               </div>
             </div>
-            <div style="flex-shrink: 0;">
-              <select onchange="window.changeCategoryRank(${index}, parseInt(this.value))" style="padding: 8px 12px; border-radius: 10px; border: 1.5px solid #c084fc; background: #faf5ff; color: #7e22ce; font-weight: 800; font-size: 0.9rem; outline: none; cursor: pointer;">
-                ${optionsHTML}
-              </select>
+
+            <!-- Category Image Link Input & FreeImage.host Helper -->
+            <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px dashed #f3e8ff;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 38px; height: 38px; border-radius: 50%; overflow: hidden; background: #f3e8ff; border: 1.5px solid #d8b4fe; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  ${currentImg ? `<img src="${currentImg}" id="cat-prev-img-${index}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='https://iili.io/' + (this.src.split('/i/')[1] || '').split('.')[0] + '.jpg';">` : `<i class="fa-solid fa-image" style="color: #a855f7; font-size: 1rem;" id="cat-prev-icon-${index}"></i>`}
+                </div>
+                <input type="text" id="cat-img-input-${index}" class="admin-input" value="${currentImg}" placeholder="Paste FreeImage.host link..." oninput="window.updateCatImgURL('${cat.replace(/'/g, "\\'")}', this.value, ${index})" style="font-size: 0.8rem; padding: 7px 12px; border-radius: 8px; border: 1.5px solid #d8b4fe; background: #faf5ff;">
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px;">
+                <a href="https://freeimage.host/" target="_blank" style="font-size: 0.8rem; color: #2563eb; font-weight: 800; text-decoration: underline; display: flex; align-items: center; gap: 5px;">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Open FreeImage.host
+                </a>
+              </div>
             </div>
           </div>
         `;
@@ -534,6 +613,17 @@
 
       container.innerHTML = html;
     }
+
+    window.updateCatImgURL = (catName, url, index) => {
+      const resolved = resolveDirectImageUrl(url);
+      categoryImagesMap[catName] = resolved;
+      const inputEl = document.getElementById(`cat-img-input-${index}`);
+      if (inputEl && resolved !== url) {
+        inputEl.value = resolved;
+      }
+      const prevImg = document.getElementById(`cat-prev-img-${index}`);
+      if (prevImg) prevImg.src = resolved;
+    };
 
     window.changeCategoryRank = (oldIndex, targetPosition) => {
       const targetIndex = targetPosition - 1;
@@ -551,11 +641,19 @@
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
 
       try {
-        await saveCategoryOrderToFirebase(categoryOrderList);
-        showNotification("Category sequence saved successfully!");
+        const sanitizedImages = {};
+        Object.keys(categoryImagesMap).forEach(k => {
+          sanitizedImages[k] = resolveDirectImageUrl(categoryImagesMap[k]);
+        });
+
+        await saveCategoryOrderToFirebase({
+          order: categoryOrderList,
+          images: sanitizedImages
+        });
+        showNotification("Category sequence & images saved successfully!");
       } catch (error) {
-        console.error("Save category order error:", error);
-        alert("Failed to save category sequence.");
+        console.error("Save category metadata error:", error);
+        alert("Failed to save category settings.");
       } finally {
         btn.disabled = false;
         btn.innerHTML = originalHTML;
@@ -635,6 +733,10 @@
             
             <div class="edit-form" id="form-${p.id}">
               <div class="input-group">
+                <label>Category</label>
+                <input type="text" class="admin-input" id="category-${p.id}" value="${p.category || ''}" placeholder="e.g. BISCUITS">
+              </div>
+              <div class="input-group">
                 <label>Price (₹)</label>
                 <input type="number" class="admin-input" id="price-${p.id}" value="${p.price}">
               </div>
@@ -686,6 +788,7 @@
     }
 
     async function updateProduct(id) {
+      const category = document.getElementById(`category-${id}`).value;
       const price = document.getElementById(`price-${id}`).value;
       const desc = document.getElementById(`desc-${id}`).value;
       const offer = document.getElementById(`offer-${id}`).value;
@@ -695,6 +798,7 @@
       
       const product = productsArray.find(p => p.id == id);
       if (product) {
+        product.category = (category || '').trim();
         product.price = parseFloat(price);
         product.desc = desc;
         product.offer = offer;
@@ -708,7 +812,7 @@
         const imgPreview = document.getElementById(`img-preview-${id}`);
         if(imgPreview) imgPreview.src = image;
         
-        showNotification();
+        showNotification("Product changes saved!");
       }
     }
 

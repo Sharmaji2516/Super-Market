@@ -88,13 +88,14 @@ export function listenForProducts(callback) {
     });
 }
 
-export async function saveCategoryOrderToFirebase(orderArray) {
+export async function saveCategoryOrderToFirebase(data) {
     try {
         const docRef = doc(db, "settings", "categoryOrder");
-        await setDoc(docRef, { order: orderArray, updatedAt: Date.now() }, { merge: true });
-        console.log("Category order saved successfully!");
+        const payload = Array.isArray(data) ? { order: data, updatedAt: Date.now() } : { ...data, updatedAt: Date.now() };
+        await setDoc(docRef, payload, { merge: true });
+        console.log("Category metadata saved successfully!");
     } catch (e) {
-        console.error("Error saving category order: ", e);
+        console.error("Error saving category metadata: ", e);
         throw e;
     }
 }
@@ -102,14 +103,15 @@ export async function saveCategoryOrderToFirebase(orderArray) {
 export function listenForCategoryOrder(callback) {
     const docRef = doc(db, "settings", "categoryOrder");
     return onSnapshot(docRef, (docSnap) => {
-        if (docSnap.exists() && docSnap.data().order) {
-            callback(docSnap.data().order);
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            callback(data);
         } else {
-            callback([]);
+            callback({ order: [], images: {} });
         }
     }, (error) => {
-        console.error("Error listening for category order: ", error);
-        callback([]);
+        console.error("Error listening for category metadata: ", error);
+        callback({ order: [], images: {} });
     });
 }
 

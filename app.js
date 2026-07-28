@@ -35,6 +35,26 @@ function getCategoryIcon(categoryName) {
   return 'fa-solid fa-basket-shopping';
 }
 
+let categoryCustomImages = {};
+
+function resolveDirectImageUrl(url) {
+  if (!url) return '';
+  let trimmed = url.trim();
+  
+  // 1. If string contains direct image URL (e.g. https://iili.io/CvHE3k7.jpg or from Markdown/HTML)
+  const directMatch = trimmed.match(/https?:\/\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp|gif)/i);
+  if (directMatch) {
+    return directMatch[0];
+  }
+
+  // 2. Auto-convert FreeImage.host viewer page link (e.g. https://freeimage.host/i/CvHE3k7) to direct image URL (https://iili.io/CvHE3k7.jpg)
+  const freeimageMatch = trimmed.match(/freeimage\.host\/i\/([a-zA-Z0-9]+)/i);
+  if (freeimageMatch && freeimageMatch[1]) {
+    return `https://iili.io/${freeimageMatch[1]}.jpg`;
+  }
+  return trimmed;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   // Mobile Navigation
   const menuBtn = document.querySelector('.menu-btn');
@@ -70,11 +90,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }, observerOptions);
 
-  // --- 1. INSTANT LOAD: Load cached products & category order from LocalStorage ---
+  // --- 1. INSTANT LOAD: Load cached products & category order/images from LocalStorage ---
   try {
     const cachedOrder = localStorage.getItem('cachedCategoryOrder');
     if (cachedOrder) {
       categoryCustomOrder = JSON.parse(cachedOrder);
+    }
+    const cachedImgs = localStorage.getItem('cachedCategoryImages');
+    if (cachedImgs) {
+      categoryCustomImages = JSON.parse(cachedImgs);
     }
     const cachedData = localStorage.getItem('cachedProducts');
     if (cachedData) {
@@ -90,11 +114,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.warn("Local storage cache read error:", e);
   }
 
-  // Listen for real-time Category Order from Firestore
-  listenForCategoryOrder((savedOrder) => {
-    categoryCustomOrder = savedOrder || [];
+  // Listen for real-time Category Order & Metadata from Firestore
+  listenForCategoryOrder((savedData) => {
+    if (savedData) {
+      if (Array.isArray(savedData)) {
+        categoryCustomOrder = savedData;
+      } else {
+        categoryCustomOrder = savedData.order || [];
+        const rawImgs = savedData.images || {};
+        categoryCustomImages = {};
+        Object.keys(rawImgs).forEach(k => {
+          categoryCustomImages[k] = resolveDirectImageUrl(rawImgs[k]);
+        });
+      }
+    }
     try {
       localStorage.setItem('cachedCategoryOrder', JSON.stringify(categoryCustomOrder));
+      localStorage.setItem('cachedCategoryImages', JSON.stringify(categoryCustomImages));
     } catch(e) {}
     populateCategoryDropdown(allProducts);
     renderCategoryPills(allProducts, activeCategory);
@@ -104,6 +140,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   listenForProducts(async (products) => {
     // Filter out soft-deleted products
     const activeProducts = products.filter(p => p.isDeleted !== true);
+    
+    // Auto-convert any FreeImage.host viewer links in products
+    activeProducts.forEach(p => {
+      if (p.image) {
+        p.image = resolveDirectImageUrl(p.image);
+      }
+    });
     allProducts = activeProducts;
     
     // Save to LocalStorage for instant rendering on next page visit
@@ -191,11 +234,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     categories.forEach(cat => {
       const count = counts[cat];
       const iconClass = getCategoryIcon(cat);
+      const rawImg = categoryCustomImages[cat] || categoryCustomImages[cat.toUpperCase()] || categoryCustomImages[cat.toLowerCase()];
+      const customImg = resolveDirectImageUrl(rawImg);
       const isActive = selectedCat === cat;
+
+      const innerContent = customImg 
+        ? `<img src="${customImg}" alt="${cat}" class="pill-custom-img" loading="lazy">` 
+        : `<i class="${iconClass}"></i>`;
+
       pillsHTML += `
         <div class="category-pill ${isActive ? 'active' : ''}" data-category="${cat}">
           <div class="pill-icon-box">
-            <i class="${iconClass}"></i>
+            ${innerContent}
             <span class="pill-badge">${count}</span>
           </div>
           <span class="pill-title">${cat}</span>

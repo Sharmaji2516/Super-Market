@@ -1,0 +1,37 @@
+[debug] [2026-07-28T06:18:07.888Z] ----------------------------------------------------------------------
+[debug] [2026-07-28T06:18:07.890Z] Command:       C:\Users\lavsh\nodejs\node-v22.16.0-win-x64\node.exe C:\Users\lavsh\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-07-28T06:18:07.890Z] CLI Version:   15.24.0
+[debug] [2026-07-28T06:18:07.890Z] Platform:      win32
+[debug] [2026-07-28T06:18:07.890Z] Node Version:  v22.16.0
+[debug] [2026-07-28T06:18:07.890Z] Detected Agent: antigravity
+[debug] [2026-07-28T06:18:07.890Z] Time:          Tue Jul 28 2026 11:48:07 GMT+0530 (India Standard Time)
+[debug] [2026-07-28T06:18:07.891Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-07-28T06:18:09.093Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-07-28T06:18:09.093Z] > authorizing via signed-in user (chittortech@gmail.com)
+[debug] [2026-07-28T06:18:09.093Z] [iam] checking project sonisonsproject for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-07-28T06:18:09.101Z] Checked if tokens are valid: true, expires at: 1785221870547
+[debug] [2026-07-28T06:18:09.101Z] Checked if tokens are valid: true, expires at: 1785221870547
+[debug] [2026-07-28T06:18:09.102Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/sonisonsproject:testIamPermissions [none]
+[debug] [2026-07-28T06:18:09.102Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/sonisonsproject:testIamPermissions  x-goog-user-project=sonisonsproject
+[debug] [2026-07-28T06:18:09.102Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sonisonsproject:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-28T06:18:10.672Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/sonisonsproject:testIamPermissions 200
+[debug] [2026-07-28T06:18:10.673Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sonisonsproject:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-28T06:18:10.675Z] Checked if tokens are valid: true, expires at: 1785221870547
+[debug] [2026-07-28T06:18:10.676Z] Checked if tokens are valid: true, expires at: 1785221870547
+[debug] [2026-07-28T06:18:10.676Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/sonisonsproject [none]
+[debug] [2026-07-28T06:18:12.076Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/sonisonsproject 200
+[debug] [2026-07-28T06:18:12.076Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/sonisonsproject {"projectId":"sonisonsproject","projectNumber":"840589594908","displayName":"SoniSonsProject","name":"projects/sonisonsproject","resources":{"hostingSite":"sonisonsproject"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_9ce8c114-4135-4a5a-99f4-8a36f21497f2"}
+[info] 
+[info] === Deploying to 'sonisonsproject'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-07-28T06:18:12.081Z] Checked if tokens are valid: true, expires at: 1785221870547
+[debug] [2026-07-28T06:18:12.082Z] Checked if tokens are valid: true, expires at: 1785221870547
+[debug] [2026-07-28T06:18:12.082Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/sonisonsproject/sites/sonisonsproject [none]
+[debug] [2026-07-28T06:18:13.456Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/sonisonsproject/sites/sonisonsproject 200
+[debug] [2026-07-28T06:18:13.456Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/sonisonsproject/sites/sonisonsproject {"name":"projects/sonisonsproject/sites/sonisonsproject","defaultUrl":"https://sonisonsproject.web.app","type":"DEFAULT_SITE"}
+[debug] [2026-07-28T06:18:13.458Z] Checked if tokens are valid: true, expires at: 1785221870547
+[debug] [2026-07-28T06:18:13.458Z] Checked if tokens are valid: true, expires at: 1785221870547
+[debug] [2026-07-28T06:18:13.459Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/sonisonsproject/versions [none]
+[debug] [2026-07-28T06:18:13.459Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/sonisonsproject/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}

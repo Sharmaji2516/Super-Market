@@ -1298,6 +1298,15 @@ textarea.form-input { min-height: 180px; resize: vertical; }
   position: relative;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
+  overflow: visible;
+}
+
+.pill-custom-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 
 .category-pill:hover .pill-icon-box {
