@@ -1230,20 +1230,63 @@ textarea.form-input { min-height: 180px; resize: vertical; }
 /* --- Category Pills Bar (Live Site Design) --- */
 .category-pills-wrapper {
   background: #090f1d;
-  padding: 2.5rem 1.5rem;
+  padding: 1.8rem 1.5rem;
   border-radius: 28px;
   margin-bottom: 2rem;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.category-pills-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 0.2rem;
+}
+
+.category-pills-label {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.explore-all-btn {
+  background: rgba(5, 150, 105, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.explore-all-btn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+}
+
 .category-pills-bar {
   display: flex;
-  gap: 1.2rem;
+  gap: 1rem;
   overflow-x: auto;
-  padding: 0.5rem 0.2rem;
+  padding: 0.5rem 0.2rem 1rem 0.2rem;
   scrollbar-width: thin;
   scrollbar-color: var(--primary) transparent;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
 }
 
 .category-pills-bar::-webkit-scrollbar {
@@ -1255,13 +1298,26 @@ textarea.form-input { min-height: 180px; resize: vertical; }
   border-radius: 10px;
 }
 
+.category-swipe-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
 .category-pill {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 100px;
-  padding: 1.2rem 1rem;
+  min-width: 96px;
+  padding: 1.1rem 0.8rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
@@ -1270,6 +1326,7 @@ textarea.form-input { min-height: 180px; resize: vertical; }
   position: relative;
   user-select: none;
   flex-shrink: 0;
+  scroll-snap-align: start;
 }
 
 .category-pill:hover {
@@ -1282,6 +1339,113 @@ textarea.form-input { min-height: 180px; resize: vertical; }
   background: radial-gradient(circle at center, rgba(5, 150, 105, 0.3) 0%, rgba(15, 23, 42, 0.8) 100%);
   border-color: var(--primary-light);
   box-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
+}
+
+/* --- Explore Categories Modal Overlay --- */
+.cat-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.cat-modal-overlay.active {
+  display: flex;
+}
+
+.cat-modal-container {
+  background: #0f172a;
+  border: 1.5px solid rgba(52, 211, 153, 0.3);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 650px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cat-modal-header {
+  padding: 1.2rem 1.5rem;
+  background: #1e293b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cat-modal-header h3 {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cat-modal-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.cat-modal-close:hover {
+  background: #ef4444;
+  transform: rotate(90deg);
+}
+
+.cat-modal-grid {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+.cat-modal-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.2rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cat-modal-card:hover {
+  background: rgba(5, 150, 105, 0.2);
+  border-color: var(--primary-light);
+  transform: translateY(-4px);
+}
+
+.cat-modal-card.active {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.4) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border-color: var(--primary-light);
+  box-shadow: 0 0 15px rgba(52, 211, 153, 0.3);
 }
 
 .pill-icon-box {

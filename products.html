@@ -42,8 +42,21 @@
     <div class="container">
       <!-- Category Pills Bar (Dynamic via JS) -->
       <div id="categoryPillsWrapper" class="category-pills-wrapper animate-on-scroll" style="display: none;">
+        <div class="category-pills-top-bar">
+          <span class="category-pills-label">
+            <i class="fa-solid fa-shapes" style="color: var(--primary-light);"></i> Explore Categories
+          </span>
+          <button id="openExploreModalBtn" class="explore-all-btn">
+            <i class="fa-solid fa-grid-2"></i> Explore All (<span id="totalCategoriesCount">0</span>) <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem;"></i>
+          </button>
+        </div>
+
         <div id="categoryPillsBar" class="category-pills-bar">
           <!-- JS injects category pills here -->
+        </div>
+
+        <div class="category-swipe-hint">
+          <i class="fa-solid fa-hand-pointer fa-bounce"></i> Swipe horizontally to explore all categories <i class="fa-solid fa-arrow-right-long"></i>
         </div>
       </div>
 
@@ -153,6 +166,19 @@
       </div>
     </div>
   </footer>
+
+  <!-- Explore All Categories Modal Overlay -->
+  <div id="exploreCategoriesModal" class="cat-modal-overlay">
+    <div class="cat-modal-container">
+      <div class="cat-modal-header">
+        <h3><i class="fa-solid fa-shapes" style="color: var(--primary);"></i> Explore All Categories</h3>
+        <button id="closeExploreModalBtn" class="cat-modal-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="catModalGrid" class="cat-modal-grid">
+        <!-- JS populates categories grid here -->
+      </div>
+    </div>
+  </div>
 
   <script type="module" src="app.js?v=1.0.6"></script>
 </body>

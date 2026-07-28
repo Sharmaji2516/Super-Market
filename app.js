@@ -256,6 +256,60 @@ document.addEventListener('DOMContentLoaded', async () => {
     bar.innerHTML = pillsHTML;
     wrapper.style.display = 'block';
 
+    // Update Category Count badge
+    const totalCatCountEl = document.getElementById('totalCategoriesCount');
+    if (totalCatCountEl) {
+      totalCatCountEl.textContent = categories.length + 1;
+    }
+
+    // Populate Explore All Modal Grid
+    const modalGrid = document.getElementById('catModalGrid');
+    if (modalGrid) {
+      let modalHTML = `
+        <div class="cat-modal-card ${selectedCat === 'all' ? 'active' : ''}" data-category="all">
+          <div class="pill-icon-box">
+            <i class="fa-solid fa-border-all"></i>
+            <span class="pill-badge">${products.length}</span>
+          </div>
+          <span class="pill-title">All Categories</span>
+        </div>
+      `;
+
+      categories.forEach(cat => {
+        const count = counts[cat];
+        const iconClass = getCategoryIcon(cat);
+        const rawImg = categoryCustomImages[cat] || categoryCustomImages[cat.toUpperCase()] || categoryCustomImages[cat.toLowerCase()];
+        const customImg = resolveDirectImageUrl(rawImg);
+        const isActive = selectedCat === cat;
+
+        const innerContent = customImg 
+          ? `<img src="${customImg}" alt="${cat}" class="pill-custom-img" loading="lazy">` 
+          : `<i class="${iconClass}"></i>`;
+
+        modalHTML += `
+          <div class="cat-modal-card ${isActive ? 'active' : ''}" data-category="${cat}">
+            <div class="pill-icon-box">
+              ${innerContent}
+              <span class="pill-badge">${count}</span>
+            </div>
+            <span class="pill-title">${cat}</span>
+          </div>
+        `;
+      });
+      modalGrid.innerHTML = modalHTML;
+
+      // Add click listener to modal category cards
+      modalGrid.querySelectorAll('.cat-modal-card').forEach(card => {
+        card.onclick = () => {
+          const cat = card.getAttribute('data-category');
+          activeCategory = cat;
+          if (categoryFilter) categoryFilter.value = cat;
+          performSearch();
+          closeExploreModal();
+        };
+      });
+    }
+
     // Add click listeners to category pills
     bar.querySelectorAll('.category-pill').forEach(pill => {
       pill.onclick = () => {
@@ -265,6 +319,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         performSearch();
       };
     });
+  }
+
+  // Explore Categories Modal Handlers
+  const modalOverlay = document.getElementById('exploreCategoriesModal');
+  const openModalBtn = document.getElementById('openExploreModalBtn');
+  const closeModalBtn = document.getElementById('closeExploreModalBtn');
+
+  function openExploreModal() {
+    if (modalOverlay) modalOverlay.classList.add('active');
+  }
+
+  function closeExploreModal() {
+    if (modalOverlay) modalOverlay.classList.remove('active');
+  }
+
+  if (openModalBtn) openModalBtn.onclick = openExploreModal;
+  if (closeModalBtn) closeModalBtn.onclick = closeExploreModal;
+  if (modalOverlay) {
+    modalOverlay.onclick = (e) => {
+      if (e.target === modalOverlay) closeExploreModal();
+    };
   }
 
   // --- Search History Logic ---
