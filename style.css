@@ -523,16 +523,23 @@ body {
 }
 
 .product-img-wrapper { 
-  height: 280px; 
+  height: 260px; 
   overflow: hidden; 
   position: relative; 
-  background: var(--bg-secondary);
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
 }
 
 .product-img { 
-  width: 100%; height: 100%; 
-  object-fit: cover; 
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+  max-width: 100%; 
+  max-height: 100%; 
+  width: auto; 
+  height: auto; 
+  object-fit: contain; 
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
 }
 
 .product-card:hover .product-img { transform: scale(1.1); }
@@ -630,11 +637,26 @@ body {
   flex-direction: column;
 }
 
+.product-price .price-amounts {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.product-price .old-price {
+  text-decoration: line-through;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.product-price .product-unit,
 .product-price span {
   font-size: 0.8rem;
   color: var(--text-muted);
   font-weight: 500;
-  margin-top: -5px;
+  margin-top: 2px;
 }
 
 .stock-status-pill { 
@@ -1041,6 +1063,7 @@ textarea.form-input { min-height: 180px; resize: vertical; }
   
   .section { padding: 5rem 0; }
   .products-grid { grid-template-columns: 1fr; }
+  .product-img-wrapper { height: 230px; padding: 10px; }
 
   .dev-credit-link {
     padding: 0.5rem 1rem;

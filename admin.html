@@ -392,8 +392,12 @@
             <input type="text" class="admin-input" id="new-category" placeholder="e.g. Fruits">
           </div>
           <div class="input-group">
-            <label>Price (₹)</label>
-            <input type="number" class="admin-input" id="new-price" placeholder="0">
+            <label>Offered Price (₹)</label>
+            <input type="number" class="admin-input" id="new-price" placeholder="e.g. 100">
+          </div>
+          <div class="input-group">
+            <label>Original / MRP Price (₹)</label>
+            <input type="number" class="admin-input" id="new-oldPrice" placeholder="e.g. 120">
           </div>
           <div class="input-group">
             <label>Unit</label>
@@ -737,8 +741,12 @@
                 <input type="text" class="admin-input" id="category-${p.id}" value="${p.category || ''}" placeholder="e.g. BISCUITS">
               </div>
               <div class="input-group">
-                <label>Price (₹)</label>
+                <label>Offered Price (₹)</label>
                 <input type="number" class="admin-input" id="price-${p.id}" value="${p.price}">
+              </div>
+              <div class="input-group">
+                <label>Original / MRP Price (₹)</label>
+                <input type="number" class="admin-input" id="oldPrice-${p.id}" value="${p.oldPrice || ''}" placeholder="e.g. 120">
               </div>
               <div class="input-group">
                 <label>Offer / Badge Text</label>
@@ -790,6 +798,7 @@
     async function updateProduct(id) {
       const category = document.getElementById(`category-${id}`).value;
       const price = document.getElementById(`price-${id}`).value;
+      const oldPrice = document.getElementById(`oldPrice-${id}`).value;
       const desc = document.getElementById(`desc-${id}`).value;
       const offer = document.getElementById(`offer-${id}`).value;
       const unit = document.getElementById(`unit-${id}`).value;
@@ -800,6 +809,7 @@
       if (product) {
         product.category = (category || '').trim();
         product.price = parseFloat(price);
+        product.oldPrice = oldPrice ? parseFloat(oldPrice) : null;
         product.desc = desc;
         product.offer = offer;
         product.unit = unit;
@@ -892,6 +902,7 @@
       const name = document.getElementById('new-name').value;
       const category = document.getElementById('new-category').value;
       const price = document.getElementById('new-price').value;
+      const oldPrice = document.getElementById('new-oldPrice').value;
       const unit = document.getElementById('new-unit').value;
       const offer = document.getElementById('new-offer').value;
       const desc = document.getElementById('new-desc').value;
@@ -915,6 +926,7 @@
         name,
         category,
         price: parseFloat(price),
+        oldPrice: oldPrice ? parseFloat(oldPrice) : null,
         unit,
         offer,
         desc,

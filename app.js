@@ -494,8 +494,11 @@ function renderProductsUI(products) {
           <p class="product-desc">${product.desc || ''}</p>
           <div class="product-footer">
             <div class="product-price">
-              ₹${product.price}
-              ${product.unit ? `<span>/ per ${product.unit}</span>` : ''}
+              <div class="price-amounts" style="display: flex; align-items: baseline; gap: 6px;">
+                <span class="current-price">₹${product.price}</span>
+                ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `<span class="old-price" style="text-decoration: line-through; color: #94a3b8; font-size: 1.1rem; font-weight: 500;">₹${product.oldPrice}</span>` : ''}
+              </div>
+              ${product.unit ? `<span class="product-unit">/ per ${product.unit}</span>` : ''}
             </div>
             <div class="stock-status-pill ${inStock ? 'in-stock' : 'no-stock'}">
               <i class="fa-solid ${inStock ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
