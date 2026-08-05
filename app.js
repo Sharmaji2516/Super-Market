@@ -317,6 +317,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         activeCategory = cat;
         if (categoryFilter) categoryFilter.value = cat;
         performSearch();
+        if (cat === 'all') {
+          openExploreModal();
+        }
       };
     });
   }
