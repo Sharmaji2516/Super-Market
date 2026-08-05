@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chittorgarh Hub | Premium Quality & Excellence</title>
+  <title>Soni Super Market | Premium Quality Grocery & Daily Needs</title>
   <meta name="description"
-    content="Welcome to Chittorgarh Hub. We offer the best quality services and premium products at amazing prices.">
+    content="Welcome to Soni Super Market (Chittorgarh Hub). Browse top quality groceries, daily essentials, and premium products at the best prices.">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -17,89 +17,158 @@
   <nav class="navbar">
     <div class="container nav-container">
       <a href="index.html" class="logo">
-        <i class="fa-solid fa-gem" style="color: var(--primary);"></i> CHITTORGARH<span>HUB</span>
+        <i class="fa-solid fa-store" style="color: var(--primary);"></i> SONI<span>SUPERMARKET</span>
       </a>
-      <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+      <button class="menu-btn" aria-label="Toggle Menu"><i class="fa-solid fa-bars"></i></button>
       <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="products.html">All Products & Services</a></li>
         <li><a href="about.html">About Us</a></li>
-        <li><a href="products.html">Our Services</a></li>
         <li><a href="contact.html">Contact Us</a></li>
         <li><a href="terms.html">Terms</a></li>
-        <li><a href="about-developer.html">About Developer</a></li>
+        <li><a href="login.html" style="color: var(--primary); font-weight: 700;"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container hero-content animate-on-scroll">
-      <div class="hero-tag"><i class="fa-solid fa-sparkles"></i> Chittorgarh's Finest Selection</div>
-      <h1>Our Priority is Your <span>Trust & Satisfaction</span></h1>
+  <!-- Modern Hero & Promotional Section -->
+  <section class="hero-promo-section" style="padding: 2.5rem 0 1.5rem; background: linear-gradient(180deg, #edf7ee 0%, #f4f6fb 100%);">
+    <div class="container">
+      
+      <!-- Hero Banner Banner Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+        <div style="background: linear-gradient(135deg, #0c831f 0%, #15803d 100%); border-radius: 20px; padding: 2.5rem 2rem; color: white; position: relative; overflow: hidden; box-shadow: var(--shadow-md);">
+          <span style="background: var(--accent); color: #0f172a; padding: 4px 12px; border-radius: 50px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;">Chittorgarh's Preferred Store</span>
+          <h1 style="font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; margin: 1rem 0 0.5rem; line-height: 1.2;">Everything You Need, <br><span style="color: var(--accent);">Under One Roof</span></h1>
+          <p style="opacity: 0.9; margin-bottom: 1.8rem; font-size: 1.05rem;">Fresh Groceries, Household Essentials & Daily Products at Unbeatable Local Prices.</p>
+          <a href="products.html" class="btn" style="background: white; color: var(--primary-dark); font-weight: 800; border-radius: 12px; padding: 0.9rem 1.8rem; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-basket-shopping"></i> Browse Products
+          </a>
+        </div>
 
-      <div class="hero-buttons">
-        <a href="products.html" class="btn btn-primary">
-          <i class="fa-solid fa-compass"></i> View Services
-        </a>
-        <a href="contact.html" class="btn btn-secondary">
-          <i class="fa-solid fa-phone"></i> Contact Us
-        </a>
+        <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 20px; padding: 2.5rem 2rem; color: white; position: relative; overflow: hidden; box-shadow: var(--shadow-md); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <span style="background: rgba(255,255,255,0.15); color: #34d399; padding: 4px 12px; border-radius: 50px; font-weight: 800; font-size: 0.8rem;">100% Genuine Quality</span>
+            <h2 style="font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 800; margin: 1rem 0 0.5rem; line-height: 1.2;">Visit Soni Super Market</h2>
+            <p style="color: #94a3b8; font-size: 1rem; margin-bottom: 1.5rem;">Located at 29 Rajive Colony, Meera Market. Open everyday 8 AM to 10 PM.</p>
+          </div>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="contact.html" class="btn" style="background: var(--primary); color: white; font-weight: 700; border-radius: 12px; padding: 0.8rem 1.4rem;">
+              <i class="fa-solid fa-location-dot"></i> Get Directions
+            </a>
+            <a href="https://wa.me/917014974762" target="_blank" class="btn" style="background: rgba(255,255,255,0.1); color: white; font-weight: 700; border-radius: 12px; padding: 0.8rem 1.4rem; border: 1px solid rgba(255,255,255,0.2);">
+              <i class="fa-brands fa-whatsapp"></i> Call / WhatsApp
+            </a>
+          </div>
+        </div>
       </div>
+
+      <!-- Quick Category Highlights Grid (Blinkit Inspired Visual Tiles) -->
+      <div style="background: white; border-radius: 24px; padding: 1.8rem; box-shadow: var(--shadow-sm); border: 1px solid rgba(0,0,0,0.05);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+          <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-grid-2" style="color: var(--primary);"></i> Top Categories
+          </h3>
+          <a href="products.html" style="color: var(--primary); font-weight: 700; font-size: 0.95rem;">See All Categories <i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 1rem;">
+          <a href="products.html" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1rem 0.5rem; text-align: center; transition: var(--transition);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
+            <div style="width: 50px; height: 50px; background: #dcfce7; color: #166534; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 0.6rem; font-size: 1.4rem;">
+              <i class="fa-solid fa-basket-shopping"></i>
+            </div>
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">Grocery</span>
+          </a>
+
+          <a href="products.html" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1rem 0.5rem; text-align: center; transition: var(--transition);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
+            <div style="width: 50px; height: 50px; background: #e0f2fe; color: #075985; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 0.6rem; font-size: 1.4rem;">
+              <i class="fa-solid fa-bottle-water"></i>
+            </div>
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">Beverages</span>
+          </a>
+
+          <a href="products.html" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1rem 0.5rem; text-align: center; transition: var(--transition);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
+            <div style="width: 50px; height: 50px; background: #fef3c7; color: #92400e; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 0.6rem; font-size: 1.4rem;">
+              <i class="fa-solid fa-cookie-bite"></i>
+            </div>
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">Snacks</span>
+          </a>
+
+          <a href="products.html" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1rem 0.5rem; text-align: center; transition: var(--transition);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
+            <div style="width: 50px; height: 50px; background: #fce7f3; color: #9d174d; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 0.6rem; font-size: 1.4rem;">
+              <i class="fa-solid fa-pump-soap"></i>
+            </div>
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">Personal Care</span>
+          </a>
+
+          <a href="products.html" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1rem 0.5rem; text-align: center; transition: var(--transition);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
+            <div style="width: 50px; height: 50px; background: #f1f5f9; color: #475569; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 0.6rem; font-size: 1.4rem;">
+              <i class="fa-solid fa-house-spray"></i>
+            </div>
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">Household</span>
+          </a>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- Features -->
-  <section class="section">
-    <div class="container features-grid">
-      <div class="feature-card animate-on-scroll">
-        <div class="feature-img-box">
-          <img src="assets/images/chittorgarh_fort.jpg" alt="Chittorgarh Fort">
-        </div>
-        <h3>चित्तौड़गढ़ किला</h3>
-        <p>
-          “चित्तौड़गढ़—चित्त को तोड़ने वाला।”<br>
-          “हार कर भी जीतने वाला।”<br>
-          “मर कर भी अमर होने वाला।”<br>
-          “चित यानी मन, चित यानी हार।”<br>
-          “किसी का मन नहीं भरता—यही है चित्तौड़गढ़।”
-        </p>
+  <!-- Cultural Heritage & Pride Section -->
+  <section class="section" style="padding: 4rem 0;">
+    <div class="container">
+      <div class="section-head" style="margin-bottom: 3rem;">
+        <h2>Chittorgarh's Pride & Heritage</h2>
+        <p>Serving the holy land of Chittorgarh with honesty and utmost commitment.</p>
       </div>
-      <div class="feature-card animate-on-scroll" style="transition-delay: 0.1s">
-        <div class="feature-img-box">
-          <img src="assets/images/sanwariya-temple-new.jpg" alt="Sanwariya Seth Temple">
+
+      <div class="features-grid">
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-img-box">
+            <img src="assets/images/chittorgarh_fort.jpg" alt="Chittorgarh Fort">
+          </div>
+          <h3>चित्तौड़गढ़ किला</h3>
+          <p>
+            “चित्तौड़गढ़—चित्त को तोड़ने वाला।”<br>
+            “हार कर भी जीतने वाला।”<br>
+            “मर कर भी अमर होने वाला।”<br>
+            “चित यानी मन, चित यानी हार।”<br>
+            “किसी का मन नहीं भरता—यही है चित्तौड़गढ़।”
+          </p>
         </div>
-        <h3>सांवरिया सेठ मंदिर</h3>
-        <p>भगवान कृष्ण को समर्पित एक पवित्र मंदिर, जिन्हें 'साँवलिया सेठ' के रूप में जाना जाता है, अपनी दिव्य आभा और सुंदरता से भक्तों को मंत्रमुग्ध करता है।</p>
+
+        <div class="feature-card animate-on-scroll" style="transition-delay: 0.1s">
+          <div class="feature-img-box">
+            <img src="assets/images/sanwariya-temple-new.jpg" alt="Sanwariya Seth Temple">
+          </div>
+          <h3>सांवरिया सेठ मंदिर</h3>
+          <p>भगवान कृष्ण को समर्पित एक पवित्र मंदिर, जिन्हें 'साँवलिया सेठ' के रूप में जाना जाता है, अपनी दिव्य आभा और सुंदरता से भक्तों को मंत्रमुग्ध करता है।</p>
+        </div>
       </div>
     </div>
   </section>
-
-
-
-
 
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-about">
-          <h3>CHITTORGARH<span>HUB</span></h3>
-          <p>Our priority is Your Trust and Satisfaction. Dedicated to serving our community with love and care.</p>
+          <h3>SONI<span>SUPERMARKET</span></h3>
+          <p>Our priority is Your Trust and Satisfaction. Dedicated to serving our Chittorgarh community with genuine products and love.</p>
           <div class="social-links" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
             <a href="https://www.facebook.com/share/17CsmEXSUP/" target="_blank"
-              style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-facebook-f"></i></a>
+              style="color: white; font-size: 1.2rem;" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/chittorgarh.sonu?igsh=MXFlMDkxaHEzanRzNg==" target="_blank"
-              style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://wa.me/917014974762" target="_blank" style="color: white; font-size: 1.2rem;"><i
+              style="color: white; font-size: 1.2rem;" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/917014974762" target="_blank" style="color: white; font-size: 1.2rem;" aria-label="WhatsApp"><i
                 class="fa-brands fa-whatsapp"></i></a>
           </div>
         </div>
         <div class="footer-links">
-          <h4>Explore</h4>
+          <h4>Quick Links</h4>
           <ul style="padding: 0;">
             <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">All Products & Services</a></li>
             <li><a href="about.html">About Us</a></li>
-            <li><a href="products.html">Our Services</a></li>
             <li><a href="contact.html">Contact Us</a></li>
             <li><a href="terms.html">Terms & Conditions</a></li>
             <li><a href="about-developer.html">About Developer</a></li>
@@ -108,7 +177,7 @@
           </ul>
         </div>
         <div class="footer-contact">
-          <h4>Get Support</h4>
+          <h4>Store Information</h4>
           <p><a href="https://www.google.com/maps/search/?api=1&query=29+Rajive+Colony+Meera+Market+Chittorgarh"
               target="_blank" style="color: inherit;"><i class="fa-solid fa-location-dot"></i> 29 Rajive Colony, Meera
               Market, Chittorgarh</a></p>
@@ -117,10 +186,11 @@
           <p><i class="fa-solid fa-clock"></i> Daily: 8:00 AM - 10:00 PM</p>
         </div>
       </div>
+
       <div class="premium-footer">
         <a href="https://www.chittortech.online/" target="_blank" class="ct-badge">
           <div class="ct-logo-box">
-            <img src="chittortech_logo_1775884354186.png" alt="ChittorTech">
+            <img src="chittortech_logo_1775884354186.png" alt="ChittorTech Logo">
           </div>
           <div class="ct-badge-text">
             <span>A PRODUCT OF</span>
@@ -131,11 +201,11 @@
         <div class="trust-badges">
           <div class="trust-list">
             <div class="trust-item">
-              <i class="fa-solid fa-circle"></i>
+              <i class="fa-solid fa-check-circle"></i>
               Recognized by iStart Rajasthan
             </div>
             <div class="trust-item">
-              <i class="fa-solid fa-circle"></i>
+              <i class="fa-solid fa-check-circle"></i>
               Registered MSME | Startup India
             </div>
           </div>
@@ -151,6 +221,7 @@
     </div>
   </footer>
 
-  <script type="module" src="app.js?v=1.0.4"></script>
+  <script type="module" src="app.js?v=1.0.5"></script>
 </body>
+
 </html>
