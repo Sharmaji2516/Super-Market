@@ -1495,6 +1495,67 @@ textarea.form-input { min-height: 180px; resize: vertical; }
   box-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
 }
 
+/* --- Sub-Category Pills --- */
+.sub-category-pills-wrapper {
+  margin-top: 10px;
+  background: transparent;
+}
+
+.sub-category-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #64748b;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sub-category-pills-bar {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 5px 0 10px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sub-category-pills-bar::-webkit-scrollbar {
+  height: 4px;
+}
+.sub-category-pills-bar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.sub-category-pill {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 50px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.sub-category-pill:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+}
+
+.sub-category-pill.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 0 4px 10px rgba(5, 150, 105, 0.2);
+}
+
 /* --- Explore Categories Modal Overlay --- */
 .cat-modal-overlay {
   position: fixed;

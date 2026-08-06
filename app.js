@@ -1,7 +1,8 @@
-import { listenForProducts, listenForCategoryOrder } from './firebase-config.js?v=1.0.6';
+import { listenForProducts, listenForCategoryOrder } from './firebase-config.js?v=1.1.0';
 
 let allProducts = []; // To store products for filtering
 let activeCategory = 'all';
+let activeSubCategory = 'all';
 let categoryCustomOrder = []; // Custom category priority sequence set by Admin
 
 // Helper to sort category names according to custom priority sequence (Case-Insensitive)
@@ -184,6 +185,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const performSearch = () => {
     const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
     const selectedCategory = categoryFilter ? categoryFilter.value : activeCategory;
+    
+    if (selectedCategory !== activeCategory) {
+      activeSubCategory = 'all';
+    }
+    
     activeCategory = selectedCategory;
 
     if (clearSearchBtn) {
@@ -194,7 +200,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       const matchesName = p.name.toLowerCase().includes(searchTerm) || 
                           (p.desc && p.desc.toLowerCase().includes(searchTerm));
       const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
-      return matchesName && matchesCategory;
+      const matchesSubCategory = activeSubCategory === 'all' || p.subCategory === activeSubCategory;
+      return matchesName && matchesCategory && matchesSubCategory;
     });
     
     renderCategoryPills(allProducts, selectedCategory);
@@ -302,12 +309,22 @@ document.addEventListener('DOMContentLoaded', async () => {
       modalGrid.querySelectorAll('.cat-modal-card').forEach(card => {
         card.onclick = () => {
           const cat = card.getAttribute('data-category');
+          activeSubCategory = 'all';
           activeCategory = cat;
           if (categoryFilter) categoryFilter.value = cat;
           performSearch();
           closeExploreModal();
-          const target = document.getElementById('products-container');
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          const categoryProducts = allProducts.filter(p => p.category === cat);
+          const hasSubCats = categoryProducts.some(p => p.subCategory && p.subCategory.trim() !== '');
+          
+          if (!hasSubCats) {
+            const target = document.getElementById('products-container');
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            const target = document.getElementById('categoryPillsWrapper');
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         };
       });
     }
@@ -316,15 +333,70 @@ document.addEventListener('DOMContentLoaded', async () => {
     bar.querySelectorAll('.category-pill').forEach(pill => {
       pill.onclick = () => {
         const cat = pill.getAttribute('data-category');
+        activeSubCategory = 'all';
         activeCategory = cat;
         if (categoryFilter) categoryFilter.value = cat;
         performSearch();
         if (cat === 'all') {
           openExploreModal();
         } else {
-          const target = document.getElementById('products-container');
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const categoryProducts = allProducts.filter(p => p.category === cat);
+          const hasSubCats = categoryProducts.some(p => p.subCategory && p.subCategory.trim() !== '');
+          
+          if (!hasSubCats) {
+            const target = document.getElementById('products-container');
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }
+      };
+    });
+
+    renderSubCategoryPills(products, selectedCat);
+  }
+
+  function renderSubCategoryPills(products, selectedCat) {
+    const wrapper = document.getElementById('subCategoryPillsWrapper');
+    const bar = document.getElementById('subCategoryPillsBar');
+    if (!wrapper || !bar) return;
+
+    if (selectedCat === 'all') {
+      wrapper.style.display = 'none';
+      return;
+    }
+
+    const categoryProducts = products.filter(p => p.category === selectedCat);
+    const subCategories = [...new Set(categoryProducts.map(p => p.subCategory).filter(s => s && s.trim() !== ''))].sort();
+
+    if (subCategories.length === 0) {
+      wrapper.style.display = 'none';
+      return;
+    }
+
+    let pillsHTML = `
+      <div class="sub-category-pill ${activeSubCategory === 'all' ? 'active' : ''}" data-subcategory="all">
+        All
+      </div>
+    `;
+
+    subCategories.forEach(subCat => {
+      const isActive = activeSubCategory === subCat;
+      pillsHTML += `
+        <div class="sub-category-pill ${isActive ? 'active' : ''}" data-subcategory="${subCat}">
+          ${subCat}
+        </div>
+      `;
+    });
+
+    bar.innerHTML = pillsHTML;
+    wrapper.style.display = 'block';
+
+    bar.querySelectorAll('.sub-category-pill').forEach(pill => {
+      pill.onclick = () => {
+        const subCat = pill.getAttribute('data-subcategory');
+        activeSubCategory = subCat;
+        performSearch();
+        const target = document.getElementById('products-container');
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       };
     });
   }
@@ -597,7 +669,7 @@ function renderProductsUI(products) {
         </div>
         <div class="product-content">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-            <span class="product-category">${product.category}</span>
+            <span class="product-category">${product.category}${product.subCategory ? ` > ${product.subCategory}` : ''}</span>
             ${product.unit ? `<span style="background: #f1f5f9; color: #475569; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px;">${product.unit}</span>` : ''}
           </div>
           <h3 class="product-title" style="${!inStock ? 'color: var(--text-muted);' : ''}">${product.name}</h3>

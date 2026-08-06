@@ -392,6 +392,10 @@
             <input type="text" class="admin-input" id="new-category" placeholder="e.g. Fruits">
           </div>
           <div class="input-group">
+            <label>Sub-Category (Optional)</label>
+            <input type="text" class="admin-input" id="new-subcategory" placeholder="e.g. Apples">
+          </div>
+          <div class="input-group">
             <label>Offered Price (₹)</label>
             <input type="number" class="admin-input" id="new-price" placeholder="e.g. 100">
           </div>
@@ -483,7 +487,7 @@
   </footer>
 
   <script type="module">
-    import { auth, getProductsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, saveCategoryOrderToFirebase, listenForCategoryOrder, storage, ref, uploadBytes, getDownloadURL } from './firebase-config.js?v=1.0.6';
+    import { auth, getProductsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, saveCategoryOrderToFirebase, listenForCategoryOrder, storage, ref, uploadBytes, getDownloadURL } from './firebase-config.js?v=1.1.0';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     let productsArray = [];
@@ -741,6 +745,10 @@
                 <input type="text" class="admin-input" id="category-${p.id}" value="${p.category || ''}" placeholder="e.g. BISCUITS">
               </div>
               <div class="input-group">
+                <label>Sub-Category (Optional)</label>
+                <input type="text" class="admin-input" id="subcategory-${p.id}" value="${p.subCategory || ''}" placeholder="e.g. Cookies">
+              </div>
+              <div class="input-group">
                 <label>Offered Price (₹)</label>
                 <input type="number" class="admin-input" id="price-${p.id}" value="${p.price}">
               </div>
@@ -797,6 +805,7 @@
 
     async function updateProduct(id) {
       const category = document.getElementById(`category-${id}`).value;
+      const subCategory = document.getElementById(`subcategory-${id}`) ? document.getElementById(`subcategory-${id}`).value : '';
       const price = document.getElementById(`price-${id}`).value;
       const oldPrice = document.getElementById(`oldPrice-${id}`).value;
       const desc = document.getElementById(`desc-${id}`).value;
@@ -808,6 +817,7 @@
       const product = productsArray.find(p => p.id == id);
       if (product) {
         product.category = (category || '').trim();
+        product.subCategory = (subCategory || '').trim();
         product.price = parseFloat(price);
         product.oldPrice = oldPrice ? parseFloat(oldPrice) : null;
         product.desc = desc;
@@ -901,6 +911,7 @@
     async function addNewProduct() {
       const name = document.getElementById('new-name').value;
       const category = document.getElementById('new-category').value;
+      const subCategory = document.getElementById('new-subcategory').value;
       const price = document.getElementById('new-price').value;
       const oldPrice = document.getElementById('new-oldPrice').value;
       const unit = document.getElementById('new-unit').value;
@@ -925,6 +936,7 @@
         id: nextId,
         name,
         category,
+        subCategory: (subCategory || '').trim(),
         price: parseFloat(price),
         oldPrice: oldPrice ? parseFloat(oldPrice) : null,
         unit,
