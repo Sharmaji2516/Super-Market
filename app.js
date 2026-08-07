@@ -657,7 +657,7 @@ function renderProductsUI(products) {
       ? Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100) 
       : null;
 
-    const waMsg = encodeURIComponent(`Hello Soni Super Market, I am interested in buying:\n*Product:* ${product.name}\n*Price:* ₹${product.price}${product.unit ? ' (' + product.unit + ')' : ''}`);
+    const waMsg = encodeURIComponent(`Hello CHITTORGARH HUB, I am interested in buying:\n*Product:* ${product.name}\n*Price:* ₹${product.price}${product.unit ? ' (' + product.unit + ')' : ''}`);
     const waUrl = `https://wa.me/917014974762?text=${waMsg}`;
     
     html += `
