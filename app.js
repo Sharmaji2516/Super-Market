@@ -1,7 +1,8 @@
 import { listenForProducts, listenForCategoryOrder } from './firebase-config.js?v=1.1.0';
 
 let allProducts = []; // To store products for filtering
-let activeCategory = 'all';
+let activeCategory = localStorage.getItem('redirectCategory') || 'all';
+localStorage.removeItem('redirectCategory');
 let activeSubCategory = 'all';
 let categoryCustomOrder = []; // Custom category priority sequence set by Admin
 
@@ -108,6 +109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         allProducts = parsedProducts;
         populateCategoryDropdown(allProducts);
         renderCategoryPills(allProducts, activeCategory);
+        renderHomeCategories(allProducts);
         renderProductsUI(allProducts);
       }
     }
@@ -135,6 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch(e) {}
     populateCategoryDropdown(allProducts);
     renderCategoryPills(allProducts, activeCategory);
+    renderHomeCategories(allProducts);
   });
 
   // --- 2. REAL-TIME SYNC: Listen for products from Firestore ---
@@ -159,6 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     populateCategoryDropdown(activeProducts);
     renderCategoryPills(activeProducts, activeCategory);
+    renderHomeCategories(activeProducts);
     performSearch();
 
     // Update animations for new elements
@@ -210,6 +214,49 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Update animations for new elements
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
   };
+
+  // Dynamic Home Categories Renderer
+  function renderHomeCategories(products) {
+    const homeGrid = document.getElementById('home-categories-grid');
+    if (!homeGrid || !products || products.length === 0) return;
+
+    const counts = {};
+    products.forEach(p => {
+      if (p.category) {
+        counts[p.category] = (counts[p.category] || 0) + 1;
+      }
+    });
+
+    const rawCategories = Object.keys(counts);
+    const categories = sortCategoriesByCustomOrder(rawCategories);
+
+    let html = '';
+    const bgColors = ['#dcfce7', '#e0f2fe', '#fef3c7', '#fce7f3', '#f1f5f9'];
+    const textColors = ['#166534', '#075985', '#92400e', '#9d174d', '#475569'];
+
+    categories.forEach((cat, index) => {
+      const iconClass = getCategoryIcon(cat);
+      const rawImg = categoryCustomImages[cat] || categoryCustomImages[cat.toUpperCase()] || categoryCustomImages[cat.toLowerCase()];
+      const customImg = resolveDirectImageUrl(rawImg);
+
+      const innerContent = customImg 
+        ? `<img src="${customImg}" alt="${cat}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">` 
+        : `<i class="${iconClass}"></i>`;
+
+      const idx = index % bgColors.length;
+
+      html += `
+        <a href="products.html" onclick="localStorage.setItem('redirectCategory', '${cat}')" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1rem 0.5rem; text-align: center; transition: var(--transition);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
+          <div style="width: 50px; height: 50px; background: ${bgColors[idx]}; color: ${textColors[idx]}; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 0.6rem; font-size: 1.4rem; overflow: hidden;">
+            ${innerContent}
+          </div>
+          <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">${cat}</span>
+        </a>
+      `;
+    });
+
+    homeGrid.innerHTML = html;
+  }
 
   // Dynamic Category Pills Renderer
   function renderCategoryPills(products, selectedCat) {
@@ -661,7 +708,7 @@ function renderProductsUI(products) {
     const waUrl = `https://wa.me/917014974762?text=${waMsg}`;
     
     html += `
-      <div class="product-card animate-on-scroll ${!inStock ? 'out-of-stock' : ''}">
+      <div class="product-card animate-on-scroll ${!inStock ? 'out-of-stock' : ''}" onclick="window.location.href='product-detail?id=${product.id}'" style="cursor: pointer;">
         <div class="product-img-wrapper">
           ${discountPercent ? `<div class="product-badge" style="background: #2563eb;">${discountPercent}% OFF</div>` : (product.offer ? `<div class="product-badge">${product.offer}</div>` : '')}
           <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" style="${!inStock ? 'filter: grayscale(1); opacity: 0.6;' : ''}">
@@ -673,9 +720,9 @@ function renderProductsUI(products) {
             ${product.unit ? `<span style="background: #f1f5f9; color: #475569; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px;">${product.unit}</span>` : ''}
           </div>
           <h3 class="product-title" style="${!inStock ? 'color: var(--text-muted);' : ''}">${product.name}</h3>
-          <p class="product-desc">${product.desc || ''}</p>
+          ${product.desc ? `<p class="product-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0.8rem; line-height: 1.6;">${product.desc}</p>` : ''}
           
-          <div class="product-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid #f1f5f9;">
+          <div class="product-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #f1f5f9;">
             <div class="product-price">
               <div class="price-amounts" style="display: flex; align-items: baseline; gap: 6px;">
                 <span class="current-price" style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">₹${product.price}</span>
@@ -688,7 +735,7 @@ function renderProductsUI(products) {
             </span>
           </div>
           ${product.videoLink ? `
-            <a href="${product.videoLink}" target="_blank" class="product-external-link" style="margin-top: 0.8rem; display: block; text-align: center; color: var(--primary); font-size: 0.85rem; font-weight: 700;">
+            <a href="${product.videoLink}" target="_blank" class="product-external-link" style="margin-top: 0.8rem; display: block; text-align: center; color: var(--primary); font-size: 0.85rem; font-weight: 700;" onclick="event.stopPropagation()">
               <i class="fa-solid fa-play-circle"></i> Watch Video Demo
             </a>
           ` : ''}
@@ -712,4 +759,5 @@ function renderProductsUI(products) {
 
   productsContainer.innerHTML = html;
 }
+
 
