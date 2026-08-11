@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ? Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100) 
       : null;
 
-    const waMsg = encodeURIComponent(`Hello CHITTORGARH HUB, I am interested in buying:\n*Product:* ${product.name}\n*Price:* ₹${product.price}${product.unit ? ' (' + product.unit + ')' : ''}`);
+    const waMsg = encodeURIComponent(`Hello CHITTORGARH HUB, I am interested in buying:\n*Product:* ${product.name}${product.price ? '\\n*Price:* ₹' + product.price : ''}${product.unit ? ' (' + product.unit + ')' : ''}`);
     const waUrl = `https://wa.me/917014974762?text=${waMsg}`;
 
     container.innerHTML = `
@@ -78,10 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
           
           <h1 class="product-page-title">${product.name}</h1>
           
+          ${product.price ? `
           <div class="product-page-price-box">
             <span class="product-page-price">₹${product.price}</span>
             ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `<span class="product-page-old-price">₹${product.oldPrice}</span>` : ''}
           </div>
+          ` : ''}
           
           <div class="product-page-stock ${inStock ? 'stock-in' : 'stock-out'}">
             <i class="fa-solid ${inStock ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${inStock ? 'Currently In Stock' : 'Currently Out of Stock'}

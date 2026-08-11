@@ -818,7 +818,7 @@
       if (product) {
         product.category = (category || '').trim();
         product.subCategory = (subCategory || '').trim();
-        product.price = parseFloat(price);
+        product.price = price ? parseFloat(price) : null;
         product.oldPrice = oldPrice ? parseFloat(oldPrice) : null;
         product.desc = desc;
         product.offer = offer;
@@ -920,8 +920,8 @@
       const videoLink = document.getElementById('new-videoLink').value;
       const image = document.getElementById('new-image').value;
 
-      if (!name || !price) {
-        alert("Please fill in at least Name and Price.");
+      if (!name) {
+        alert("Please fill in at least the Product Name.");
         return;
       }
 
@@ -937,7 +937,7 @@
         name,
         category,
         subCategory: (subCategory || '').trim(),
-        price: parseFloat(price),
+        price: price ? parseFloat(price) : null,
         oldPrice: oldPrice ? parseFloat(oldPrice) : null,
         unit,
         offer,

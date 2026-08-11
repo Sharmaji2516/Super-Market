@@ -704,7 +704,7 @@ function renderProductsUI(products) {
       ? Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100) 
       : null;
 
-    const waMsg = encodeURIComponent(`Hello CHITTORGARH HUB, I am interested in buying:\n*Product:* ${product.name}\n*Price:* ₹${product.price}${product.unit ? ' (' + product.unit + ')' : ''}`);
+    const waMsg = encodeURIComponent(`Hello CHITTORGARH HUB, I am interested in buying:\n*Product:* ${product.name}${product.price ? '\\n*Price:* ₹' + product.price : ''}${product.unit ? ' (' + product.unit + ')' : ''}`);
     const waUrl = `https://wa.me/917014974762?text=${waMsg}`;
     
     html += `
@@ -723,12 +723,14 @@ function renderProductsUI(products) {
           ${product.desc ? `<p class="product-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0.8rem; line-height: 1.6;">${product.desc}</p>` : ''}
           
           <div class="product-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #f1f5f9;">
+            ${product.price ? `
             <div class="product-price">
               <div class="price-amounts" style="display: flex; align-items: baseline; gap: 6px;">
                 <span class="current-price" style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">₹${product.price}</span>
                 ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `<span class="old-price" style="text-decoration: line-through; color: #94a3b8; font-size: 0.95rem; font-weight: 500;">₹${product.oldPrice}</span>` : ''}
               </div>
             </div>
+            ` : '<div></div>'}
 
             <span style="font-size: 0.8rem; font-weight: 700; color: ${inStock ? '#16a34a' : '#dc2626'}; background: ${inStock ? '#f0fdf4' : '#fef2f2'}; border: 1px solid ${inStock ? '#bbf7d0' : '#fecaca'}; padding: 3px 10px; border-radius: 20px;">
               ${inStock ? 'In Stock' : 'Out of Stock'}
