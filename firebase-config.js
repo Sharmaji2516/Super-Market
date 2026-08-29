@@ -51,6 +51,7 @@ export async function saveProductToFirebase(product) {
         console.log("Product saved successfully!");
     } catch (e) {
         console.error("Error saving product: ", e);
+        throw e;
     }
 }
 
