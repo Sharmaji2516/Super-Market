@@ -30,68 +30,107 @@
 
   <!-- Products Section -->
   <section class="section" style="padding-top: 1.5rem;">
-    <div class="container">
-      <!-- Category Pills Bar (Dynamic via JS) -->
-      <div id="categoryPillsWrapper" class="category-pills-wrapper animate-on-scroll" style="display: none;">
-        <div class="category-pills-top-bar">
-          <span class="category-pills-label">
-            <i class="fa-solid fa-shapes" style="color: var(--primary-light);"></i> Explore Categories
-          </span>
-        </div>
-
-        <div id="categoryPillsBar" class="category-pills-bar">
-          <!-- JS injects category pills here -->
-        </div>
-
-        <div class="category-swipe-hint">
-          <i class="fa-solid fa-shapes"></i> All categories at a glance • Tap any category to filter
-        </div>
-      </div>
+    <div class="container catalog-container">
       
-      <!-- Sub-Category Pills Bar (Dynamic via JS) -->
-      <div id="subCategoryPillsWrapper" class="sub-category-pills-wrapper animate-on-scroll" style="display: none;">
-        <div class="sub-category-label"><i class="fa-solid fa-filter"></i> Sub-Categories</div>
-        <div id="subCategoryPillsBar" class="sub-category-pills-bar">
-          <!-- JS injects sub-category pills here -->
-        </div>
+      <!-- Catalog Page Header -->
+      <div class="catalog-page-header">
+        <h1 class="catalog-title">All Products &amp; Catalogue</h1>
+        <p class="catalog-subtitle">Explore daily groceries, personal care, snacks &amp; household essentials</p>
       </div>
 
-      <!-- Premium Search Section -->
-      <div class="search-section animate-on-scroll">
-        <div class="search-wrapper">
-          <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="productSearch" placeholder="Search by name, item, brand..." autocomplete="off">
-            <button id="clearSearchBtn" class="clear-btn" style="display: none;" type="button" title="Clear Search">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-            <!-- Search Suggestions & History Dropdown -->
-            <div id="searchHistoryList" class="search-history-dropdown"></div>
+      <div class="catalog-layout">
+        
+        <!-- Sidebar Filters -->
+        <aside class="sidebar-filters">
+          <div class="sidebar-header">
+            <h3><i class="fa-solid fa-sliders"></i> Filters</h3>
+            <button id="mobileFilterCloseBtn" class="mobile-close-btn" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
           </div>
           
-          <div class="category-box">
-            <i class="fa-solid fa-filter filter-icon"></i>
-            <select id="categoryFilter">
-              <option value="all">All Categories</option>
-              <!-- Populated via JS -->
-            </select>
+          <!-- Category Filter Accordion -->
+          <div class="filter-accordion">
+            <div class="filter-accordion-header">
+              <h4><i class="fa-solid fa-layer-group" style="color: #3b82f6; margin-right: 8px;"></i> Shop by Category</h4>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="filter-accordion-content" id="sidebarCategoryList">
+              <!-- JS injects category radio list here -->
+            </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Container populated via JS with Skeleton Placeholders on first load -->
-      <div id="products-container" class="products-grid all-products">
-        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
-        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
-        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
-        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
-        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
-        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
-      </div>
+          <!-- Price Range Filter Accordion -->
+          <div class="filter-accordion">
+            <div class="filter-accordion-header">
+              <h4><i class="fa-solid fa-tags" style="color: #10b981; margin-right: 8px;"></i> Price Range</h4>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="filter-accordion-content" id="sidebarPriceList">
+              <label class="filter-radio-label active-filter">
+                <input type="radio" name="priceFilter" value="all" checked>
+                <span class="radio-custom"></span>
+                <span class="filter-name">All Prices</span>
+              </label>
+              <label class="filter-radio-label">
+                <input type="radio" name="priceFilter" value="0-50">
+                <span class="radio-custom"></span>
+                <span class="filter-name">Under ₹50</span>
+              </label>
+              <label class="filter-radio-label">
+                <input type="radio" name="priceFilter" value="50-200">
+                <span class="radio-custom"></span>
+                <span class="filter-name">₹50 - ₹200</span>
+              </label>
+              <label class="filter-radio-label">
+                <input type="radio" name="priceFilter" value="200-500">
+                <span class="radio-custom"></span>
+                <span class="filter-name">₹200 - ₹500</span>
+              </label>
+              <label class="filter-radio-label">
+                <input type="radio" name="priceFilter" value="500-plus">
+                <span class="radio-custom"></span>
+                <span class="filter-name">Over ₹500</span>
+              </label>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Products Area -->
+        <div class="main-products-content">
+          
+          <!-- Premium Search Section -->
+          <div class="search-section animate-on-scroll">
+            <div class="search-wrapper" style="width: 100%;">
+              <button id="mobileFilterOpenBtn" class="mobile-filter-btn" type="button">
+                <i class="fa-solid fa-filter"></i> Filters
+              </button>
+              <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="productSearch" placeholder="Search by name, item, brand..." autocomplete="off">
+                <button id="clearSearchBtn" class="clear-btn" style="display: none;" type="button" title="Clear Search">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+                <!-- Search Suggestions & History Dropdown -->
+                <div id="searchHistoryList" class="search-history-dropdown"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Container populated via JS with Skeleton Placeholders on first load -->
+          <div id="products-container" class="products-grid all-products">
+            <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+            <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+            <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+            <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+            <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+            <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line full"></div></div></div>
+          </div>
+          
+          <!-- Pagination logic also handled in JS -->
+          <div id="pagination-container" class="pagination"></div>
+
+        </div> <!-- End Main Content -->
+      </div> <!-- End Catalog Layout -->
       
-      <!-- Pagination logic also handled in JS -->
-      <div id="pagination-container" class="pagination">
-      </div>
     </div>
   </section>
 
@@ -138,26 +177,6 @@
             <span>A PRODUCT OF</span>
             <h5>ChittorTech</h5>
           </div>
-        </a>
-
-        <div class="trust-badges">
-          <div class="trust-list">
-            <div class="trust-item">
-              <i class="fa-solid fa-circle"></i>
-              Recognized by iStart Rajasthan
-            </div>
-            <div class="trust-item">
-              <i class="fa-solid fa-circle"></i>
-              Registered MSME | Startup India
-            </div>
-          </div>
-        </div>
-
-        <hr class="footer-divider">
-
-        <a href="mailto:chittortech@gmail.com" class="footer-contact-link">
-          <i class="fa-solid fa-envelope"></i>
-          chittortech@gmail.com
         </a>
       </div>
     </div>

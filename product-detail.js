@@ -1,6 +1,6 @@
 import { listenForProducts } from './firebase-config.js?v=1.1.0';
 
-function getYouTubeEmbedUrl(url) {
+export function getYouTubeEmbedUrl(url) {
   if (!url || typeof url !== 'string') return null;
   const trimmed = url.trim();
   const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
@@ -8,14 +8,23 @@ function getYouTubeEmbedUrl(url) {
   return (match && match[1]) ? `https://www.youtube.com/embed/${match[1]}?autoplay=0&rel=0&modestbranding=1` : null;
 }
 
-function getInstagramEmbedUrl(url) {
+export function getInstagramEmbedUrl(url) {
   if (!url || typeof url !== 'string') return null;
   const trimmed = url.trim();
-  const match = trimmed.match(/instagram\.com\/(reel|p|tv)\/([^/?#&]+)/i);
+  const match = trimmed.match(/instagram\.com\/(reel|p|tv|reels)\/([^/?#&]+)/i);
   if (!match) return null;
-  const mediaType = match[1] === 'tv' ? 'reel' : match[1];
+  const mediaType = match[1] === 'tv' ? 'reel' : (match[1] === 'reels' ? 'reel' : match[1]);
   const mediaId = match[2];
   return `https://www.instagram.com/${mediaType}/${mediaId}/embed`;
+}
+
+export function getFacebookEmbedUrl(url) {
+  if (!url || typeof url !== 'string') return null;
+  const trimmed = url.trim();
+  if (trimmed.includes('facebook.com') || trimmed.includes('fb.watch')) {
+    return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(trimmed)}&show_text=0&width=500`;
+  }
+  return null;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -75,72 +84,89 @@ document.addEventListener('DOMContentLoaded', () => {
       ? Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100) 
       : null;
 
-    const waMsg = encodeURIComponent(`Hello CHITTORGARH HUB, I am interested in buying:\n*Product:* ${product.name}${product.price ? '\\n*Price:* ₹' + product.price : ''}${product.unit ? ' (' + product.unit + ')' : ''}`);
-    const waUrl = `https://wa.me/917014974762?text=${waMsg}`;
+    // Collect all candidate video links from all fields
+    const candidateLinks = [
+      product.youtube_url,
+      product.instagram_url,
+      product.videoLink
+    ].filter(link => link && typeof link === 'string' && link.trim().length > 0);
 
-    // Detect cross-pasted URLs automatically
-    const rawYt = product.youtube_url || product.videoLink || '';
-    const rawIg = product.instagram_url || '';
-    let finalYtUrl = rawYt.trim();
-    let finalIgUrl = rawIg.trim();
-    
-    if (finalYtUrl.includes('instagram.com')) {
-      finalIgUrl = finalYtUrl;
-      finalYtUrl = '';
-    } else if (finalIgUrl.includes('youtube.com') || finalIgUrl.includes('youtu.be')) {
-      finalYtUrl = finalIgUrl;
-      finalIgUrl = '';
-    }
-    
-    const ytEmbed = getYouTubeEmbedUrl(finalYtUrl);
-    const igEmbed = getInstagramEmbedUrl(finalIgUrl);
-    const isYtShort = finalYtUrl.includes('/shorts/');
+    let videoCardsHtml = '';
+    const renderedEmbeds = new Set();
 
-    let videoSectionHtml = '';
-    if (finalYtUrl || finalIgUrl) {
-      videoSectionHtml = `<div class="product-video-embed-section">`;
+    candidateLinks.forEach(link => {
+      const trimmed = link.trim();
       
-      if (finalYtUrl) {
-        videoSectionHtml += `
+      // 1. YouTube
+      const ytEmbed = getYouTubeEmbedUrl(trimmed);
+      if (ytEmbed && !renderedEmbeds.has(ytEmbed)) {
+        renderedEmbeds.add(ytEmbed);
+        const isYtShort = trimmed.includes('/shorts/');
+        videoCardsHtml += `
           <div class="video-embed-card yt-card">
             <div class="video-header" style="color: #ff0000;">
-              <span><i class="fa-brands fa-youtube" style="margin-right: 8px;"></i> Product Video Demo</span>
+              <span><i class="fa-brands fa-youtube" style="margin-right: 8px;"></i> Product Video Showcase</span>
             </div>
-            ${ytEmbed ? `
-              <div class="video-frame-wrapper ${isYtShort ? 'is-shorts' : 'is-landscape'}">
-                <iframe 
-                  src="${ytEmbed}"
-                  title="YouTube Video"
-                  allowFullScreen
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                ></iframe>
-              </div>
-            ` : ''}
+            <div class="video-frame-wrapper ${isYtShort ? 'is-shorts' : 'is-landscape'}">
+              <iframe 
+                src="${ytEmbed}"
+                title="YouTube Video"
+                allowFullScreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              ></iframe>
+            </div>
           </div>
         `;
+        return;
       }
-      
-      if (finalIgUrl) {
-        videoSectionHtml += `
+
+      // 2. Instagram
+      const igEmbed = getInstagramEmbedUrl(trimmed);
+      if (igEmbed && !renderedEmbeds.has(igEmbed)) {
+        renderedEmbeds.add(igEmbed);
+        videoCardsHtml += `
           <div class="video-embed-card ig-card">
             <div class="video-header" style="color: #e1306c;">
               <span><i class="fa-brands fa-instagram" style="margin-right: 8px;"></i> Instagram Reel Showcase</span>
             </div>
-            ${igEmbed ? `
-              <div class="video-frame-wrapper is-shorts">
-                <iframe 
-                  src="${igEmbed}"
-                  title="Instagram Reel"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            ` : ''}
+            <div class="video-frame-wrapper is-shorts">
+              <iframe 
+                src="${igEmbed}"
+                title="Instagram Reel"
+                allowFullScreen
+              ></iframe>
+            </div>
           </div>
         `;
+        return;
       }
-      
-      videoSectionHtml += `</div>`;
-    }
+
+      // 3. Facebook
+      const fbEmbed = getFacebookEmbedUrl(trimmed);
+      if (fbEmbed && !renderedEmbeds.has(fbEmbed)) {
+        renderedEmbeds.add(fbEmbed);
+        videoCardsHtml += `
+          <div class="video-embed-card fb-card">
+            <div class="video-header" style="color: #1877f2;">
+              <span><i class="fa-brands fa-facebook" style="margin-right: 8px;"></i> Facebook Video Showcase</span>
+            </div>
+            <div class="video-frame-wrapper is-landscape">
+              <iframe 
+                src="${fbEmbed}"
+                title="Facebook Video"
+                allowFullScreen
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              ></iframe>
+            </div>
+          </div>
+        `;
+        return;
+      }
+    });
+
+    const videoSectionHtml = videoCardsHtml 
+      ? `<div class="product-video-embed-section">${videoCardsHtml}</div>` 
+      : '';
 
     container.innerHTML = `
       <div class="product-page-layout">
@@ -155,22 +181,22 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="product-page-details">
           <div class="product-page-meta">
             <span class="product-page-cat">${product.category}${product.subCategory ? ` <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem; margin: 0 4px;"></i> ${product.subCategory}` : ''}</span>
-            ${product.unit ? `<span class="product-page-unit">${product.unit}</span>` : ''}
+            ${product.unit ? `<span class="product-page-unit">Unit: ${product.unit}</span>` : ''}
           </div>
           
-          <h1 class="product-page-title">${product.name}</h1>
-          
-          ${product.price ? `
+          <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 1.5rem;">
+            <h1 class="product-page-title" style="margin-bottom: 0;">${product.name}</h1>
+            <div class="product-page-stock ${inStock ? 'stock-in' : 'stock-out'}" style="margin-bottom: 0; padding: 6px 16px; font-size: 0.85rem; box-shadow: none;">
+              <i class="fa-solid ${inStock ? 'fa-check-circle' : 'fa-times-circle'}"></i> 
+              ${inStock ? 'Currently In Stock' : 'Out of Stock'}
+            </div>
+          </div>
+
           <div class="product-page-price-box">
             <span class="product-page-price">₹${product.price}</span>
             ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `<span class="product-page-old-price">₹${product.oldPrice}</span>` : ''}
           </div>
-          ` : ''}
           
-          <div class="product-page-stock ${inStock ? 'stock-in' : 'stock-out'}">
-            <i class="fa-solid ${inStock ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${inStock ? 'Currently In Stock' : 'Currently Out of Stock'}
-          </div>
-
           <div class="product-page-desc">
             <h3>Description</h3>
             <p>${product.desc ? product.desc.replace(/\n/g, '<br>') : 'No description available for this product.'}</p>

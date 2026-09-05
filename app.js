@@ -5,6 +5,7 @@ let activeCategory = localStorage.getItem('redirectCategory') || 'all';
 localStorage.removeItem('redirectCategory');
 let activeSubCategory = 'all';
 let categoryCustomOrder = []; // Custom category priority sequence set by Admin
+let categoryCustomImages = {};
 
 // Helper to sort category names according to custom priority sequence (Case-Insensitive)
 function sortCategoriesByCustomOrder(categoriesArray) {
@@ -37,8 +38,6 @@ function getCategoryIcon(categoryName) {
   return 'fa-solid fa-basket-shopping';
 }
 
-let categoryCustomImages = {};
-
 function resolveDirectImageUrl(url) {
   if (!url) return '';
   let trimmed = url.trim();
@@ -55,6 +54,251 @@ function resolveDirectImageUrl(url) {
     return `https://iili.io/${freeimageMatch[1]}.jpg`;
   }
   return trimmed;
+}
+
+// Function to populate old category dropdown if present
+function populateCategoryDropdown(products) {
+  const categoryFilter = document.getElementById('categoryFilter');
+  if (!categoryFilter) return;
+  const rawCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
+  const categories = sortCategoriesByCustomOrder(rawCategories);
+
+  const currentVal = categoryFilter.value || 'all';
+  categoryFilter.innerHTML = '<option value="all">All Categories</option>' + 
+    categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+  categoryFilter.value = currentVal;
+}
+
+// Dynamic Home Categories Renderer
+function renderHomeCategories(products) {
+  const homeGrid = document.getElementById('home-categories-grid');
+  if (!homeGrid || !products || products.length === 0) return;
+
+  const counts = {};
+  products.forEach(p => {
+    if (p.category) {
+      counts[p.category] = (counts[p.category] || 0) + 1;
+    }
+  });
+
+  const rawCategories = Object.keys(counts);
+  const categories = sortCategoriesByCustomOrder(rawCategories);
+
+  let html = '';
+  const bgColors = ['#dcfce7', '#e0f2fe', '#fef3c7', '#fce7f3', '#f1f5f9'];
+  const textColors = ['#166534', '#075985', '#92400e', '#9d174d', '#475569'];
+
+  categories.forEach((cat, index) => {
+    const iconClass = getCategoryIcon(cat);
+    const rawImg = categoryCustomImages[cat] || categoryCustomImages[cat.toUpperCase()] || categoryCustomImages[cat.toLowerCase()];
+    const customImg = resolveDirectImageUrl(rawImg);
+
+    const innerContent = customImg 
+      ? `<img src="${customImg}" alt="${cat}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">` 
+      : `<i class="${iconClass}"></i>`;
+
+    const idx = index % bgColors.length;
+
+    html += `
+      <a href="products.html" onclick="localStorage.setItem('redirectCategory', '${cat}')" class="home-cat-card" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1rem 0.5rem; text-align: center; transition: var(--transition); text-decoration: none; display: flex; flex-direction: column; align-items: center;" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
+        <div style="width: 50px; height: 50px; background: ${bgColors[idx]}; color: ${textColors[idx]}; border-radius: 50%; display: grid; place-items: center; margin-bottom: 0.6rem; font-size: 1.4rem; overflow: hidden;">
+          ${innerContent}
+        </div>
+        <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">${cat}</span>
+      </a>
+    `;
+  });
+
+  homeGrid.innerHTML = html;
+}
+
+// Dynamic Sidebar Category Renderer
+function renderSidebarFilters(products, selectedCat) {
+  const list = document.getElementById('sidebarCategoryList');
+  if (!list || !products || products.length === 0) return;
+
+  // Count products per category
+  const counts = {};
+  products.forEach(p => {
+    if (p.category) {
+      counts[p.category] = (counts[p.category] || 0) + 1;
+    }
+  });
+
+  const rawCategories = Object.keys(counts);
+  const categories = sortCategoriesByCustomOrder(rawCategories);
+
+  let html = `
+    <label class="filter-radio-label ${selectedCat === 'all' ? 'active-filter' : ''}">
+      <input type="radio" name="categoryFilterRadio" value="all" ${selectedCat === 'all' ? 'checked' : ''}>
+      <span class="radio-custom"></span>
+      <span class="filter-name">All Categories</span>
+      <span class="filter-count">${products.length}</span>
+    </label>
+  `;
+
+  categories.forEach(cat => {
+    const count = counts[cat];
+    const isActive = selectedCat === cat;
+
+    html += `
+      <label class="filter-radio-label ${isActive ? 'active-filter' : ''}">
+        <input type="radio" name="categoryFilterRadio" value="${cat}" ${isActive ? 'checked' : ''}>
+        <span class="radio-custom"></span>
+        <span class="filter-name">${cat}</span>
+        <span class="filter-count">${count}</span>
+      </label>
+    `;
+  });
+
+  list.innerHTML = html;
+
+  // Attach listeners to newly rendered radios
+  list.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      // Update label active styling
+      list.querySelectorAll('.filter-radio-label').forEach(lbl => lbl.classList.remove('active-filter'));
+      if (radio.closest('.filter-radio-label')) {
+        radio.closest('.filter-radio-label').classList.add('active-filter');
+      }
+      performSearch();
+    });
+  });
+}
+
+function performSearch() {
+  const searchInput = document.getElementById('productSearch');
+  const clearSearchBtn = document.getElementById('clearSearchBtn');
+  const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+  
+  // Find selected category radio
+  const selectedCategoryRadio = document.querySelector('input[name="categoryFilterRadio"]:checked');
+  const selectedCategory = selectedCategoryRadio ? selectedCategoryRadio.value : (activeCategory || 'all');
+  
+  // Find selected price radio
+  const selectedPriceRadio = document.querySelector('input[name="priceFilter"]:checked');
+  const selectedPrice = selectedPriceRadio ? selectedPriceRadio.value : 'all';
+
+  activeCategory = selectedCategory;
+
+  if (clearSearchBtn) {
+    clearSearchBtn.style.display = searchTerm ? 'block' : 'none';
+  }
+
+  const filtered = allProducts.filter(p => {
+    // 1. Name match
+    const matchesName = p.name.toLowerCase().includes(searchTerm) || 
+                       (p.brand && p.brand.toLowerCase().includes(searchTerm)) ||
+                       (p.desc && p.desc.toLowerCase().includes(searchTerm));
+    
+    // 2. Category match
+    const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
+    
+    // 3. Price match
+    let matchesPrice = true;
+    if (selectedPrice !== 'all' && p.price) {
+      const price = Number(p.price);
+      if (selectedPrice === '0-50') matchesPrice = price < 50;
+      else if (selectedPrice === '50-200') matchesPrice = price >= 50 && price <= 200;
+      else if (selectedPrice === '200-500') matchesPrice = price >= 200 && price <= 500;
+      else if (selectedPrice === '500-plus') matchesPrice = price > 500;
+    }
+
+    return matchesName && matchesCategory && matchesPrice;
+  });
+  
+  renderProductsUI(filtered);
+}
+
+function renderProductsUI(products) {
+  const productsContainer = document.getElementById('products-container');
+  if (!productsContainer) return;
+  
+  let html = '';
+  // Sort by ID descending to show newest products first
+  products.sort((a, b) => Number(b.id) - Number(a.id)).forEach(product => {
+    const inStock = product.inStock !== false;
+    const discountPercent = (product.oldPrice && Number(product.oldPrice) > Number(product.price)) 
+      ? Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100) 
+      : null;
+
+    const rawYt = product.youtube_url || product.videoLink || '';
+    const rawIg = product.instagram_url || '';
+    let finalYtUrl = rawYt.trim();
+    let finalIgUrl = rawIg.trim();
+    
+    if (finalYtUrl.includes('instagram.com')) {
+      finalIgUrl = finalYtUrl;
+      finalYtUrl = '';
+    } else if (finalIgUrl.includes('youtube.com') || finalIgUrl.includes('youtu.be')) {
+      finalYtUrl = finalIgUrl;
+      finalIgUrl = '';
+    }
+
+    let ytEmbed = null;
+    if (finalYtUrl) {
+      const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+      const match = finalYtUrl.match(regExp);
+      ytEmbed = (match && match[1]) ? `https://www.youtube.com/embed/${match[1]}?autoplay=0&rel=0&modestbranding=1` : null;
+    }
+
+    let igEmbed = null;
+    if (finalIgUrl) {
+      const match = finalIgUrl.match(/instagram\.com\/(reel|p|tv)\/([^/?#&]+)/i);
+      if (match) {
+        const mediaType = match[1] === 'tv' ? 'reel' : match[1];
+        igEmbed = `https://www.instagram.com/${mediaType}/${match[2]}/embed`;
+      }
+    }
+
+    const isYtShort = finalYtUrl.includes('/shorts/');
+
+    html += `
+      <div class="product-card ${!inStock ? 'out-of-stock' : ''}" onclick="window.location.href='product-detail.html?id=${product.id}'" style="cursor: pointer;">
+        <div class="product-img-wrapper">
+          ${discountPercent ? `<div class="product-badge" style="background: #2563eb;">${discountPercent}% OFF</div>` : (product.offer ? `<div class="product-badge">${product.offer}</div>` : '')}
+          <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" style="${!inStock ? 'filter: grayscale(1); opacity: 0.6;' : ''}">
+          ${!inStock ? '<div class="out-of-stock-overlay">OUT OF STOCK</div>' : ''}
+        </div>
+        <div class="product-content">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <span class="product-category">${product.category}${product.subCategory ? ` > ${product.subCategory}` : ''}</span>
+            ${product.unit ? `<span class="product-unit-pill">${product.unit}</span>` : ''}
+          </div>
+          <h3 class="product-title" style="${!inStock ? 'color: var(--text-muted);' : ''}">${product.name}</h3>
+          ${product.desc ? `<p class="product-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0.8rem; line-height: 1.6;">${product.desc}</p>` : ''}
+          
+          <div class="product-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #f1f5f9;">
+            ${product.price ? `
+            <div class="product-price">
+              <div class="price-amounts" style="display: flex; align-items: baseline; gap: 8px;">
+                <span class="current-price" style="font-size: 1.35rem; font-weight: 900; color: var(--text-main);">₹${product.price}</span>
+                ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `<span class="old-price" style="text-decoration: line-through; color: #94a3b8; font-size: 0.95rem; font-weight: 600;">₹${product.oldPrice}</span>` : ''}
+              </div>
+            </div>
+            ` : '<div></div>'}
+
+            <div class="status-badge ${inStock ? 'in-stock' : 'out-stock'}">
+              <span class="status-dot"></span>
+              ${inStock ? 'In Stock' : 'Out of Stock'}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  if (products.length === 0) {
+    html = `
+      <div class="no-results" style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem; background: white; border-radius: 20px; border: 1px dashed #cbd5e1;">
+        <i class="fa-solid fa-box-open" style="font-size: 3.5rem; color: #94a3b8; margin-bottom: 1rem;"></i>
+        <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">No products found</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Try adjusting your search terms or filters to find what you're looking for.</p>
+      </div>
+    `;
+  }
+
+  productsContainer.innerHTML = html;
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -76,22 +320,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Scroll Animations setup
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-  };
-  
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        obs.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-
   // --- 1. INSTANT LOAD: Load cached products & category order/images from LocalStorage ---
   try {
     const cachedOrder = localStorage.getItem('cachedCategoryOrder');
@@ -108,9 +336,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (Array.isArray(parsedProducts) && parsedProducts.length > 0) {
         allProducts = parsedProducts;
         populateCategoryDropdown(allProducts);
-        renderCategoryPills(allProducts, activeCategory);
+        renderSidebarFilters(allProducts, activeCategory);
         renderHomeCategories(allProducts);
-        renderProductsUI(allProducts);
+        performSearch();
       }
     }
   } catch (e) {
@@ -136,16 +364,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       localStorage.setItem('cachedCategoryImages', JSON.stringify(categoryCustomImages));
     } catch(e) {}
     populateCategoryDropdown(allProducts);
-    renderCategoryPills(allProducts, activeCategory);
+    renderSidebarFilters(allProducts, activeCategory);
     renderHomeCategories(allProducts);
   });
 
   // --- 2. REAL-TIME SYNC: Listen for products from Firestore ---
   listenForProducts(async (products) => {
-    // Filter out soft-deleted products
     const activeProducts = products.filter(p => p.isDeleted !== true);
     
-    // Auto-convert any FreeImage.host viewer links in products
     activeProducts.forEach(p => {
       if (p.image) {
         p.image = resolveDirectImageUrl(p.image);
@@ -153,7 +379,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     allProducts = activeProducts;
     
-    // Save to LocalStorage for instant rendering on next page visit
     try {
       localStorage.setItem('cachedProducts', JSON.stringify(activeProducts));
     } catch (e) {
@@ -161,315 +386,61 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     populateCategoryDropdown(activeProducts);
-    renderCategoryPills(activeProducts, activeCategory);
+    renderSidebarFilters(activeProducts, activeCategory);
     renderHomeCategories(activeProducts);
     performSearch();
-
-    // Update animations for new elements
-    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
   });
 
-  // Search Logic
+  // Search Logic & Listeners
   const searchInput = document.getElementById('productSearch');
-  const categoryFilter = document.getElementById('categoryFilter');
   const clearSearchBtn = document.getElementById('clearSearchBtn');
   const searchHistoryList = document.getElementById('searchHistoryList');
+  const categoryFilter = document.getElementById('categoryFilter');
 
-  function populateCategoryDropdown(products) {
-    if (!categoryFilter) return;
-    const rawCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
-    const categories = sortCategoriesByCustomOrder(rawCategories);
-
-    const currentVal = categoryFilter.value || 'all';
-    categoryFilter.innerHTML = '<option value="all">All Categories</option>' + 
-      categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
-    categoryFilter.value = currentVal;
+  if (categoryFilter) {
+    categoryFilter.addEventListener('change', performSearch);
   }
 
-  const performSearch = () => {
-    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
-    const selectedCategory = categoryFilter ? categoryFilter.value : activeCategory;
-    
-    if (selectedCategory !== activeCategory) {
-      activeSubCategory = 'all';
-    }
-    
-    activeCategory = selectedCategory;
-
-    if (clearSearchBtn) {
-      clearSearchBtn.style.display = searchTerm ? 'block' : 'none';
-    }
-
-    const filtered = allProducts.filter(p => {
-      const matchesName = p.name.toLowerCase().includes(searchTerm) || 
-                          (p.desc && p.desc.toLowerCase().includes(searchTerm));
-      const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
-      const matchesSubCategory = activeSubCategory === 'all' || p.subCategory === activeSubCategory;
-      return matchesName && matchesCategory && matchesSubCategory;
-    });
-    
-    renderCategoryPills(allProducts, selectedCategory);
-    renderProductsUI(filtered);
-    
-    // Update animations for new elements
-    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-  };
-
-  // Dynamic Home Categories Renderer
-  function renderHomeCategories(products) {
-    const homeGrid = document.getElementById('home-categories-grid');
-    if (!homeGrid || !products || products.length === 0) return;
-
-    const counts = {};
-    products.forEach(p => {
-      if (p.category) {
-        counts[p.category] = (counts[p.category] || 0) + 1;
-      }
-    });
-
-    const rawCategories = Object.keys(counts);
-    const categories = sortCategoriesByCustomOrder(rawCategories);
-
-    let html = '';
-    const bgColors = ['#dcfce7', '#e0f2fe', '#fef3c7', '#fce7f3', '#f1f5f9'];
-    const textColors = ['#166534', '#075985', '#92400e', '#9d174d', '#475569'];
-
-    categories.forEach((cat, index) => {
-      const iconClass = getCategoryIcon(cat);
-      const rawImg = categoryCustomImages[cat] || categoryCustomImages[cat.toUpperCase()] || categoryCustomImages[cat.toLowerCase()];
-      const customImg = resolveDirectImageUrl(rawImg);
-
-      const innerContent = customImg 
-        ? `<img src="${customImg}" alt="${cat}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">` 
-        : `<i class="${iconClass}"></i>`;
-
-      const idx = index % bgColors.length;
-
-      html += `
-        <a href="products.html" onclick="localStorage.setItem('redirectCategory', '${cat}')" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1rem 0.5rem; text-align: center; transition: var(--transition);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
-          <div style="width: 50px; height: 50px; background: ${bgColors[idx]}; color: ${textColors[idx]}; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 0.6rem; font-size: 1.4rem; overflow: hidden;">
-            ${innerContent}
-          </div>
-          <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">${cat}</span>
-        </a>
-      `;
-    });
-
-    homeGrid.innerHTML = html;
-  }
-
-  // Dynamic Category Pills Renderer
-  function renderCategoryPills(products, selectedCat) {
-    const wrapper = document.getElementById('categoryPillsWrapper');
-    const bar = document.getElementById('categoryPillsBar');
-    if (!wrapper || !bar || !products || products.length === 0) return;
-
-    // Count products per category
-    const counts = {};
-    products.forEach(p => {
-      if (p.category) {
-        counts[p.category] = (counts[p.category] || 0) + 1;
-      }
-    });
-
-    const rawCategories = Object.keys(counts);
-    const categories = sortCategoriesByCustomOrder(rawCategories);
-
-    let pillsHTML = `
-      <div class="category-pill ${selectedCat === 'all' ? 'active' : ''}" data-category="all">
-        <div class="pill-icon-box">
-          <i class="fa-solid fa-border-all"></i>
-          <span class="pill-badge">${products.length}</span>
-        </div>
-        <span class="pill-title">All Categories</span>
-      </div>
-    `;
-
-    categories.forEach(cat => {
-      const count = counts[cat];
-      const iconClass = getCategoryIcon(cat);
-      const rawImg = categoryCustomImages[cat] || categoryCustomImages[cat.toUpperCase()] || categoryCustomImages[cat.toLowerCase()];
-      const customImg = resolveDirectImageUrl(rawImg);
-      const isActive = selectedCat === cat;
-
-      const innerContent = customImg 
-        ? `<img src="${customImg}" alt="${cat}" class="pill-custom-img" loading="lazy">` 
-        : `<i class="${iconClass}"></i>`;
-
-      pillsHTML += `
-        <div class="category-pill ${isActive ? 'active' : ''}" data-category="${cat}">
-          <div class="pill-icon-box">
-            ${innerContent}
-            <span class="pill-badge">${count}</span>
-          </div>
-          <span class="pill-title">${cat}</span>
-        </div>
-      `;
-    });
-
-    bar.innerHTML = pillsHTML;
-    wrapper.style.display = 'block';
-
-    // Update Category Count badge
-    const totalCatCountEl = document.getElementById('totalCategoriesCount');
-    if (totalCatCountEl) {
-      totalCatCountEl.textContent = categories.length + 1;
-    }
-
-    // Populate Explore All Modal Grid
-    const modalGrid = document.getElementById('catModalGrid');
-    if (modalGrid) {
-      let modalHTML = `
-        <div class="cat-modal-card ${selectedCat === 'all' ? 'active' : ''}" data-category="all">
-          <div class="pill-icon-box">
-            <i class="fa-solid fa-border-all"></i>
-            <span class="pill-badge">${products.length}</span>
-          </div>
-          <span class="pill-title">All Categories</span>
-        </div>
-      `;
-
-      categories.forEach(cat => {
-        const count = counts[cat];
-        const iconClass = getCategoryIcon(cat);
-        const rawImg = categoryCustomImages[cat] || categoryCustomImages[cat.toUpperCase()] || categoryCustomImages[cat.toLowerCase()];
-        const customImg = resolveDirectImageUrl(rawImg);
-        const isActive = selectedCat === cat;
-
-        const innerContent = customImg 
-          ? `<img src="${customImg}" alt="${cat}" class="pill-custom-img" loading="lazy">` 
-          : `<i class="${iconClass}"></i>`;
-
-        modalHTML += `
-          <div class="cat-modal-card ${isActive ? 'active' : ''}" data-category="${cat}">
-            <div class="pill-icon-box">
-              ${innerContent}
-              <span class="pill-badge">${count}</span>
-            </div>
-            <span class="pill-title">${cat}</span>
-          </div>
-        `;
-      });
-      modalGrid.innerHTML = modalHTML;
-
-      // Add click listener to modal category cards
-      modalGrid.querySelectorAll('.cat-modal-card').forEach(card => {
-        card.onclick = () => {
-          const cat = card.getAttribute('data-category');
-          activeSubCategory = 'all';
-          activeCategory = cat;
-          if (categoryFilter) categoryFilter.value = cat;
-          performSearch();
-          closeExploreModal();
-          
-          const categoryProducts = allProducts.filter(p => p.category === cat);
-          const hasSubCats = categoryProducts.some(p => p.subCategory && p.subCategory.trim() !== '');
-          
-          if (!hasSubCats) {
-            const target = document.getElementById('products-container');
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else {
-            const target = document.getElementById('categoryPillsWrapper');
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        };
-      });
-    }
-
-    // Add click listeners to category pills
-    bar.querySelectorAll('.category-pill').forEach(pill => {
-      pill.onclick = () => {
-        const cat = pill.getAttribute('data-category');
-        activeSubCategory = 'all';
-        activeCategory = cat;
-        if (categoryFilter) categoryFilter.value = cat;
-        performSearch();
-        if (cat === 'all') {
-          openExploreModal();
-        } else {
-          const categoryProducts = allProducts.filter(p => p.category === cat);
-          const hasSubCats = categoryProducts.some(p => p.subCategory && p.subCategory.trim() !== '');
-          
-          if (!hasSubCats) {
-            const target = document.getElementById('products-container');
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
+  // Price Filter Listeners
+  const priceRadios = document.querySelectorAll('input[name="priceFilter"]');
+  if (priceRadios.length > 0) {
+    priceRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        const priceContainer = document.getElementById('sidebarPriceList');
+        if (priceContainer) {
+          priceContainer.querySelectorAll('.filter-radio-label').forEach(lbl => lbl.classList.remove('active-filter'));
         }
-      };
-    });
-
-    renderSubCategoryPills(products, selectedCat);
-  }
-
-  function renderSubCategoryPills(products, selectedCat) {
-    const wrapper = document.getElementById('subCategoryPillsWrapper');
-    const bar = document.getElementById('subCategoryPillsBar');
-    if (!wrapper || !bar) return;
-
-    if (selectedCat === 'all') {
-      wrapper.style.display = 'none';
-      return;
-    }
-
-    const categoryProducts = products.filter(p => p.category === selectedCat);
-    const subCategories = [...new Set(categoryProducts.map(p => p.subCategory).filter(s => s && s.trim() !== ''))].sort();
-
-    if (subCategories.length === 0) {
-      wrapper.style.display = 'none';
-      return;
-    }
-
-    let pillsHTML = `
-      <div class="sub-category-pill ${activeSubCategory === 'all' ? 'active' : ''}" data-subcategory="all">
-        All
-      </div>
-    `;
-
-    subCategories.forEach(subCat => {
-      const isActive = activeSubCategory === subCat;
-      pillsHTML += `
-        <div class="sub-category-pill ${isActive ? 'active' : ''}" data-subcategory="${subCat}">
-          ${subCat}
-        </div>
-      `;
-    });
-
-    bar.innerHTML = pillsHTML;
-    wrapper.style.display = 'block';
-
-    bar.querySelectorAll('.sub-category-pill').forEach(pill => {
-      pill.onclick = () => {
-        const subCat = pill.getAttribute('data-subcategory');
-        activeSubCategory = subCat;
+        if (radio.closest('.filter-radio-label')) {
+          radio.closest('.filter-radio-label').classList.add('active-filter');
+        }
         performSearch();
-        const target = document.getElementById('products-container');
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      };
+      });
     });
   }
 
-  // Explore Categories Modal Handlers
-  const modalOverlay = document.getElementById('exploreCategoriesModal');
-  const openModalBtn = document.getElementById('openExploreModalBtn');
-  const closeModalBtn = document.getElementById('closeExploreModalBtn');
+  // Accordion Expand / Collapse Handlers
+  document.querySelectorAll('.filter-accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const accordion = header.closest('.filter-accordion');
+      if (accordion) {
+        accordion.classList.toggle('collapsed');
+      }
+    });
+  });
 
-  function openExploreModal() {
-    if (modalOverlay) modalOverlay.classList.add('active');
+  // Mobile Sidebar Toggle
+  const mobileOpenBtn = document.getElementById('mobileFilterOpenBtn');
+  const mobileCloseBtn = document.getElementById('mobileFilterCloseBtn');
+  const sidebar = document.querySelector('.sidebar-filters');
+
+  if (mobileOpenBtn && sidebar) {
+    mobileOpenBtn.addEventListener('click', () => sidebar.classList.add('open'));
+  }
+  if (mobileCloseBtn && sidebar) {
+    mobileCloseBtn.addEventListener('click', () => sidebar.classList.remove('open'));
   }
 
-  function closeExploreModal() {
-    if (modalOverlay) modalOverlay.classList.remove('active');
-  }
-
-  if (openModalBtn) openModalBtn.onclick = openExploreModal;
-  if (closeModalBtn) closeModalBtn.onclick = closeExploreModal;
-  if (modalOverlay) {
-    modalOverlay.onclick = (e) => {
-      if (e.target === modalOverlay) closeExploreModal();
-    };
-  }
-
-  // --- Smart Professional Search System ---
+  // --- Smart Search System with Dropdown & History ---
   const MAX_HISTORY = 5;
   const getHistory = () => JSON.parse(localStorage.getItem('searchHistory') || '[]');
   
@@ -489,18 +460,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderSearchDropdown();
   };
 
-  // Render Smart Dropdown (History + Popular Searches + Instant Product Matches)
   const renderSearchDropdown = () => {
     if (!searchHistoryList || !searchInput) return;
     const term = searchInput.value.toLowerCase().trim();
 
-    // 1. If user is typing, show instant product suggestions
     if (term.length > 0) {
       const matches = allProducts.filter(p => 
         p.name.toLowerCase().includes(term) || 
         (p.category && p.category.toLowerCase().includes(term)) ||
         (p.desc && p.desc.toLowerCase().includes(term))
-      ).slice(0, 5); // Limit top 5 suggestions
+      ).slice(0, 5);
 
       if (matches.length === 0) {
         searchHistoryList.innerHTML = `
@@ -537,7 +506,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       searchHistoryList.innerHTML = suggestHTML;
       searchHistoryList.style.display = 'block';
 
-      // Click listener for instant suggestions
       searchHistoryList.querySelectorAll('.search-suggest-item').forEach(el => {
         el.addEventListener('click', () => {
           const name = el.getAttribute('data-name');
@@ -545,14 +513,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           saveHistory(name);
           performSearch();
           searchHistoryList.style.display = 'none';
-          const target = document.getElementById('products-container');
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
       });
       return;
     }
 
-    // 2. If search input is empty, show History + Popular Search Chips
     const history = getHistory();
     const popularTags = ['Biscuits', 'Maggi', 'Ice Cream', 'Chocolate', 'Bread', 'Beverages'];
 
@@ -589,7 +554,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     searchHistoryList.innerHTML = dropdownHTML;
     searchHistoryList.style.display = 'block';
 
-    // Click listener for history items
     searchHistoryList.querySelectorAll('.search-history-item').forEach(item => {
       item.addEventListener('click', (e) => {
         if (e.target.classList.contains('search-history-delete')) {
@@ -603,7 +567,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     });
 
-    // Click listener for popular tags
     searchHistoryList.querySelectorAll('.trending-chip').forEach(chip => {
       chip.addEventListener('click', () => {
         const tag = chip.getAttribute('data-tag');
@@ -629,11 +592,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       setTimeout(() => {
         if (searchHistoryList) searchHistoryList.style.display = 'none';
       }, 250);
-      
-      const term = searchInput.value.trim();
-      if (term.length >= 2) {
-        saveHistory(term);
-      }
     });
 
     searchInput.addEventListener('keypress', (e) => {
@@ -648,10 +606,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  if (categoryFilter) {
-    categoryFilter.addEventListener('change', performSearch);
-  }
-
   if (clearSearchBtn) {
     clearSearchBtn.addEventListener('click', () => {
       searchInput.value = '';
@@ -661,13 +615,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Navbar Background on Scroll
   const navbar = document.querySelector('.navbar');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  }
 
   // Contact Form Handling (WhatsApp Redirect)
   const contactForm = document.getElementById('contactForm');
@@ -691,114 +647,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 });
-
-function renderProductsUI(products) {
-  const productsContainer = document.getElementById('products-container');
-  if (!productsContainer) return;
-  
-  let html = '';
-  // Sort by ID descending to show newest products first
-  products.sort((a, b) => Number(b.id) - Number(a.id)).forEach(product => {
-    const inStock = product.inStock !== false;
-    const discountPercent = (product.oldPrice && Number(product.oldPrice) > Number(product.price)) 
-      ? Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100) 
-      : null;
-
-    const waMsg = encodeURIComponent(`Hello CHITTORGARH HUB, I am interested in buying:\n*Product:* ${product.name}${product.price ? '\\n*Price:* ₹' + product.price : ''}${product.unit ? ' (' + product.unit + ')' : ''}`);
-    const waUrl = `https://wa.me/917014974762?text=${waMsg}`;
-    
-    const rawYt = product.youtube_url || product.videoLink || '';
-    const rawIg = product.instagram_url || '';
-    let finalYtUrl = rawYt.trim();
-    let finalIgUrl = rawIg.trim();
-    
-    if (finalYtUrl.includes('instagram.com')) {
-      finalIgUrl = finalYtUrl;
-      finalYtUrl = '';
-    } else if (finalIgUrl.includes('youtube.com') || finalIgUrl.includes('youtu.be')) {
-      finalYtUrl = finalIgUrl;
-      finalIgUrl = '';
-    }
-
-    let ytEmbed = null;
-    if (finalYtUrl) {
-      const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
-      const match = finalYtUrl.match(regExp);
-      ytEmbed = (match && match[1]) ? `https://www.youtube.com/embed/${match[1]}?autoplay=0&rel=0&modestbranding=1` : null;
-    }
-
-    let igEmbed = null;
-    if (finalIgUrl) {
-      const match = finalIgUrl.match(/instagram\.com\/(reel|p|tv)\/([^/?#&]+)/i);
-      if (match) {
-        const mediaType = match[1] === 'tv' ? 'reel' : match[1];
-        igEmbed = `https://www.instagram.com/${mediaType}/${match[2]}/embed`;
-      }
-    }
-
-    const isYtShort = finalYtUrl.includes('/shorts/');
-
-    html += `
-      <div class="product-card animate-on-scroll ${!inStock ? 'out-of-stock' : ''}" onclick="window.location.href='product-detail.html?id=${product.id}'" style="cursor: pointer;">
-        <div class="product-img-wrapper">
-          ${discountPercent ? `<div class="product-badge" style="background: #2563eb;">${discountPercent}% OFF</div>` : (product.offer ? `<div class="product-badge">${product.offer}</div>` : '')}
-          <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" style="${!inStock ? 'filter: grayscale(1); opacity: 0.6;' : ''}">
-          ${!inStock ? '<div class="out-of-stock-overlay">OUT OF STOCK</div>' : ''}
-        </div>
-        <div class="product-content">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-            <span class="product-category">${product.category}${product.subCategory ? ` > ${product.subCategory}` : ''}</span>
-            ${product.unit ? `<span style="background: #f1f5f9; color: #475569; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px;">${product.unit}</span>` : ''}
-          </div>
-          <h3 class="product-title" style="${!inStock ? 'color: var(--text-muted);' : ''}">${product.name}</h3>
-          ${product.desc ? `<p class="product-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0.8rem; line-height: 1.6;">${product.desc}</p>` : ''}
-          
-          <div class="product-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #f1f5f9;">
-            ${product.price ? `
-            <div class="product-price">
-              <div class="price-amounts" style="display: flex; align-items: baseline; gap: 8px;">
-                <span class="current-price" style="font-size: 1.5rem; font-weight: 900; background: linear-gradient(135deg, var(--text-main), #475569); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">₹${product.price}</span>
-                ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `<span class="old-price" style="text-decoration: line-through; color: #94a3b8; font-size: 1rem; font-weight: 600;">₹${product.oldPrice}</span>` : ''}
-              </div>
-            </div>
-            ` : '<div></div>'}
-
-            <div class="status-badge ${inStock ? 'in-stock' : 'out-stock'}">
-              <span class="status-dot"></span>
-              ${inStock ? 'In Stock' : 'Out of Stock'}
-            </div>
-          </div>
-          
-          ${ytEmbed ? `
-            <div class="video-frame-wrapper ${isYtShort ? 'is-shorts' : 'is-landscape'}" style="margin-top: 1rem; border-radius: 8px; overflow: hidden;" onclick="event.stopPropagation()">
-              <iframe src="${ytEmbed}" title="YouTube Video" allowFullScreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-            </div>
-          ` : ''}
-
-          ${igEmbed ? `
-            <div class="video-frame-wrapper is-shorts" style="margin-top: 1rem; border-radius: 8px; overflow: hidden;" onclick="event.stopPropagation()">
-              <iframe src="${igEmbed}" title="Instagram Reel" allowFullScreen></iframe>
-            </div>
-          ` : ''}
-        </div>
-      </div>
-    `;
-  });
-
-  if (products.length === 0) {
-    html = `
-      <div class="no-results animate-on-scroll">
-        <i class="fa-solid fa-box-open" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
-        <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">No products found</h3>
-        <p style="color: var(--text-muted);">Try searching with a different product name or category filter.</p>
-      </div>
-    `;
-    productsContainer.style.display = 'block';
-  } else {
-    productsContainer.style.display = 'grid';
-  }
-
-  productsContainer.innerHTML = html;
-}
-
-
