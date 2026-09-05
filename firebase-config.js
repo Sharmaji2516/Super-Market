@@ -13,7 +13,7 @@ const firebaseConfig = {
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 import { getFirestore, doc, getDoc, setDoc, collection, getDocs, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 // Initialize Firebase
@@ -22,6 +22,18 @@ const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
+
+// Ensure Firebase Auth session exists so Firestore rules allow writes
+export async function ensureFirebaseAuth() {
+  if (!auth.currentUser) {
+    try {
+      await signInAnonymously(auth);
+      console.log("Firebase anonymous session active.");
+    } catch (e) {
+      console.warn("Firebase Auth Notice:", e.message);
+    }
+  }
+}
 
 // Helper functions for our products
 export async function getProductsFromFirebase() {
