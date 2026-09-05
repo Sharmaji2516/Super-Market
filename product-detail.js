@@ -1,5 +1,23 @@
 import { listenForProducts } from './firebase-config.js?v=1.1.0';
 
+function getYouTubeEmbedUrl(url) {
+  if (!url || typeof url !== 'string') return null;
+  const trimmed = url.trim();
+  const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+  const match = trimmed.match(regExp);
+  return (match && match[1]) ? `https://www.youtube.com/embed/${match[1]}?autoplay=0&rel=0&modestbranding=1` : null;
+}
+
+function getInstagramEmbedUrl(url) {
+  if (!url || typeof url !== 'string') return null;
+  const trimmed = url.trim();
+  const match = trimmed.match(/instagram\.com\/(reel|p|tv)\/([^/?#&]+)/i);
+  if (!match) return null;
+  const mediaType = match[1] === 'tv' ? 'reel' : match[1];
+  const mediaId = match[2];
+  return `https://www.instagram.com/${mediaType}/${mediaId}/embed`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Mobile Menu Toggle
   const menuBtn = document.querySelector('.menu-btn');
@@ -60,6 +78,70 @@ document.addEventListener('DOMContentLoaded', () => {
     const waMsg = encodeURIComponent(`Hello CHITTORGARH HUB, I am interested in buying:\n*Product:* ${product.name}${product.price ? '\\n*Price:* ₹' + product.price : ''}${product.unit ? ' (' + product.unit + ')' : ''}`);
     const waUrl = `https://wa.me/917014974762?text=${waMsg}`;
 
+    // Detect cross-pasted URLs automatically
+    const rawYt = product.youtube_url || product.videoLink || '';
+    const rawIg = product.instagram_url || '';
+    let finalYtUrl = rawYt.trim();
+    let finalIgUrl = rawIg.trim();
+    
+    if (finalYtUrl.includes('instagram.com')) {
+      finalIgUrl = finalYtUrl;
+      finalYtUrl = '';
+    } else if (finalIgUrl.includes('youtube.com') || finalIgUrl.includes('youtu.be')) {
+      finalYtUrl = finalIgUrl;
+      finalIgUrl = '';
+    }
+    
+    const ytEmbed = getYouTubeEmbedUrl(finalYtUrl);
+    const igEmbed = getInstagramEmbedUrl(finalIgUrl);
+    const isYtShort = finalYtUrl.includes('/shorts/');
+
+    let videoSectionHtml = '';
+    if (finalYtUrl || finalIgUrl) {
+      videoSectionHtml = `<div class="product-video-embed-section">`;
+      
+      if (finalYtUrl) {
+        videoSectionHtml += `
+          <div class="video-embed-card yt-card">
+            <div class="video-header" style="color: #ff0000;">
+              <span><i class="fa-brands fa-youtube" style="margin-right: 8px;"></i> Product Video Demo</span>
+            </div>
+            ${ytEmbed ? `
+              <div class="video-frame-wrapper ${isYtShort ? 'is-shorts' : 'is-landscape'}">
+                <iframe 
+                  src="${ytEmbed}"
+                  title="YouTube Video"
+                  allowFullScreen
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                ></iframe>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+      
+      if (finalIgUrl) {
+        videoSectionHtml += `
+          <div class="video-embed-card ig-card">
+            <div class="video-header" style="color: #e1306c;">
+              <span><i class="fa-brands fa-instagram" style="margin-right: 8px;"></i> Instagram Reel Showcase</span>
+            </div>
+            ${igEmbed ? `
+              <div class="video-frame-wrapper is-shorts">
+                <iframe 
+                  src="${igEmbed}"
+                  title="Instagram Reel"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+      
+      videoSectionHtml += `</div>`;
+    }
+
     container.innerHTML = `
       <div class="product-page-layout">
         <!-- Image Section -->
@@ -91,18 +173,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="product-page-desc">
             <h3>Description</h3>
-            <p>${product.desc ? product.desc.replace(/\\n/g, '<br>') : 'No description available for this product.'}</p>
-          </div>
-
-          <div class="product-page-actions">
-            ${product.videoLink ? `
-              <a href="${product.videoLink}" target="_blank" class="product-page-btn video-btn">
-                <i class="fa-brands fa-youtube"></i> Watch Video Demo
-              </a>
-            ` : ''}
+            <p>${product.desc ? product.desc.replace(/\n/g, '<br>') : 'No description available for this product.'}</p>
           </div>
         </div>
       </div>
+      ${videoSectionHtml}
     `;
   });
 });

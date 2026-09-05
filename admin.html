@@ -420,6 +420,14 @@
             <input type="text" class="admin-input" id="new-videoLink" placeholder="e.g. Google Drive or YouTube link">
           </div>
           <div class="input-group full">
+            <label>YouTube Video URL (Optional)</label>
+            <input type="text" class="admin-input" id="new-youtube_url" placeholder="e.g. https://youtube.com/watch?v=...">
+          </div>
+          <div class="input-group full">
+            <label>Instagram Reel URL (Optional)</label>
+            <input type="text" class="admin-input" id="new-instagram_url" placeholder="e.g. https://instagram.com/reel/...">
+          </div>
+          <div class="input-group full">
             <label>Image URL</label>
             <div style="display: flex; gap: 10px; margin-bottom: 5px;">
               <input type="text" class="admin-input" id="new-image" placeholder="assets/images/product.jpg">
@@ -773,6 +781,14 @@
                 <input type="text" class="admin-input" id="videoLink-${p.id}" value="${p.videoLink || ''}" placeholder="e.g. https://youtube.com/watch?v=...">
               </div>
               <div class="input-group full">
+                <label>YouTube Video URL (Optional)</label>
+                <input type="text" class="admin-input" id="youtube_url-${p.id}" value="${p.youtube_url || ''}" placeholder="e.g. https://youtube.com/watch?v=...">
+              </div>
+              <div class="input-group full">
+                <label>Instagram Reel URL (Optional)</label>
+                <input type="text" class="admin-input" id="instagram_url-${p.id}" value="${p.instagram_url || ''}" placeholder="e.g. https://instagram.com/reel/...">
+              </div>
+              <div class="input-group full">
                 <label>Image URL</label>
                 <div style="display: flex; gap: 10px;">
                   <input type="text" class="admin-input" id="image-${p.id}" value="${p.image}" placeholder="e.g. assets/images/product.jpg">
@@ -813,6 +829,8 @@
       const unit = document.getElementById(`unit-${id}`).value;
       const image = document.getElementById(`image-${id}`).value;
       const videoLink = document.getElementById(`videoLink-${id}`).value;
+      const youtube_url = document.getElementById(`youtube_url-${id}`).value;
+      const instagram_url = document.getElementById(`instagram_url-${id}`).value;
       
       const product = productsArray.find(p => p.id == id);
       if (product) {
@@ -825,6 +843,8 @@
         product.unit = unit;
         product.image = image;
         product.videoLink = videoLink;
+        product.youtube_url = youtube_url;
+        product.instagram_url = instagram_url;
         
         await saveProductToFirebase(product);
         
@@ -918,6 +938,8 @@
       const offer = document.getElementById('new-offer').value;
       const desc = document.getElementById('new-desc').value;
       const videoLink = document.getElementById('new-videoLink').value;
+      const youtube_url = document.getElementById('new-youtube_url').value;
+      const instagram_url = document.getElementById('new-instagram_url').value;
       const image = document.getElementById('new-image').value;
 
       if (!name) {
@@ -943,6 +965,8 @@
         offer,
         desc,
         videoLink,
+        youtube_url,
+        instagram_url,
         image,
         inStock: true,
         isDeleted: false

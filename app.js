@@ -707,8 +707,39 @@ function renderProductsUI(products) {
     const waMsg = encodeURIComponent(`Hello CHITTORGARH HUB, I am interested in buying:\n*Product:* ${product.name}${product.price ? '\\n*Price:* ₹' + product.price : ''}${product.unit ? ' (' + product.unit + ')' : ''}`);
     const waUrl = `https://wa.me/917014974762?text=${waMsg}`;
     
+    const rawYt = product.youtube_url || product.videoLink || '';
+    const rawIg = product.instagram_url || '';
+    let finalYtUrl = rawYt.trim();
+    let finalIgUrl = rawIg.trim();
+    
+    if (finalYtUrl.includes('instagram.com')) {
+      finalIgUrl = finalYtUrl;
+      finalYtUrl = '';
+    } else if (finalIgUrl.includes('youtube.com') || finalIgUrl.includes('youtu.be')) {
+      finalYtUrl = finalIgUrl;
+      finalIgUrl = '';
+    }
+
+    let ytEmbed = null;
+    if (finalYtUrl) {
+      const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+      const match = finalYtUrl.match(regExp);
+      ytEmbed = (match && match[1]) ? `https://www.youtube.com/embed/${match[1]}?autoplay=0&rel=0&modestbranding=1` : null;
+    }
+
+    let igEmbed = null;
+    if (finalIgUrl) {
+      const match = finalIgUrl.match(/instagram\.com\/(reel|p|tv)\/([^/?#&]+)/i);
+      if (match) {
+        const mediaType = match[1] === 'tv' ? 'reel' : match[1];
+        igEmbed = `https://www.instagram.com/${mediaType}/${match[2]}/embed`;
+      }
+    }
+
+    const isYtShort = finalYtUrl.includes('/shorts/');
+
     html += `
-      <div class="product-card animate-on-scroll ${!inStock ? 'out-of-stock' : ''}" onclick="window.location.href='product-detail?id=${product.id}'" style="cursor: pointer;">
+      <div class="product-card animate-on-scroll ${!inStock ? 'out-of-stock' : ''}" onclick="window.location.href='product-detail.html?id=${product.id}'" style="cursor: pointer;">
         <div class="product-img-wrapper">
           ${discountPercent ? `<div class="product-badge" style="background: #2563eb;">${discountPercent}% OFF</div>` : (product.offer ? `<div class="product-badge">${product.offer}</div>` : '')}
           <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" style="${!inStock ? 'filter: grayscale(1); opacity: 0.6;' : ''}">
@@ -725,21 +756,29 @@ function renderProductsUI(products) {
           <div class="product-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #f1f5f9;">
             ${product.price ? `
             <div class="product-price">
-              <div class="price-amounts" style="display: flex; align-items: baseline; gap: 6px;">
-                <span class="current-price" style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">₹${product.price}</span>
-                ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `<span class="old-price" style="text-decoration: line-through; color: #94a3b8; font-size: 0.95rem; font-weight: 500;">₹${product.oldPrice}</span>` : ''}
+              <div class="price-amounts" style="display: flex; align-items: baseline; gap: 8px;">
+                <span class="current-price" style="font-size: 1.5rem; font-weight: 900; background: linear-gradient(135deg, var(--text-main), #475569); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">₹${product.price}</span>
+                ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `<span class="old-price" style="text-decoration: line-through; color: #94a3b8; font-size: 1rem; font-weight: 600;">₹${product.oldPrice}</span>` : ''}
               </div>
             </div>
             ` : '<div></div>'}
 
-            <span style="font-size: 0.8rem; font-weight: 700; color: ${inStock ? '#16a34a' : '#dc2626'}; background: ${inStock ? '#f0fdf4' : '#fef2f2'}; border: 1px solid ${inStock ? '#bbf7d0' : '#fecaca'}; padding: 3px 10px; border-radius: 20px;">
+            <div class="status-badge ${inStock ? 'in-stock' : 'out-stock'}">
+              <span class="status-dot"></span>
               ${inStock ? 'In Stock' : 'Out of Stock'}
-            </span>
+            </div>
           </div>
-          ${product.videoLink ? `
-            <a href="${product.videoLink}" target="_blank" class="product-external-link" style="margin-top: 0.8rem; display: block; text-align: center; color: var(--primary); font-size: 0.85rem; font-weight: 700;" onclick="event.stopPropagation()">
-              <i class="fa-solid fa-play-circle"></i> Watch Video Demo
-            </a>
+          
+          ${ytEmbed ? `
+            <div class="video-frame-wrapper ${isYtShort ? 'is-shorts' : 'is-landscape'}" style="margin-top: 1rem; border-radius: 8px; overflow: hidden;" onclick="event.stopPropagation()">
+              <iframe src="${ytEmbed}" title="YouTube Video" allowFullScreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            </div>
+          ` : ''}
+
+          ${igEmbed ? `
+            <div class="video-frame-wrapper is-shorts" style="margin-top: 1rem; border-radius: 8px; overflow: hidden;" onclick="event.stopPropagation()">
+              <iframe src="${igEmbed}" title="Instagram Reel" allowFullScreen></iframe>
+            </div>
           ` : ''}
         </div>
       </div>
