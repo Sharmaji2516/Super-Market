@@ -35,29 +35,57 @@ export async function ensureFirebaseAuth() {
   }
 }
 
+export async function fetchProductsViaRest() {
+    try {
+        const res = await fetch("https://firestore.googleapis.com/v1/projects/sonisonsproject/databases/(default)/documents/products?pageSize=300");
+        const data = await res.json();
+        if (data && data.documents && Array.isArray(data.documents)) {
+            return data.documents.map(doc => {
+                const id = doc.name.split('/').pop();
+                const fields = doc.fields || {};
+                const parsed = { id: isNaN(id) ? id : Number(id) };
+                Object.keys(fields).forEach(key => {
+                    const valObj = fields[key];
+                    if (valObj.stringValue !== undefined) parsed[key] = valObj.stringValue;
+                    else if (valObj.integerValue !== undefined) parsed[key] = Number(valObj.integerValue);
+                    else if (valObj.doubleValue !== undefined) parsed[key] = Number(valObj.doubleValue);
+                    else if (valObj.booleanValue !== undefined) parsed[key] = valObj.booleanValue;
+                    else if (valObj.arrayValue !== undefined) parsed[key] = (valObj.arrayValue.values || []).map(v => v.stringValue || v);
+                });
+                return parsed;
+            });
+        }
+    } catch (e) {
+        console.error("REST fetch error:", e);
+    }
+    return [];
+}
+
 // Helper functions for our products
 export async function getProductsFromFirebase() {
+    // 1. Instant REST fetch (<150ms)
+    const restProds = await fetchProductsViaRest();
+    if (restProds && restProds.length > 0) {
+        return restProds;
+    }
+
+    // 2. Fallback to SDK
     try {
         const querySnapshot = await getDocs(collection(db, "products"));
         const products = [];
         querySnapshot.forEach((doc) => {
             products.push({ id: doc.id, ...doc.data() });
         });
-        
-        // If no products in Firebase, we can initialize it with the local data once
-        if (products.length === 0) {
-            return null; 
-        }
-        return products;
+        if (products.length > 0) return products;
     } catch (e) {
-        console.error("Error fetching products: ", e);
-        return null;
+        console.warn("Firestore SDK fetch notice: ", e);
     }
+
+    return [];
 }
 
 export async function saveProductToFirebase(product) {
     try {
-        // Use setDoc with Merge to update existing or create new
         const docRef = doc(db, "products", product.id.toString());
         await setDoc(docRef, product, { merge: true });
         console.log("Product saved successfully!");
@@ -89,16 +117,34 @@ export async function updateProductStock(id, status) {
 }
 
 export function listenForProducts(callback) {
-    const productsRef = collection(db, "products");
-    return onSnapshot(productsRef, (querySnapshot) => {
-        const products = [];
-        querySnapshot.forEach((doc) => {
-            products.push({ id: doc.id, ...doc.data() });
+    // 1. Immediately emit via REST fetch so data displays in <150ms
+    fetchProductsViaRest().then(prods => {
+        if (prods && prods.length > 0) {
+            callback(prods);
+        }
+    }).catch(console.warn);
+
+    // 2. Attach real-time onSnapshot listener
+    try {
+        const productsRef = collection(db, "products");
+        return onSnapshot(productsRef, (querySnapshot) => {
+            const products = [];
+            querySnapshot.forEach((doc) => {
+                products.push({ id: doc.id, ...doc.data() });
+            });
+            if (products.length > 0) {
+                callback(products);
+            }
+        }, async (error) => {
+            console.warn("Snapshot listener fallback: ", error);
+            const fallbackProds = await fetchProductsViaRest();
+            if (fallbackProds && fallbackProds.length > 0) {
+                callback(fallbackProds);
+            }
         });
-        callback(products);
-    }, (error) => {
-        console.error("Error with snapshot listener: ", error);
-    });
+    } catch (snapErr) {
+        console.warn("onSnapshot attach error:", snapErr);
+    }
 }
 
 export async function saveCategoryOrderToFirebase(data) {
@@ -114,6 +160,22 @@ export async function saveCategoryOrderToFirebase(data) {
 }
 
 export function listenForCategoryOrder(callback) {
+    // Immediate fallback fetch
+    fetch("https://firestore.googleapis.com/v1/projects/sonisonsproject/databases/(default)/documents/settings/categoryOrder")
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.fields) {
+          const rawOrder = data.fields.order?.arrayValue?.values?.map(v => v.stringValue) || [];
+          const rawImages = {};
+          if (data.fields.images?.mapValue?.fields) {
+            Object.keys(data.fields.images.mapValue.fields).forEach(k => {
+              rawImages[k] = data.fields.images.mapValue.fields[k]?.stringValue || '';
+            });
+          }
+          callback({ order: rawOrder, images: rawImages });
+        }
+      }).catch(console.warn);
+
     const docRef = doc(db, "settings", "categoryOrder");
     return onSnapshot(docRef, (docSnap) => {
         if (docSnap.exists()) {
@@ -123,8 +185,7 @@ export function listenForCategoryOrder(callback) {
             callback({ order: [], images: {} });
         }
     }, (error) => {
-        console.error("Error listening for category metadata: ", error);
-        callback({ order: [], images: {} });
+        console.warn("Category order listener warning: ", error);
     });
 }
 

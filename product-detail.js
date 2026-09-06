@@ -1,4 +1,4 @@
-import { listenForProducts } from './firebase-config.js?v=1.1.0';
+import { listenForProducts } from './firebase-config.js?v=1.3.5';
 
 export function getYouTubeEmbedUrl(url) {
   if (!url || typeof url !== 'string') return null;

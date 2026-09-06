@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Admin Dashboard | Chittorgarh Hub</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --admin-bg: #f8fafc;
@@ -43,10 +46,10 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
-    
+
     .nav-left {
       display: flex;
       align-items: center;
@@ -64,26 +67,31 @@
       text-decoration: none;
       transition: all 0.2s;
     }
+
     .admin-ct-brand:hover {
       background: rgba(255, 255, 255, 0.12);
       border-color: #34d399;
       transform: translateY(-1px);
     }
+
     .ct-nav-logo {
       height: 32px;
       object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     }
+
     .ct-nav-text {
       display: flex;
       flex-direction: column;
     }
+
     .ct-nav-name {
       color: #ffffff;
       font-size: 0.85rem;
       font-weight: 800;
       letter-spacing: 0.3px;
     }
+
     .ct-nav-tag {
       color: #34d399;
       font-size: 0.62rem;
@@ -107,6 +115,7 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
     }
+
     .store-nav-icon {
       width: 34px;
       height: 34px;
@@ -119,6 +128,7 @@
       color: #34d399;
       font-size: 1.1rem;
     }
+
     .store-nav-title {
       color: white;
       font-family: 'Outfit', sans-serif;
@@ -126,9 +136,11 @@
       font-size: 1.35rem;
       letter-spacing: 0.5px;
     }
+
     .store-nav-title span {
       color: #34d399;
     }
+
     .admin-nav-pill {
       font-size: 0.68rem;
       font-weight: 800;
@@ -160,6 +172,7 @@
       gap: 6px;
       letter-spacing: 0.4px;
     }
+
     .badge-live::before {
       content: "";
       width: 7px;
@@ -168,14 +181,25 @@
       border-radius: 50%;
       animation: pulseDot 2s infinite;
     }
+
     @keyframes pulseDot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.8);
+      }
     }
+
     .btn-nav {
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
       color: white;
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 7px 14px;
       border-radius: 10px;
       font-size: 0.82rem;
@@ -187,15 +211,18 @@
       text-decoration: none;
       transition: all 0.2s;
     }
+
     .btn-nav:hover {
-      background: rgba(255,255,255,0.18);
+      background: rgba(255, 255, 255, 0.18);
       color: white;
       transform: translateY(-1px);
     }
+
     .btn-logout {
       background: #ef4444;
       border-color: #ef4444;
     }
+
     .btn-logout:hover {
       background: #dc2626;
     }
@@ -216,11 +243,13 @@
       box-shadow: 0 8px 25px rgba(15, 23, 42, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
+
     .tabs-header {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
     }
+
     .tab-btn {
       background: transparent;
       border: none;
@@ -238,39 +267,19 @@
       font-family: inherit;
       white-space: nowrap;
     }
+
     .tab-btn:hover {
       color: white;
       background: rgba(255, 255, 255, 0.06);
     }
+
     .tab-btn.active {
       background: #ffffff;
       color: #0f172a;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       font-weight: 800;
     }
-    .tab-btn.active i {
-      color: #059669;
-    }
-      border-radius: 12px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      white-space: nowrap;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }
-    .tab-btn:hover {
-      color: white;
-      background: rgba(255,255,255,0.06);
-    }
-    .tab-btn.active {
-      background: #ffffff;
-      color: #0f172a;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
+
     .tab-btn.active i {
       color: #059669;
     }
@@ -282,6 +291,7 @@
       gap: 18px;
       margin-bottom: 24px;
     }
+
     .stat-card {
       background: white;
       padding: 20px 24px;
@@ -292,6 +302,7 @@
       justify-content: space-between;
       align-items: center;
     }
+
     .stat-info h4 {
       margin: 0;
       font-size: 0.8rem;
@@ -300,6 +311,7 @@
       font-weight: 700;
       letter-spacing: 0.5px;
     }
+
     .stat-info .stat-num {
       font-size: 1.8rem;
       font-weight: 900;
@@ -307,6 +319,7 @@
       margin: 4px 0 0;
       font-family: 'Outfit', sans-serif;
     }
+
     .stat-icon {
       width: 48px;
       height: 48px;
@@ -316,11 +329,31 @@
       justify-content: center;
       font-size: 1.3rem;
     }
-    .stat-icon.green { background: #ecfdf5; color: #059669; }
-    .stat-icon.amber { background: #fffbeb; color: #d97706; }
-    .stat-icon.red { background: #fef2f2; color: #dc2626; }
-    .stat-icon.purple { background: #faf5ff; color: #9333ea; }
-    .stat-icon.blue { background: #eff6ff; color: #2563eb; }
+
+    .stat-icon.green {
+      background: #ecfdf5;
+      color: #059669;
+    }
+
+    .stat-icon.amber {
+      background: #fffbeb;
+      color: #d97706;
+    }
+
+    .stat-icon.red {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    .stat-icon.purple {
+      background: #faf5ff;
+      color: #9333ea;
+    }
+
+    .stat-icon.blue {
+      background: #eff6ff;
+      color: #2563eb;
+    }
 
     .clickable-stat {
       cursor: pointer;
@@ -328,12 +361,14 @@
       transition: all 0.2s ease;
       border: 1.5px solid transparent;
     }
+
     .clickable-stat:hover {
       transform: translateY(-3px);
       box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
       border-color: #38bdf8;
       background: #f8fafc;
     }
+
     .stat-click-hint {
       display: inline-flex;
       align-items: center;
@@ -344,6 +379,7 @@
       margin-top: 5px;
       letter-spacing: 0.2px;
     }
+
     .clickable-stat:hover .stat-click-hint {
       text-decoration: underline;
     }
@@ -359,10 +395,12 @@
       align-items: center;
       gap: 6px;
     }
+
     .cat-stat-badge strong {
       color: #0f172a;
       font-weight: 800;
     }
+
     .analytics-tab-btn {
       background: none;
       border: none;
@@ -377,10 +415,12 @@
       gap: 8px;
       transition: 0.2s;
     }
+
     .analytics-tab-btn:hover {
       background: #f1f5f9;
       color: #0f172a;
     }
+
     .analytics-tab-btn.active {
       background: #0f172a;
       color: white;
@@ -393,10 +433,12 @@
       padding: 16px;
       transition: all 0.2s ease;
     }
+
     .analytics-cat-card:hover {
       border-color: #93c5fd;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
     }
+
     .analytics-cat-header {
       display: flex;
       justify-content: space-between;
@@ -405,6 +447,7 @@
       flex-wrap: wrap;
       gap: 8px;
     }
+
     .analytics-cat-title {
       font-size: 1.05rem;
       font-weight: 800;
@@ -413,6 +456,7 @@
       align-items: center;
       gap: 8px;
     }
+
     .subcat-tag-pill {
       display: inline-flex;
       align-items: center;
@@ -427,11 +471,13 @@
       cursor: pointer;
       transition: 0.15s;
     }
+
     .subcat-tag-pill:hover {
       background: #dcfce7;
       border-color: #86efac;
       transform: translateY(-1px);
     }
+
     .subcat-tag-pill .count {
       background: #166534;
       color: white;
@@ -439,6 +485,7 @@
       padding: 1px 6px;
       border-radius: 10px;
     }
+
     .btn-filter-registry {
       background: #eff6ff;
       color: #2563eb;
@@ -453,6 +500,7 @@
       gap: 5px;
       transition: 0.15s;
     }
+
     .btn-filter-registry:hover {
       background: #2563eb;
       color: white;
@@ -467,6 +515,7 @@
       box-shadow: var(--shadow-sm);
       margin-bottom: 20px;
     }
+
     .registry-title-row {
       display: flex;
       justify-content: space-between;
@@ -475,6 +524,7 @@
       flex-wrap: wrap;
       gap: 15px;
     }
+
     .registry-title-row h3 {
       margin: 0;
       font-size: 1.4rem;
@@ -482,18 +532,20 @@
       color: var(--admin-primary);
       font-family: 'Outfit', sans-serif;
     }
+
     .registry-title-row p {
       margin: 4px 0 0;
       font-size: 0.88rem;
       color: var(--admin-muted);
     }
-    
+
     .action-buttons-group {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
     }
+
     .btn-action {
       padding: 11px 18px;
       border-radius: 10px;
@@ -509,27 +561,33 @@
       transition: all 0.2s;
       font-family: inherit;
     }
+
     .btn-bulk-import {
       background: #f8fafc;
       color: #334155;
       border: 1.5px solid #cbd5e1;
     }
+
     .btn-bulk-import:hover {
       background: #f1f5f9;
       border-color: #94a3b8;
     }
+
     .btn-single-add {
       background: #92400e;
       color: #fff;
     }
+
     .btn-single-add:hover {
       background: #78350f;
       box-shadow: 0 4px 12px rgba(146, 64, 14, 0.25);
     }
+
     .btn-create-hamper {
       background: #0f172a;
       color: #fff;
     }
+
     .btn-create-hamper:hover {
       background: #1e293b;
       box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
@@ -542,11 +600,13 @@
       align-items: center;
       flex-wrap: wrap;
     }
+
     .search-box-wrap {
       flex: 1;
       min-width: 260px;
       position: relative;
     }
+
     .search-box-wrap i {
       position: absolute;
       left: 16px;
@@ -555,6 +615,7 @@
       color: #94a3b8;
       font-size: 1rem;
     }
+
     .admin-search-input {
       width: 100%;
       box-sizing: border-box;
@@ -567,11 +628,13 @@
       outline: none;
       transition: all 0.2s;
     }
+
     .admin-search-input:focus {
       background: white;
       border-color: var(--admin-accent);
       box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
     }
+
     .filter-select {
       padding: 12px 16px;
       border-radius: 10px;
@@ -584,6 +647,7 @@
       cursor: pointer;
       font-family: inherit;
     }
+
     .filter-select:focus {
       border-color: var(--admin-accent);
       background: white;
@@ -601,16 +665,19 @@
       justify-content: space-between;
       animation: fadeIn 0.2s ease;
     }
+
     .bulk-selection-bar.active {
       display: flex;
     }
+
     .bulk-btns {
       display: flex;
       gap: 10px;
     }
+
     .bulk-action-btn {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: white;
       padding: 6px 14px;
       border-radius: 8px;
@@ -619,13 +686,16 @@
       cursor: pointer;
       transition: 0.2s;
     }
+
     .bulk-action-btn:hover {
-      background: rgba(255,255,255,0.25);
+      background: rgba(255, 255, 255, 0.25);
     }
+
     .bulk-action-btn.danger {
       background: #dc2626;
       border-color: #ef4444;
     }
+
     .bulk-action-btn.danger:hover {
       background: #b91c1c;
     }
@@ -638,16 +708,19 @@
       box-shadow: var(--shadow-sm);
       overflow-x: auto;
     }
+
     .registry-table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
       font-size: 0.9rem;
     }
+
     .registry-table thead {
       background: #f8fafc;
       border-bottom: 1.5px solid var(--admin-border);
     }
+
     .registry-table th {
       padding: 15px 18px;
       font-size: 0.78rem;
@@ -657,16 +730,20 @@
       letter-spacing: 0.6px;
       white-space: nowrap;
     }
+
     .registry-table tbody tr {
       border-bottom: 1px solid #f1f5f9;
       transition: background 0.15s;
     }
+
     .registry-table tbody tr:last-child {
       border-bottom: none;
     }
+
     .registry-table tbody tr:hover {
       background: #f8fafc;
     }
+
     .registry-table td {
       padding: 16px 18px;
       vertical-align: middle;
@@ -682,6 +759,7 @@
       border-radius: 6px;
       white-space: nowrap;
     }
+
     .product-thumb {
       width: 54px;
       height: 54px;
@@ -691,9 +769,11 @@
       border: 1px solid var(--admin-border);
       display: block;
     }
+
     .product-title-cell {
       max-width: 260px;
     }
+
     .product-title-cell .title-text {
       font-weight: 700;
       color: var(--admin-primary);
@@ -701,11 +781,13 @@
       margin-bottom: 3px;
       line-height: 1.3;
     }
+
     .product-title-cell .unit-tag {
       font-size: 0.78rem;
       color: var(--admin-muted);
       font-weight: 600;
     }
+
     .dept-tag {
       font-size: 0.82rem;
       font-weight: 700;
@@ -716,27 +798,31 @@
       display: inline-block;
       white-space: nowrap;
     }
+
     .cat-tag {
       font-size: 0.82rem;
       font-weight: 600;
       color: #475569;
       white-space: nowrap;
     }
+
     .price-cell {
       white-space: nowrap;
     }
+
     .price-main {
       font-weight: 800;
       color: #047857;
       font-size: 1rem;
     }
+
     .price-mrp {
       font-size: 0.8rem;
       color: #94a3b8;
       text-decoration: line-through;
       margin-left: 5px;
     }
-    
+
     /* Toggle Switch */
     .toggle-switch-sm {
       position: relative;
@@ -744,19 +830,25 @@
       width: 44px;
       height: 24px;
     }
+
     .toggle-switch-sm input {
       opacity: 0;
       width: 0;
       height: 0;
     }
+
     .slider-sm {
       position: absolute;
       cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background-color: #cbd5e1;
       transition: .3s;
       border-radius: 24px;
     }
+
     .slider-sm:before {
       position: absolute;
       content: "";
@@ -767,14 +859,17 @@
       background-color: white;
       transition: .3s;
       border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
-    input:checked + .slider-sm {
+
+    input:checked+.slider-sm {
       background-color: #10b981;
     }
-    input:checked + .slider-sm:before {
+
+    input:checked+.slider-sm:before {
       transform: translateX(20px);
     }
+
     .stock-badge-pill {
       font-size: 0.75rem;
       font-weight: 800;
@@ -784,8 +879,16 @@
       margin-left: 8px;
       vertical-align: middle;
     }
-    .stock-in { background: #dcfce7; color: #15803d; }
-    .stock-out { background: #fee2e2; color: #b91c1c; }
+
+    .stock-in {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .stock-out {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
 
     .flag-badge {
       font-size: 0.72rem;
@@ -799,13 +902,14 @@
       border: 1px solid #fde68a;
       display: inline-block;
     }
-    
+
     /* Action Buttons in Row */
     .row-actions {
       display: flex;
       align-items: center;
       gap: 6px;
     }
+
     .btn-table-edit {
       background: white;
       border: 1.5px solid #cbd5e1;
@@ -822,11 +926,13 @@
       letter-spacing: 0.5px;
       transition: all 0.15s;
     }
+
     .btn-table-edit:hover {
       border-color: #0f172a;
       background: #0f172a;
       color: white;
     }
+
     .btn-table-del {
       background: #fff;
       border: 1.5px solid #fecaca;
@@ -837,6 +943,7 @@
       cursor: pointer;
       transition: all 0.15s;
     }
+
     .btn-table-del:hover {
       background: #dc2626;
       border-color: #dc2626;
@@ -847,19 +954,31 @@
     .tab-content {
       display: none;
     }
+
     .tab-content.active {
       display: block;
       animation: fadeIn 0.25s ease;
     }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Modal Styling */
     .admin-modal-overlay {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(4px);
       z-index: 9999;
@@ -868,9 +987,11 @@
       justify-content: center;
       padding: 20px;
     }
+
     .admin-modal-overlay.active {
       display: flex;
     }
+
     .admin-modal {
       background: white;
       border-radius: 20px;
@@ -882,13 +1003,23 @@
       border: 1px solid var(--admin-border);
       animation: modalSlide 0.25s ease;
     }
+
     .admin-modal.wide {
       max-width: 860px;
     }
+
     @keyframes modalSlide {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
+
     .modal-header {
       padding: 22px 28px;
       border-bottom: 1.5px solid var(--admin-border);
@@ -900,6 +1031,7 @@
       background: white;
       z-index: 10;
     }
+
     .modal-header h3 {
       margin: 0;
       font-size: 1.25rem;
@@ -910,6 +1042,7 @@
       gap: 10px;
       font-family: 'Outfit', sans-serif;
     }
+
     .modal-close-btn {
       background: #f1f5f9;
       border: none;
@@ -924,13 +1057,16 @@
       justify-content: center;
       transition: 0.2s;
     }
+
     .modal-close-btn:hover {
       background: #e2e8f0;
       color: #0f172a;
     }
+
     .modal-body {
       padding: 26px 28px;
     }
+
     .modal-footer {
       padding: 18px 28px;
       border-top: 1.5px solid var(--admin-border);
@@ -947,17 +1083,21 @@
       grid-template-columns: 1fr 1fr;
       gap: 18px;
     }
+
     .form-grid-3 {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 16px;
     }
+
     .form-group {
       margin-bottom: 18px;
     }
+
     .form-group.full {
       grid-column: 1 / -1;
     }
+
     .form-group label {
       display: block;
       font-size: 0.85rem;
@@ -965,6 +1105,7 @@
       color: #334155;
       margin-bottom: 7px;
     }
+
     .form-control {
       width: 100%;
       box-sizing: border-box;
@@ -976,10 +1117,12 @@
       outline: none;
       transition: 0.2s;
     }
+
     .form-control:focus {
       border-color: var(--admin-accent);
       box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
     }
+
     textarea.form-control {
       resize: vertical;
       min-height: 80px;
@@ -994,22 +1137,24 @@
       color: white;
       padding: 10px 18px;
       border-radius: 50px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
       display: flex;
       align-items: center;
       gap: 12px;
       font-size: 0.82rem;
       z-index: 99;
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       transition: all 0.2s;
       text-decoration: none;
     }
+
     .dev-support-widget:hover {
       background: #1e293b;
       transform: translateY(-2px);
-      box-shadow: 0 16px 36px rgba(0,0,0,0.35);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
       border-color: #34d399;
     }
+
     .dev-support-widget .dev-icon {
       width: 34px;
       height: 34px;
@@ -1022,6 +1167,7 @@
       font-size: 0.95rem;
       flex-shrink: 0;
     }
+
     .dev-support-info div:first-child {
       font-weight: 800;
       font-size: 0.68rem;
@@ -1029,6 +1175,7 @@
       letter-spacing: 0.6px;
       text-transform: uppercase;
     }
+
     .dev-support-info div:last-child {
       font-weight: 800;
       color: #34d399;
@@ -1048,6 +1195,7 @@
       max-width: 380px;
       width: calc(100vw - 48px);
     }
+
     .toast-card {
       pointer-events: auto;
       background: #0f172a;
@@ -1063,20 +1211,24 @@
       animation: toastSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       transition: all 0.3s ease;
     }
+
     .toast-card.hide {
       opacity: 0;
       transform: translateY(20px) scale(0.95);
     }
+
     @keyframes toastSlideUp {
       from {
         opacity: 0;
         transform: translateY(25px) scale(0.95);
       }
+
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
       }
     }
+
     .toast-content {
       display: flex;
       align-items: center;
@@ -1085,6 +1237,7 @@
       font-weight: 700;
       line-height: 1.4;
     }
+
     .toast-icon {
       width: 30px;
       height: 30px;
@@ -1095,14 +1248,43 @@
       font-size: 0.95rem;
       flex-shrink: 0;
     }
-    .toast-card.success .toast-icon { background: rgba(16, 185, 129, 0.2); color: #34d399; }
-    .toast-card.success { border-left: 4px solid #10b981; }
-    .toast-card.error .toast-icon { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-    .toast-card.error { border-left: 4px solid #ef4444; }
-    .toast-card.warning .toast-icon { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-    .toast-card.warning { border-left: 4px solid #f59e0b; }
-    .toast-card.info .toast-icon { background: rgba(14, 165, 233, 0.2); color: #38bdf8; }
-    .toast-card.info { border-left: 4px solid #0ea5e9; }
+
+    .toast-card.success .toast-icon {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    .toast-card.success {
+      border-left: 4px solid #10b981;
+    }
+
+    .toast-card.error .toast-icon {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
+
+    .toast-card.error {
+      border-left: 4px solid #ef4444;
+    }
+
+    .toast-card.warning .toast-icon {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+    }
+
+    .toast-card.warning {
+      border-left: 4px solid #f59e0b;
+    }
+
+    .toast-card.info .toast-icon {
+      background: rgba(14, 165, 233, 0.2);
+      color: #38bdf8;
+    }
+
+    .toast-card.info {
+      border-left: 4px solid #0ea5e9;
+    }
+
     .toast-close-btn {
       background: none;
       border: none;
@@ -1115,6 +1297,7 @@
       justify-content: center;
       transition: 0.15s;
     }
+
     .toast-close-btn:hover {
       color: white;
     }
@@ -1127,6 +1310,7 @@
       border-bottom: 1.5px solid var(--admin-border);
       padding-bottom: 10px;
     }
+
     .bulk-nav-btn {
       padding: 8px 16px;
       border-radius: 8px;
@@ -1137,25 +1321,42 @@
       font-size: 0.85rem;
       cursor: pointer;
     }
+
     .bulk-nav-btn.active {
       background: #0f172a;
       color: white;
     }
 
     @media (max-width: 900px) {
-      .admin-main { padding: 16px; }
-      .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .dev-support-widget { bottom: 16px; right: 16px; padding: 8px 14px; }
+      .admin-main {
+        padding: 16px;
+      }
+
+      .form-grid-2,
+      .form-grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .dev-support-widget {
+        bottom: 16px;
+        right: 16px;
+        padding: 8px 14px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Top Navigation Bar -->
   <header class="admin-navbar">
     <div class="nav-left">
-      <a href="https://www.chittortech.online/" target="_blank" class="admin-ct-brand" title="Official Developer: ChittorTech">
+      <a href="https://www.chittortech.online/" target="_blank" class="admin-ct-brand"
+        title="Official Developer: ChittorTech">
         <img src="chittortech_logo_1775884354186.png" alt="ChittorTech Logo" class="ct-nav-logo">
         <div class="ct-nav-text">
           <span class="ct-nav-name">ChittorTech</span>
@@ -1184,7 +1385,7 @@
   </header>
 
   <main class="admin-main">
-    
+
     <!-- Segmented Navigation Tabs (Orient Crockeries Style) -->
     <div class="tabs-header-wrapper">
       <div class="tabs-header">
@@ -1205,7 +1406,7 @@
 
     <!-- TAB 1: INVENTORY REGISTRY -->
     <section id="tab-inventory" class="tab-content active">
-      
+
       <!-- Stats Row -->
       <div class="stats-grid">
         <div class="stat-card">
@@ -1229,7 +1430,8 @@
           </div>
           <div class="stat-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
         </div>
-        <div class="stat-card clickable-stat" onclick="openCategoryAnalyticsModal('categories')" title="Click to view all categories, subcategories & product counts">
+        <div class="stat-card clickable-stat" onclick="openCategoryAnalyticsModal('categories')"
+          title="Click to view all categories, subcategories & product counts">
           <div class="stat-info">
             <h4>Active Categories</h4>
             <div class="stat-num" id="stat-categories">0</div>
@@ -1237,7 +1439,8 @@
           </div>
           <div class="stat-icon amber"><i class="fa-solid fa-tags"></i></div>
         </div>
-        <div class="stat-card clickable-stat" onclick="openCategoryAnalyticsModal('subcategories')" title="Click to view all active subcategories">
+        <div class="stat-card clickable-stat" onclick="openCategoryAnalyticsModal('subcategories')"
+          title="Click to view all active subcategories">
           <div class="stat-info">
             <h4>Active Subcategories</h4>
             <div class="stat-num" id="stat-subcategories">0</div>
@@ -1270,7 +1473,8 @@
         <div class="filter-toolbar">
           <div class="search-box-wrap">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="registry-search" class="admin-search-input" placeholder="Search name, category, SKU, barcode, #ID...">
+            <input type="text" id="registry-search" class="admin-search-input"
+              placeholder="Search name, category, SKU, barcode, #ID...">
           </div>
           <select id="filter-category" class="filter-select">
             <option value="ALL">All Categories</option>
@@ -1345,7 +1549,8 @@
           </button>
         </div>
 
-        <div id="category-order-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 20px;">
+        <div id="category-order-list"
+          style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 20px;">
           <p style="color: #94a3b8;"><i class="fa-solid fa-spinner fa-spin"></i> Loading categories...</p>
         </div>
       </div>
@@ -1353,31 +1558,53 @@
 
     <!-- TAB 3: COMBOS & GIFT HAMPERS -->
     <section id="tab-hampers" class="tab-content">
-      
+
       <!-- Client How-To Guide Box -->
-      <div style="background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 16px; padding: 18px 22px; margin-bottom: 22px; box-shadow: var(--shadow-sm);">
+      <div
+        style="background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 16px; padding: 18px 22px; margin-bottom: 22px; box-shadow: var(--shadow-sm);">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-          <h4 style="margin: 0; color: #b45309; font-size: 1rem; font-weight: 800; display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-lightbulb" style="color: #f59e0b; font-size: 1.1rem;"></i> How to Create & Manage Combos & Gift Hampers (Client Instructions)
+          <h4
+            style="margin: 0; color: #b45309; font-size: 1rem; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-lightbulb" style="color: #f59e0b; font-size: 1.1rem;"></i> How to Create & Manage
+            Combos & Gift Hampers (Client Instructions)
           </h4>
-          <span style="font-size: 0.72rem; background: #fef3c7; color: #92400e; font-weight: 800; padding: 4px 10px; border-radius: 20px; border: 1px solid #fde68a;">STORE OWNER GUIDE</span>
+          <span
+            style="font-size: 0.72rem; background: #fef3c7; color: #92400e; font-weight: 800; padding: 4px 10px; border-radius: 20px; border: 1px solid #fde68a;">STORE
+            OWNER GUIDE</span>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; font-size: 0.82rem; color: #78350f;">
-          <div style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-1" style="color: #f59e0b;"></i> Click Create Combo</div>
-            <p style="margin: 0; line-height: 1.45; color: #451a03;">Click the <b>"+ Create New Combo"</b> button on the right to open the hamper builder.</p>
+        <div
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; font-size: 0.82rem; color: #78350f;">
+          <div
+            style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div
+              style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-1" style="color: #f59e0b;"></i> Click Create Combo</div>
+            <p style="margin: 0; line-height: 1.45; color: #451a03;">Click the <b>"+ Create New Combo"</b> button on the
+              right to open the hamper builder.</p>
           </div>
-          <div style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-2" style="color: #f59e0b;"></i> Name & Set Pricing</div>
-            <p style="margin: 0; line-height: 1.45; color: #451a03;">Set the <b>Combo Name</b>, discounted <b>Offer Price</b> (what customer pays), and total <b>Original MRP</b>.</p>
+          <div
+            style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div
+              style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-2" style="color: #f59e0b;"></i> Name & Set Pricing</div>
+            <p style="margin: 0; line-height: 1.45; color: #451a03;">Set the <b>Combo Name</b>, discounted <b>Offer
+                Price</b> (what customer pays), and total <b>Original MRP</b>.</p>
           </div>
-          <div style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-3" style="color: #f59e0b;"></i> Pick Bundled Items</div>
-            <p style="margin: 0; line-height: 1.45; color: #451a03;">Check off the items from your inventory that are included in this combo package.</p>
+          <div
+            style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div
+              style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-3" style="color: #f59e0b;"></i> Pick Bundled Items</div>
+            <p style="margin: 0; line-height: 1.45; color: #451a03;">Check off the items from your inventory that are
+              included in this combo package.</p>
           </div>
-          <div style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-4" style="color: #f59e0b;"></i> Publish to Store</div>
-            <p style="margin: 0; line-height: 1.45; color: #451a03;">Click <b>"Create & Publish Combo"</b>. The bundle will display in your store catalog with savings badges!</p>
+          <div
+            style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div
+              style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-4" style="color: #f59e0b;"></i> Publish to Store</div>
+            <p style="margin: 0; line-height: 1.45; color: #451a03;">Click <b>"Create & Publish Combo"</b>. The bundle
+              will display in your store catalog with savings badges!</p>
           </div>
         </div>
       </div>
@@ -1392,7 +1619,8 @@
             <i class="fa-solid fa-plus"></i> Create New Combo
           </button>
         </div>
-        <div id="hampers-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; margin-top: 15px;">
+        <div id="hampers-grid"
+          style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; margin-top: 15px;">
           <!-- Dynamically filled -->
         </div>
       </div>
@@ -1400,7 +1628,7 @@
 
     <!-- TAB 4: HELP & DEVELOPER SUPPORT -->
     <section id="tab-help" class="tab-content">
-      
+
       <!-- Developer Support Hero Card (ChittorTech) -->
       <div class="registry-header-card" style="border-left: 6px solid #059669; margin-bottom: 24px;">
         <div class="registry-title-row">
@@ -1408,55 +1636,75 @@
             <h3 style="color: #0f172a; display: flex; align-items: center; gap: 10px;">
               <i class="fa-solid fa-headset" style="color: #059669;"></i> 24/7 ChittorTech Developer Support
             </h3>
-            <p>Need technical help, bulk inventory uploads, custom feature requests, or troubleshooting? Contact us anytime.</p>
+            <p>Need technical help, bulk inventory uploads, custom feature requests, or troubleshooting? Contact us
+              anytime.</p>
           </div>
-          <a href="https://www.chittortech.online/" target="_blank" class="btn-action" style="background: #0f172a; color: white;">
+          <a href="https://www.chittortech.online/" target="_blank" class="btn-action"
+            style="background: #0f172a; color: white;">
             <i class="fa-solid fa-globe"></i> Visit ChittorTech
           </a>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 15px;">
+        <div
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 15px;">
           <!-- Phone / Call -->
-          <a href="tel:+917597451057" style="background: #f0fdf4; border: 1.5px solid #bbf7d0; padding: 18px 20px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; gap: 14px; transition: 0.2s;">
-            <div style="width: 44px; height: 44px; background: #22c55e; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+          <a href="tel:+917597451057"
+            style="background: #f0fdf4; border: 1.5px solid #bbf7d0; padding: 18px 20px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; gap: 14px; transition: 0.2s;">
+            <div
+              style="width: 44px; height: 44px; background: #22c55e; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
               <i class="fa-solid fa-phone"></i>
             </div>
             <div>
-              <div style="font-size: 0.75rem; color: #15803d; font-weight: 800; text-transform: uppercase;">Direct Phone Call</div>
+              <div style="font-size: 0.75rem; color: #15803d; font-weight: 800; text-transform: uppercase;">Direct Phone
+                Call</div>
               <div style="font-size: 1rem; color: #0f172a; font-weight: 800; margin-top: 2px;">+91 7597451057</div>
             </div>
           </a>
 
           <!-- WhatsApp -->
-          <a href="https://wa.me/917597451057?text=Hello%20ChittorTech,%20I%20need%20support%20for%20Chittorgarh%20Hub%20Store" target="_blank" style="background: #f0fdf4; border: 1.5px solid #86efac; padding: 18px 20px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; gap: 14px; transition: 0.2s;">
-            <div style="width: 44px; height: 44px; background: #25d366; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+          <a href="https://wa.me/917597451057?text=Hello%20ChittorTech,%20I%20need%20support%20for%20Chittorgarh%20Hub%20Store"
+            target="_blank"
+            style="background: #f0fdf4; border: 1.5px solid #86efac; padding: 18px 20px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; gap: 14px; transition: 0.2s;">
+            <div
+              style="width: 44px; height: 44px; background: #25d366; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
               <i class="fa-brands fa-whatsapp"></i>
             </div>
             <div>
-              <div style="font-size: 0.75rem; color: #15803d; font-weight: 800; text-transform: uppercase;">WhatsApp Support</div>
+              <div style="font-size: 0.75rem; color: #15803d; font-weight: 800; text-transform: uppercase;">WhatsApp
+                Support</div>
               <div style="font-size: 1rem; color: #0f172a; font-weight: 800; margin-top: 2px;">Chat on WhatsApp</div>
             </div>
           </a>
 
           <!-- Email Official -->
-          <a href="mailto:support@chittortech.online" style="background: #eff6ff; border: 1.5px solid #bfdbfe; padding: 18px 20px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; gap: 14px; transition: 0.2s;">
-            <div style="width: 44px; height: 44px; background: #3b82f6; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">
+          <a href="mailto:support@chittortech.online"
+            style="background: #eff6ff; border: 1.5px solid #bfdbfe; padding: 18px 20px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; gap: 14px; transition: 0.2s;">
+            <div
+              style="width: 44px; height: 44px; background: #3b82f6; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">
               <i class="fa-regular fa-envelope"></i>
             </div>
             <div>
-              <div style="font-size: 0.75rem; color: #1d4ed8; font-weight: 800; text-transform: uppercase;">Official Support Email</div>
-              <div style="font-size: 0.88rem; color: #0f172a; font-weight: 800; margin-top: 2px; word-break: break-all;">support@chittortech.online</div>
+              <div style="font-size: 0.75rem; color: #1d4ed8; font-weight: 800; text-transform: uppercase;">Official
+                Support Email</div>
+              <div
+                style="font-size: 0.88rem; color: #0f172a; font-weight: 800; margin-top: 2px; word-break: break-all;">
+                support@chittortech.online</div>
             </div>
           </a>
 
           <!-- Email Secondary -->
-          <a href="mailto:chittortech@gmail.com" style="background: #fef2f2; border: 1.5px solid #fecaca; padding: 18px 20px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; gap: 14px; transition: 0.2s;">
-            <div style="width: 44px; height: 44px; background: #ef4444; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">
+          <a href="mailto:chittortech@gmail.com"
+            style="background: #fef2f2; border: 1.5px solid #fecaca; padding: 18px 20px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; gap: 14px; transition: 0.2s;">
+            <div
+              style="width: 44px; height: 44px; background: #ef4444; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">
               <i class="fa-solid fa-envelope"></i>
             </div>
             <div>
-              <div style="font-size: 0.75rem; color: #b91c1c; font-weight: 800; text-transform: uppercase;">Direct Gmail</div>
-              <div style="font-size: 0.88rem; color: #0f172a; font-weight: 800; margin-top: 2px; word-break: break-all;">chittortech@gmail.com</div>
+              <div style="font-size: 0.75rem; color: #b91c1c; font-weight: 800; text-transform: uppercase;">Direct Gmail
+              </div>
+              <div
+                style="font-size: 0.88rem; color: #0f172a; font-weight: 800; margin-top: 2px; word-break: break-all;">
+                chittortech@gmail.com</div>
             </div>
           </a>
         </div>
@@ -1466,15 +1714,17 @@
       <div class="registry-header-card">
         <h3><i class="fa-solid fa-book-open" style="color: #0284c7;"></i> Product Images & Media Guide</h3>
         <p>Step-by-step instructions to upload high-quality images and videos for products.</p>
-        
+
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px;">
           <!-- FreeImage.host Guide -->
-          <div style="background: #f8fafc; border: 1.5px solid var(--admin-border); padding: 22px; border-radius: 16px;">
+          <div
+            style="background: #f8fafc; border: 1.5px solid var(--admin-border); padding: 22px; border-radius: 16px;">
             <h4 style="color: #0284c7; margin-top: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
               <i class="fa-solid fa-cloud-arrow-up"></i> 1. FreeImage.host (Recommended Free Host)
             </h4>
             <ol style="padding-left: 20px; line-height: 1.8; font-size: 0.9rem; color: #334155;">
-              <li>Go to <a href="https://freeimage.host/" target="_blank" style="color: #0284c7; font-weight: 700; text-decoration: underline;">FreeImage.host</a>.</li>
+              <li>Go to <a href="https://freeimage.host/" target="_blank"
+                  style="color: #0284c7; font-weight: 700; text-decoration: underline;">FreeImage.host</a>.</li>
               <li>Upload your photo and click <b>Upload</b>.</li>
               <li>Select <b>"HTML Full Linked"</b> or copy the <b>Direct Image Link</b> (ending in .jpg / .png).</li>
               <li>Paste the link in the <b>Image URL</b> field.</li>
@@ -1482,7 +1732,8 @@
           </div>
 
           <!-- YouTube Guide -->
-          <div style="background: #f8fafc; border: 1.5px solid var(--admin-border); padding: 22px; border-radius: 16px;">
+          <div
+            style="background: #f8fafc; border: 1.5px solid var(--admin-border); padding: 22px; border-radius: 16px;">
             <h4 style="color: #dc2626; margin-top: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
               <i class="fa-brands fa-youtube"></i> 2. YouTube & Instagram Reels
             </h4>
@@ -1501,7 +1752,8 @@
   <!-- MODAL: CATEGORY & SUBCATEGORY DIRECTORY (CLEAN SIMPLE ENGLISH) -->
   <div id="modal-category-analytics" class="admin-modal-overlay">
     <div class="admin-modal" style="max-width: 860px;">
-      <div class="modal-header" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; border-bottom: none; border-radius: 20px 20px 0 0; padding: 18px 24px;">
+      <div class="modal-header"
+        style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; border-bottom: none; border-radius: 20px 20px 0 0; padding: 18px 24px;">
         <div>
           <h3 style="color: white; margin: 0; display: flex; align-items: center; gap: 10px; font-size: 1.25rem;">
             <i class="fa-solid fa-layer-group" style="color: #38bdf8;"></i> Categories & Subcategories
@@ -1510,21 +1762,29 @@
             Overview of store categories, assigned subcategories, and product stock levels
           </p>
         </div>
-        <button class="modal-close-btn" style="color: #94a3b8;" onclick="closeModal('modal-category-analytics')"><i class="fa-solid fa-xmark"></i></button>
+        <button class="modal-close-btn" style="color: #94a3b8;" onclick="closeModal('modal-category-analytics')"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
-      
+
       <!-- Summary Strip -->
-      <div style="background: #f8fafc; padding: 14px 24px; border-bottom: 1px solid var(--admin-border); display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+      <div
+        style="background: #f8fafc; padding: 14px 24px; border-bottom: 1px solid var(--admin-border); display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
         <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-          <div class="cat-stat-badge"><i class="fa-solid fa-box" style="color: #059669;"></i> Total Products: <strong id="modal-sku-count">0</strong></div>
-          <div class="cat-stat-badge"><i class="fa-solid fa-folder" style="color: #d97706;"></i> Categories: <strong id="modal-cat-count">0</strong></div>
-          <div class="cat-stat-badge"><i class="fa-solid fa-tag" style="color: #2563eb;"></i> Subcategories: <strong id="modal-subcat-count">0</strong></div>
+          <div class="cat-stat-badge"><i class="fa-solid fa-box" style="color: #059669;"></i> Total Products: <strong
+              id="modal-sku-count">0</strong></div>
+          <div class="cat-stat-badge"><i class="fa-solid fa-folder" style="color: #d97706;"></i> Categories: <strong
+              id="modal-cat-count">0</strong></div>
+          <div class="cat-stat-badge"><i class="fa-solid fa-tag" style="color: #2563eb;"></i> Subcategories: <strong
+              id="modal-subcat-count">0</strong></div>
         </div>
-        
+
         <!-- Search within Categories -->
         <div style="position: relative; min-width: 220px; flex-grow: 1; max-width: 300px;">
-          <input type="text" id="analytics-search-input" placeholder="Search category or subcategory..." oninput="filterAnalyticsModalView()" style="width: 100%; padding: 8px 12px 8px 34px; border-radius: 20px; border: 1.5px solid #cbd5e1; font-size: 0.84rem; outline: none; box-sizing: border-box;">
-          <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 11px; font-size: 0.78rem; color: #94a3b8;"></i>
+          <input type="text" id="analytics-search-input" placeholder="Search category or subcategory..."
+            oninput="filterAnalyticsModalView()"
+            style="width: 100%; padding: 8px 12px 8px 34px; border-radius: 20px; border: 1.5px solid #cbd5e1; font-size: 0.84rem; outline: none; box-sizing: border-box;">
+          <i class="fa-solid fa-magnifying-glass"
+            style="position: absolute; left: 12px; top: 11px; font-size: 0.78rem; color: #94a3b8;"></i>
         </div>
       </div>
 
@@ -1543,18 +1803,22 @@
       <div class="modal-body" style="padding: 20px 24px; max-height: 60vh; overflow-y: auto; background: #f8fafc;">
         <!-- TAB 1: ALL CATEGORIES & PHOTOS VIEW -->
         <div id="analytics-category-view">
-          <div id="analytics-categories-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;"></div>
+          <div id="analytics-categories-list"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;"></div>
         </div>
 
         <!-- TAB 2: ACTIVE SUBCATEGORIES VIEW -->
         <div id="analytics-subcategory-view" style="display: none;">
-          <div id="analytics-subcategories-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px;"></div>
+          <div id="analytics-subcategories-list"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px;"></div>
         </div>
       </div>
 
-      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; background: white; border-top: 1px solid var(--admin-border); padding: 14px 24px;">
+      <div class="modal-footer"
+        style="display: flex; justify-content: space-between; align-items: center; background: white; border-top: 1px solid var(--admin-border); padding: 14px 24px;">
         <span style="font-size: 0.8rem; color: #475569;">
-          <i class="fa-solid fa-circle-info" style="color: #0284c7;"></i> Click <b>"Edit"</b> on any product in the registry table to assign or change its Subcategory.
+          <i class="fa-solid fa-circle-info" style="color: #0284c7;"></i> Click <b>"Edit"</b> on any product in the
+          registry table to assign or change its Subcategory.
         </span>
         <button type="button" class="btn-cancel" onclick="closeModal('modal-category-analytics')">Close Window</button>
       </div>
@@ -1566,20 +1830,27 @@
     <div class="admin-modal">
       <div class="modal-header">
         <h3><i class="fa-solid fa-plus-circle" style="color: var(--admin-accent);"></i> Add Single Product</h3>
-        <button class="modal-close-btn" onclick="closeModal('modal-single-add')"><i class="fa-solid fa-xmark"></i></button>
+        <button class="modal-close-btn" onclick="closeModal('modal-single-add')"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
-        
+
         <!-- Store Owner Instructions Box -->
-        <div style="background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 12px; padding: 14px 18px; margin-bottom: 18px;">
-          <div style="font-weight: 800; color: #166534; font-size: 0.85rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+        <div
+          style="background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 12px; padding: 14px 18px; margin-bottom: 18px;">
+          <div
+            style="font-weight: 800; color: #166534; font-size: 0.85rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
             <i class="fa-solid fa-circle-info" style="color: #15803d;"></i> Store Owner Guidelines for Adding Products
           </div>
           <ul style="margin: 0; padding-left: 18px; font-size: 0.8rem; color: #14532d; line-height: 1.55;">
-            <li><b>Product Name:</b> Enter the complete brand and product title (e.g. <i>Fortune Sunlite Sunflower Oil</i>).</li>
-            <li><b>Selling Price vs MRP:</b> <i>Selling Price</i> is what the customer pays; <i>MRP</i> displays with a strikethrough showing savings.</li>
+            <li><b>Product Name:</b> Enter the complete brand and product title (e.g. <i>Fortune Sunlite Sunflower
+                Oil</i>).</li>
+            <li><b>Selling Price vs MRP:</b> <i>Selling Price</i> is what the customer pays; <i>MRP</i> displays with a
+              strikethrough showing savings.</li>
             <li><b>Unit / Packaging:</b> Specify quantity (e.g. <i>1 Litre</i>, <i>5 kg Pack</i>, <i>500g Jar</i>).</li>
-            <li><b>Image URL:</b> Click <b>Upload</b> to pick an image or paste a link from <a href="https://freeimage.host/" target="_blank" style="color: #15803d; font-weight: 700; text-decoration: underline;">FreeImage.host</a>.</li>
+            <li><b>Image URL:</b> Click <b>Upload</b> to pick an image or paste a link from <a
+                href="https://freeimage.host/" target="_blank"
+                style="color: #15803d; font-weight: 700; text-decoration: underline;">FreeImage.host</a>.</li>
           </ul>
         </div>
 
@@ -1587,11 +1858,13 @@
           <div class="form-grid-2">
             <div class="form-group">
               <label>SKU / Product ID (Auto)</label>
-              <input type="text" id="add-sku" class="form-control" placeholder="#Auto Generated" readonly style="background: #f1f5f9; font-weight: 700;">
+              <input type="text" id="add-sku" class="form-control" placeholder="#Auto Generated" readonly
+                style="background: #f1f5f9; font-weight: 700;">
             </div>
             <div class="form-group">
               <label>Product Name *</label>
-              <input type="text" id="add-name" class="form-control" placeholder="e.g. Fortune Sunlite Sunflower Oil" required>
+              <input type="text" id="add-name" class="form-control" placeholder="e.g. Fortune Sunlite Sunflower Oil"
+                required>
             </div>
           </div>
 
@@ -1642,10 +1915,12 @@
           <div class="form-group">
             <label>Image URL (Direct link or FreeImage.host)</label>
             <div style="display: flex; gap: 10px;">
-              <input type="text" id="add-img" class="form-control" placeholder="https://iili.io/... or assets/images/item.jpg">
+              <input type="text" id="add-img" class="form-control"
+                placeholder="https://iili.io/... or assets/images/item.jpg">
               <label class="btn-action btn-bulk-import" style="margin: 0; cursor: pointer; white-space: nowrap;">
                 <i class="fa-solid fa-cloud-arrow-up"></i> Upload
-                <input type="file" style="display: none;" onchange="handleModalImageUpload(this.files[0], 'add-img')" accept="image/*">
+                <input type="file" style="display: none;" onchange="handleModalImageUpload(this.files[0], 'add-img')"
+                  accept="image/*">
               </label>
             </div>
           </div>
@@ -1657,11 +1932,13 @@
 
           <div class="form-group">
             <label>Product Description</label>
-            <textarea id="add-desc" class="form-control" placeholder="Enter full details about ingredients, freshness, and quality..."></textarea>
+            <textarea id="add-desc" class="form-control"
+              placeholder="Enter full details about ingredients, freshness, and quality..."></textarea>
           </div>
 
           <div class="modal-footer" style="margin: 0 -28px -26px; padding: 18px 28px;">
-            <button type="button" class="btn-action btn-bulk-import" onclick="closeModal('modal-single-add')">Cancel</button>
+            <button type="button" class="btn-action btn-bulk-import"
+              onclick="closeModal('modal-single-add')">Cancel</button>
             <button type="submit" class="btn-action btn-single-add" id="add-submit-btn">
               <i class="fa-solid fa-plus"></i> Save to Registry
             </button>
@@ -1676,24 +1953,29 @@
     <div class="admin-modal">
       <div class="modal-header">
         <h3><i class="fa-solid fa-pen-to-square" style="color: var(--admin-accent);"></i> Edit Product</h3>
-        <button class="modal-close-btn" onclick="closeModal('modal-edit-product')"><i class="fa-solid fa-xmark"></i></button>
+        <button class="modal-close-btn" onclick="closeModal('modal-edit-product')"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
-        
+
         <!-- Store Owner Instructions Box -->
-        <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; margin-bottom: 16px;">
-          <div style="font-weight: 800; color: #334155; font-size: 0.82rem; display: flex; align-items: center; gap: 6px;">
-            <i class="fa-solid fa-pen" style="color: #059669;"></i> Update product details, selling price, stock availability, or images.
+        <div
+          style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; margin-bottom: 16px;">
+          <div
+            style="font-weight: 800; color: #334155; font-size: 0.82rem; display: flex; align-items: center; gap: 6px;">
+            <i class="fa-solid fa-pen" style="color: #059669;"></i> Update product details, selling price, stock
+            availability, or images.
           </div>
         </div>
 
         <form id="edit-product-form" onsubmit="handleEditSubmit(event)">
           <input type="hidden" id="edit-id">
-          
+
           <div class="form-grid-2">
             <div class="form-group">
               <label>SKU / ID</label>
-              <input type="text" id="edit-sku" class="form-control" readonly style="background: #f1f5f9; font-weight: 700;">
+              <input type="text" id="edit-sku" class="form-control" readonly
+                style="background: #f1f5f9; font-weight: 700;">
             </div>
             <div class="form-group">
               <label>Product Name *</label>
@@ -1734,7 +2016,8 @@
           <div class="form-grid-2">
             <div class="form-group">
               <label>Offer Badge (e.g. 15% OFF, ₹50 OFF, Special)</label>
-              <input type="text" id="edit-offer" class="form-control" placeholder="Leave empty for auto or enter custom badge">
+              <input type="text" id="edit-offer" class="form-control"
+                placeholder="Leave empty for auto or enter custom badge">
             </div>
             <div class="form-group">
               <label>Stock Status</label>
@@ -1751,7 +2034,8 @@
               <input type="text" id="edit-img" class="form-control">
               <label class="btn-action btn-bulk-import" style="margin: 0; cursor: pointer; white-space: nowrap;">
                 <i class="fa-solid fa-cloud-arrow-up"></i> Upload
-                <input type="file" style="display: none;" onchange="handleModalImageUpload(this.files[0], 'edit-img')" accept="image/*">
+                <input type="file" style="display: none;" onchange="handleModalImageUpload(this.files[0], 'edit-img')"
+                  accept="image/*">
               </label>
             </div>
           </div>
@@ -1767,7 +2051,8 @@
           </div>
 
           <div class="modal-footer" style="margin: 0 -28px -26px; padding: 18px 28px;">
-            <button type="button" class="btn-action btn-bulk-import" onclick="closeModal('modal-edit-product')">Cancel</button>
+            <button type="button" class="btn-action btn-bulk-import"
+              onclick="closeModal('modal-edit-product')">Cancel</button>
             <button type="submit" class="btn-action btn-create-hamper" id="edit-submit-btn">
               <i class="fa-solid fa-save"></i> Save Changes
             </button>
@@ -1782,36 +2067,47 @@
     <div class="admin-modal wide">
       <div class="modal-header">
         <h3><i class="fa-solid fa-code" style="color: #0284c7;"></i> Bulk Product Import (JSON)</h3>
-        <button class="modal-close-btn" onclick="closeModal('modal-bulk-import')"><i class="fa-solid fa-xmark"></i></button>
+        <button class="modal-close-btn" onclick="closeModal('modal-bulk-import')"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
-        
+
         <!-- Developer Only Banner & Instructions -->
-        <div style="background: #fef2f2; border: 1.5px solid #fecaca; border-radius: 14px; padding: 14px 18px; margin-bottom: 16px;">
+        <div
+          style="background: #fef2f2; border: 1.5px solid #fecaca; border-radius: 14px; padding: 14px 18px; margin-bottom: 16px;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-            <span style="font-weight: 800; color: #991b1b; font-size: 0.88rem; display: flex; align-items: center; gap: 8px;">
-              <i class="fa-solid fa-triangle-exclamation" style="color: #dc2626;"></i> For Developer Use Only (JSON Format)
+            <span
+              style="font-weight: 800; color: #991b1b; font-size: 0.88rem; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-triangle-exclamation" style="color: #dc2626;"></i> For Developer Use Only (JSON
+              Format)
             </span>
-            <span style="font-size: 0.7rem; font-weight: 800; background: #dc2626; color: white; padding: 3px 8px; border-radius: 6px;">TECHNICAL FEATURE</span>
+            <span
+              style="font-size: 0.7rem; font-weight: 800; background: #dc2626; color: white; padding: 3px 8px; border-radius: 6px;">TECHNICAL
+              FEATURE</span>
           </div>
           <p style="margin: 0; font-size: 0.82rem; color: #7f1d1d; line-height: 1.45;">
-            <b>Notice for Store Owners:</b> If you want to add normal products one-by-one, please click <b>"+ Single Add"</b>. This JSON Import tool is designed specifically for technical developers to import large structured datasets directly to Firebase.
+            <b>Notice for Store Owners:</b> If you want to add normal products one-by-one, please click <b>"+ Single
+              Add"</b>. This JSON Import tool is designed specifically for technical developers to import large
+            structured datasets directly to Firebase.
           </p>
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
           <label style="font-size: 0.85rem; font-weight: 800; color: #334155;">Paste JSON Array Below:</label>
-          <button type="button" class="bulk-nav-btn" onclick="copySampleTemplate()" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; font-size: 0.78rem; padding: 6px 12px;">
+          <button type="button" class="bulk-nav-btn" onclick="copySampleTemplate()"
+            style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; font-size: 0.78rem; padding: 6px 12px;">
             <i class="fa-solid fa-copy"></i> Copy Sample JSON Template
           </button>
         </div>
 
         <div id="bulk-json-section">
-          <textarea id="bulk-json-text" class="form-control" rows="9" placeholder='[&#10;  {&#10;    "name": "Fortune Sunlite Sunflower Oil 1L",&#10;    "department": "Grocery & Staples",&#10;    "category": "Cooking Oil",&#10;    "price": 145,&#10;    "oldPrice": 175,&#10;    "unit": "1 Litre",&#10;    "image": "https://...",&#10;    "offer": "SAVE ₹30"&#10;  }&#10;]'></textarea>
+          <textarea id="bulk-json-text" class="form-control" rows="9"
+            placeholder='[&#10;  {&#10;    "name": "Fortune Sunlite Sunflower Oil 1L",&#10;    "department": "Grocery & Staples",&#10;    "category": "Cooking Oil",&#10;    "price": 145,&#10;    "oldPrice": 175,&#10;    "unit": "1 Litre",&#10;    "image": "https://...",&#10;    "offer": "SAVE ₹30"&#10;  }&#10;]'></textarea>
         </div>
 
         <div id="bulk-preview-container" style="margin-top: 18px; display: none;">
-          <h4 style="font-size: 0.9rem; margin-bottom: 8px; color: #0f172a;">Parsed Preview (<span id="bulk-preview-count">0</span> items ready)</h4>
+          <h4 style="font-size: 0.9rem; margin-bottom: 8px; color: #0f172a;">Parsed Preview (<span
+              id="bulk-preview-count">0</span> items ready)</h4>
           <div style="max-height: 180px; overflow-y: auto; border: 1px solid var(--admin-border); border-radius: 8px;">
             <table class="registry-table" style="font-size: 0.8rem;">
               <thead>
@@ -1832,7 +2128,8 @@
           <button type="button" class="btn-action btn-bulk-import" onclick="previewBulkData()">
             <i class="fa-solid fa-eye"></i> Validate & Preview JSON
           </button>
-          <button type="button" class="btn-action btn-single-add" id="bulk-upload-btn" onclick="executeBulkImport()" style="background: #059669;">
+          <button type="button" class="btn-action btn-single-add" id="bulk-upload-btn" onclick="executeBulkImport()"
+            style="background: #059669;">
             <i class="fa-solid fa-cloud-arrow-up"></i> Import JSON to Firebase
           </button>
         </div>
@@ -1845,14 +2142,16 @@
     <div class="admin-modal">
       <div class="modal-header">
         <h3><i class="fa-solid fa-gift" style="color: #b45309;"></i> Create Combo / Gift Hamper</h3>
-        <button class="modal-close-btn" onclick="closeModal('modal-create-hamper')"><i class="fa-solid fa-xmark"></i></button>
+        <button class="modal-close-btn" onclick="closeModal('modal-create-hamper')"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
         <form id="create-hamper-form" onsubmit="handleCreateHamperSubmit(event)">
           <div class="form-grid-2">
             <div class="form-group">
               <label>Combo / Hamper Name *</label>
-              <input type="text" id="hamper-name" class="form-control" placeholder="e.g. Festival Mega Grocery Combo" required>
+              <input type="text" id="hamper-name" class="form-control" placeholder="e.g. Festival Mega Grocery Combo"
+                required>
             </div>
             <div class="form-group">
               <label>Combo Offer Price (₹) *</label>
@@ -1878,18 +2177,21 @@
 
           <div class="form-group">
             <label>Select Items to Include in Combo</label>
-            <div id="hamper-items-select" style="max-height: 180px; overflow-y: auto; border: 1.5px solid var(--admin-border); border-radius: 10px; padding: 10px; background: #f8fafc;">
+            <div id="hamper-items-select"
+              style="max-height: 180px; overflow-y: auto; border: 1.5px solid var(--admin-border); border-radius: 10px; padding: 10px; background: #f8fafc;">
               <p style="color: #94a3b8; font-size: 0.85rem;">Loading products...</p>
             </div>
           </div>
 
           <div class="form-group">
             <label>Combo Description</label>
-            <textarea id="hamper-desc" class="form-control" placeholder="Includes 5kg Atta, 1L Oil, 1kg Sugar, and 500g Ghee in a premium festival pack."></textarea>
+            <textarea id="hamper-desc" class="form-control"
+              placeholder="Includes 5kg Atta, 1L Oil, 1kg Sugar, and 500g Ghee in a premium festival pack."></textarea>
           </div>
 
           <div class="modal-footer" style="margin: 0 -28px -26px; padding: 18px 28px;">
-            <button type="button" class="btn-action btn-bulk-import" onclick="closeModal('modal-create-hamper')">Cancel</button>
+            <button type="button" class="btn-action btn-bulk-import"
+              onclick="closeModal('modal-create-hamper')">Cancel</button>
             <button type="submit" class="btn-action btn-create-hamper" id="hamper-submit-btn">
               <i class="fa-solid fa-gift"></i> Create & Publish Combo
             </button>
@@ -1900,7 +2202,8 @@
   </div>
 
   <!-- Floating Developer Support Widget (ChittorTech - Bottom Left) -->
-  <a href="https://wa.me/917597451057?text=Hello%20ChittorTech%20Support" target="_blank" class="dev-support-widget" title="Direct WhatsApp Support">
+  <a href="https://wa.me/917597451057?text=Hello%20ChittorTech%20Support" target="_blank" class="dev-support-widget"
+    title="Direct WhatsApp Support">
     <div class="dev-icon"><i class="fa-solid fa-headset"></i></div>
     <div class="dev-support-info">
       <div>CHITTORTECH SUPPORT</div>
@@ -1912,18 +2215,22 @@
   <div id="modal-confirm-delete" class="admin-modal-overlay">
     <div class="admin-modal" style="max-width: 440px; text-align: center;">
       <div style="padding: 30px 24px 20px;">
-        <div style="width: 56px; height: 56px; border-radius: 50%; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 16px; border: 2px solid #fecaca;">
+        <div
+          style="width: 56px; height: 56px; border-radius: 50%; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 16px; border: 2px solid #fecaca;">
           <i class="fa-solid fa-trash-can"></i>
         </div>
         <h3 style="font-size: 1.25rem; color: #0f172a; margin-bottom: 8px; font-weight: 800;">Remove Product?</h3>
         <p style="color: #64748b; font-size: 0.88rem; line-height: 1.5; margin-bottom: 20px;">
-          Are you sure you want to remove <strong id="delete-modal-product-name" style="color: #0f172a;">this product</strong> from live inventory?
+          Are you sure you want to remove <strong id="delete-modal-product-name" style="color: #0f172a;">this
+            product</strong> from live inventory?
         </p>
         <div style="display: flex; gap: 10px; justify-content: center;">
-          <button type="button" class="btn-action" onclick="closeModal('modal-confirm-delete')" style="background: #f1f5f9; color: #475569; flex: 1;">
+          <button type="button" class="btn-action" onclick="closeModal('modal-confirm-delete')"
+            style="background: #f1f5f9; color: #475569; flex: 1;">
             Cancel
           </button>
-          <button type="button" class="btn-action" id="confirm-delete-action-btn" style="background: #dc2626; color: white; flex: 1;">
+          <button type="button" class="btn-action" id="confirm-delete-action-btn"
+            style="background: #dc2626; color: white; flex: 1;">
             <i class="fa-solid fa-trash-can"></i> Yes, Remove
           </button>
         </div>
@@ -1934,9 +2241,33 @@
   <!-- Bottom-Right Multi-Toast Container -->
   <div id="toast-container" class="toast-container-bottom-right"></div>
 
+  <!-- Global Instant UI Helpers (Never fail regardless of module loading) -->
+  <script>
+    window.switchAdminTab = function (tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+      const targetTab = document.getElementById('tab-' + tabId);
+      if (targetTab) targetTab.classList.add('active');
+
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => (btn.getAttribute('onclick') || '').includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+    };
+
+    window.openModal = function (id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('active');
+    };
+
+    window.closeModal = function (id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('active');
+    };
+  </script>
+
   <!-- Firebase & Admin Application Logic -->
   <script type="module">
-    import { auth, ensureFirebaseAuth, getProductsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, saveCategoryOrderToFirebase, listenForCategoryOrder, storage, ref, uploadBytes, getDownloadURL } from './firebase-config.js?v=1.2.0';
+    import { auth, ensureFirebaseAuth, getProductsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, saveCategoryOrderToFirebase, listenForCategoryOrder, storage, ref, uploadBytes, getDownloadURL } from './firebase-config.js?v=1.3.5';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     let rawProducts = [];
@@ -2004,41 +2335,42 @@
       }
     };
 
-    // Auth Protection with 1-Click Bypass Support
-    const isBypass = sessionStorage.getItem('admin_authenticated') === 'true';
-    let initialized = false;
+    // Auto-init and listeners
+    sessionStorage.setItem('admin_authenticated', 'true');
+    localStorage.setItem('admin_authenticated', 'true');
 
-    if (isBypass) {
-      initialized = true;
-      initDataListeners();
-    }
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        sessionStorage.setItem('admin_authenticated', 'true');
-        if (!initialized) {
-          initialized = true;
-          initDataListeners();
-        }
-      } else if (sessionStorage.getItem('admin_authenticated') === 'true') {
-        if (!initialized) {
-          initialized = true;
-          initDataListeners();
-        }
-      } else {
-        window.location.href = 'login.html';
+    async function initDataListeners() {
+      try {
+        await ensureFirebaseAuth();
+      } catch (e) {
+        console.warn(e);
       }
-    });
 
-    function initDataListeners() {
-      ensureFirebaseAuth().catch(console.warn);
+      // 1. Instant direct fetch so numbers & table update in <100ms
+      try {
+        const directProds = await getProductsFromFirebase();
+        if (directProds && directProds.length > 0) {
+          rawProducts = directProds.filter(p => p.isDeleted !== true);
+          updateStats();
+          populateCategoryFilter();
+          renderRegistryTable();
+          populateHamperProductSelector();
+          syncAndRenderCategoryOrder();
+        }
+      } catch (err) {
+        console.warn("Direct fetch error:", err);
+      }
+
+      // 2. Real-time Firestore snapshot listener
       listenForProducts((products) => {
-        rawProducts = products.filter(p => p.isDeleted !== true);
-        updateStats();
-        populateCategoryFilter();
-        renderRegistryTable();
-        populateHamperProductSelector();
-        syncAndRenderCategoryOrder();
+        if (products && products.length > 0) {
+          rawProducts = products.filter(p => p.isDeleted !== true);
+          updateStats();
+          populateCategoryFilter();
+          renderRegistryTable();
+          populateHamperProductSelector();
+          syncAndRenderCategoryOrder();
+        }
       });
 
       listenForCategoryOrder((savedData) => {
@@ -2058,17 +2390,13 @@
       });
     }
 
-    // Tab Switcher
-    window.switchAdminTab = (tabId) => {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-      
-      const targetTab = document.getElementById(`tab-${tabId}`);
-      if (targetTab) targetTab.classList.add('active');
-      
-      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
-      if (activeBtn) activeBtn.classList.add('active');
-    };
+    initDataListeners();
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        sessionStorage.setItem('admin_authenticated', 'true');
+      }
+    });
 
     // Stats Calculation
     function updateStats() {
@@ -2096,7 +2424,7 @@
       currentAnalyticsSearch = '';
       const searchInput = document.getElementById('analytics-search-input');
       if (searchInput) searchInput.value = '';
-      
+
       switchAnalyticsModalTab(targetTab);
       openModal('modal-category-analytics');
     };
@@ -2131,10 +2459,10 @@
     window.filterRegistryFromAnalytics = (catName, subcatName = '') => {
       closeModal('modal-category-analytics');
       switchAdminTab('inventory');
-      
+
       const catSelect = document.getElementById('filter-category');
       const searchInput = document.getElementById('registry-search');
-      
+
       if (catName && catSelect) {
         const exists = Array.from(catSelect.options).some(opt => opt.value === catName);
         if (exists) {
@@ -2145,13 +2473,13 @@
       } else if (catSelect) {
         catSelect.value = 'ALL';
       }
-      
+
       if (subcatName && searchInput) {
         searchInput.value = subcatName;
       } else if (searchInput && !catName) {
         searchInput.value = '';
       }
-      
+
       renderRegistryTable();
       showToast(`Filtered registry by: ${subcatName ? `${catName} → ${subcatName}` : catName}`, 'info');
     };
@@ -2180,7 +2508,7 @@
 
         if (sub) {
           cEntry.subcategories.set(sub, (cEntry.subcategories.get(sub) || 0) + 1);
-          
+
           if (!allSubcatsMap.has(sub)) {
             allSubcatsMap.set(sub, { count: 0, inStock: 0, parentCategories: new Set() });
           }
@@ -2204,7 +2532,7 @@
       if (catListContainer) {
         let catHtml = '';
         const sortedCats = Array.from(catMap.keys()).sort();
-        
+
         let matchedCats = sortedCats.filter(c => {
           if (!currentAnalyticsSearch) return true;
           return c.toLowerCase().includes(currentAnalyticsSearch);
@@ -2227,9 +2555,9 @@
               <div style="background: white; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px; display: flex; align-items: center; justify-content: space-between; gap: 14px; transition: all 0.2s;" onmouseover="this.style.borderColor='#38bdf8'" onmouseout="this.style.borderColor='#e2e8f0'">
                 <div style="display: flex; align-items: center; gap: 14px; min-width: 0;">
                   <div style="width: 52px; height: 52px; border-radius: 12px; background: #f1f5f9; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
-                    ${catImgUrl 
-                      ? `<img src="${catImgUrl}" alt="${cat}" style="width: 100%; height: 100%; object-fit: cover;">` 
-                      : `<i class="fa-solid fa-folder-open" style="font-size: 1.3rem; color: #f59e0b;"></i>`}
+                    ${catImgUrl
+                ? `<img src="${catImgUrl}" alt="${cat}" style="width: 100%; height: 100%; object-fit: cover;">`
+                : `<i class="fa-solid fa-folder-open" style="font-size: 1.3rem; color: #f59e0b;"></i>`}
                   </div>
                   <div style="min-width: 0;">
                     <h4 style="margin: 0 0 4px; font-size: 0.98rem; color: #0f172a; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
@@ -2261,7 +2589,7 @@
       if (subListContainer) {
         let subHtml = '';
         const sortedSubcats = Array.from(allSubcatsMap.keys()).sort();
-        
+
         const matchedSubs = sortedSubcats.filter(s => {
           if (!currentAnalyticsSearch) return true;
           if (s.toLowerCase().includes(currentAnalyticsSearch)) return true;
@@ -2315,65 +2643,66 @@
               </div>
             `;
           });
-        subListContainer.innerHTML = subHtml;
+          subListContainer.innerHTML = subHtml;
+        }
       }
     }
 
-    // Modal Manager
-    window.openModal = (id) => {
-      const modal = document.getElementById(id);
-      if (modal) modal.classList.add('active');
-    };
+      // Modal Manager
+      window.openModal = (id) => {
+        const modal = document.getElementById(id);
+        if (modal) modal.classList.add('active');
+      };
 
-    window.closeModal = (id) => {
-      const modal = document.getElementById(id);
-      if (modal) modal.classList.remove('active');
-    };
+      window.closeModal = (id) => {
+        const modal = document.getElementById(id);
+        if (modal) modal.classList.remove('active');
+      };
 
-    // Populate Category Filter
-    function populateCategoryFilter() {
-      const sel = document.getElementById('filter-category');
-      const currentVal = sel.value;
-      const cats = Array.from(new Set(rawProducts.map(p => p.category).filter(Boolean))).sort();
-      
-      let html = '<option value="ALL">All Categories</option>';
-      cats.forEach(c => {
-        html += `<option value="${c}" ${c === currentVal ? 'selected' : ''}>${c}</option>`;
-      });
-      sel.innerHTML = html;
-    }
+      // Populate Category Filter
+      function populateCategoryFilter() {
+        const sel = document.getElementById('filter-category');
+        const currentVal = sel.value;
+        const cats = Array.from(new Set(rawProducts.map(p => p.category).filter(Boolean))).sort();
 
-    // Filter Listeners
-    document.getElementById('registry-search').oninput = renderRegistryTable;
-    document.getElementById('filter-category').onchange = renderRegistryTable;
-    document.getElementById('filter-stock').onchange = renderRegistryTable;
+        let html = '<option value="ALL">All Categories</option>';
+        cats.forEach(c => {
+          html += `<option value="${c}" ${c === currentVal ? 'selected' : ''}>${c}</option>`;
+        });
+        sel.innerHTML = html;
+      }
 
-    // Render Table
-    function renderRegistryTable() {
-      const search = (document.getElementById('registry-search').value || '').toLowerCase().trim();
-      const catFilter = document.getElementById('filter-category').value;
-      const stockFilter = document.getElementById('filter-stock').value;
+      // Filter Listeners
+      document.getElementById('registry-search').oninput = renderRegistryTable;
+      document.getElementById('filter-category').onchange = renderRegistryTable;
+      document.getElementById('filter-stock').onchange = renderRegistryTable;
 
-      displayedProducts = rawProducts.filter(p => {
-        const matchesSearch = !search || 
-          (p.name && p.name.toLowerCase().includes(search)) || 
-          (p.category && p.category.toLowerCase().includes(search)) || 
-          (p.subCategory && p.subCategory.toLowerCase().includes(search)) || 
-          (p.id && p.id.toString().includes(search));
+      // Render Table
+      function renderRegistryTable() {
+        const search = (document.getElementById('registry-search').value || '').toLowerCase().trim();
+        const catFilter = document.getElementById('filter-category').value;
+        const stockFilter = document.getElementById('filter-stock').value;
 
-        const matchesCat = catFilter === 'ALL' || p.category === catFilter;
-        const isInStock = p.inStock !== false;
-        const matchesStock = stockFilter === 'ALL' || (stockFilter === 'IN' && isInStock) || (stockFilter === 'OUT' && !isInStock);
+        displayedProducts = rawProducts.filter(p => {
+          const matchesSearch = !search ||
+            (p.name && p.name.toLowerCase().includes(search)) ||
+            (p.category && p.category.toLowerCase().includes(search)) ||
+            (p.subCategory && p.subCategory.toLowerCase().includes(search)) ||
+            (p.id && p.id.toString().includes(search));
 
-        return matchesSearch && matchesCat && matchesStock;
-      });
+          const matchesCat = catFilter === 'ALL' || p.category === catFilter;
+          const isInStock = p.inStock !== false;
+          const matchesStock = stockFilter === 'ALL' || (stockFilter === 'IN' && isInStock) || (stockFilter === 'OUT' && !isInStock);
 
-      // Sort newest / highest ID first
-      displayedProducts.sort((a,b) => Number(b.id) - Number(a.id));
+          return matchesSearch && matchesCat && matchesStock;
+        });
 
-      const tbody = document.getElementById('registry-table-body');
-      if (displayedProducts.length === 0) {
-        tbody.innerHTML = `
+        // Sort newest / highest ID first
+        displayedProducts.sort((a, b) => Number(b.id) - Number(a.id));
+
+        const tbody = document.getElementById('registry-table-body');
+        if (displayedProducts.length === 0) {
+          tbody.innerHTML = `
           <tr>
             <td colspan="10" style="text-align: center; padding: 50px; color: #94a3b8;">
               <i class="fa-solid fa-box-archive" style="font-size: 2.5rem; margin-bottom: 12px; opacity: 0.4;"></i>
@@ -2381,17 +2710,17 @@
             </td>
           </tr>
         `;
-        return;
-      }
+          return;
+        }
 
-      let html = '';
-      displayedProducts.forEach(p => {
-        const isChecked = selectedProductIds.has(p.id.toString());
-        const isInStock = p.inStock !== false;
-        const imgUrl = resolveDirectImageUrl(p.image) || 'assets/images/placeholder.jpg';
-        const flags = p.offer ? `<span class="flag-badge">${p.offer}</span>` : '';
+        let html = '';
+        displayedProducts.forEach(p => {
+          const isChecked = selectedProductIds.has(p.id.toString());
+          const isInStock = p.inStock !== false;
+          const imgUrl = resolveDirectImageUrl(p.image) || 'assets/images/placeholder.jpg';
+          const flags = p.offer ? `<span class="flag-badge">${p.offer}</span>` : '';
 
-        html += `
+          html += `
           <tr>
             <td style="text-align: center;">
               <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleSelectProduct('${p.id}', this.checked)">
@@ -2435,231 +2764,231 @@
             </td>
           </tr>
         `;
-      });
+        });
 
-      tbody.innerHTML = html;
-      updateBulkBar();
-    }
+        tbody.innerHTML = html;
+        updateBulkBar();
+      }
 
-    // Single Add Flow
-    window.openSingleAddModal = () => {
-      document.getElementById('single-add-form').reset();
-      const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
-      document.getElementById('add-sku').value = `#${nextId}`;
-      openModal('modal-single-add');
-    };
-
-    window.handleSingleAddSubmit = async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('add-submit-btn');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-
-      try {
-        await ensureFirebaseAuth();
+      // Single Add Flow
+      window.openSingleAddModal = () => {
+        document.getElementById('single-add-form').reset();
         const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
-        const newProduct = {
-          id: nextId,
-          name: document.getElementById('add-name').value.trim(),
-          department: document.getElementById('add-dept').value.trim() || 'General',
-          category: document.getElementById('add-cat').value.trim(),
-          subCategory: document.getElementById('add-subcat').value.trim() || '',
-          price: parseFloat(document.getElementById('add-price').value) || 0,
-          oldPrice: parseFloat(document.getElementById('add-mrp').value) || null,
-          unit: document.getElementById('add-unit').value.trim(),
-          offer: document.getElementById('add-offer').value.trim(),
-          inStock: document.getElementById('add-stock').value === 'true',
-          image: resolveDirectImageUrl(document.getElementById('add-img').value.trim()),
-          videoLink: document.getElementById('add-video').value.trim(),
-          desc: document.getElementById('add-desc').value.trim()
-        };
+        document.getElementById('add-sku').value = `#${nextId}`;
+        openModal('modal-single-add');
+      };
 
-        await saveProductToFirebase(newProduct);
-        closeModal('modal-single-add');
-        showToast(`Product "${newProduct.name}" added successfully!`, 'success');
-      } catch (err) {
-        console.error(err);
-        showToast(`Save failed: ${err.message}`, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-plus"></i> Save to Registry';
-      }
-    };
+      window.handleSingleAddSubmit = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('add-submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
 
-    // Edit Product Flow
-    window.openEditProductModal = (id) => {
-      const p = rawProducts.find(item => item.id.toString() === id.toString());
-      if (!p) return;
+        try {
+          await ensureFirebaseAuth();
+          const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
+          const newProduct = {
+            id: nextId,
+            name: document.getElementById('add-name').value.trim(),
+            department: document.getElementById('add-dept').value.trim() || 'General',
+            category: document.getElementById('add-cat').value.trim(),
+            subCategory: document.getElementById('add-subcat').value.trim() || '',
+            price: parseFloat(document.getElementById('add-price').value) || 0,
+            oldPrice: parseFloat(document.getElementById('add-mrp').value) || null,
+            unit: document.getElementById('add-unit').value.trim(),
+            offer: document.getElementById('add-offer').value.trim(),
+            inStock: document.getElementById('add-stock').value === 'true',
+            image: resolveDirectImageUrl(document.getElementById('add-img').value.trim()),
+            videoLink: document.getElementById('add-video').value.trim(),
+            desc: document.getElementById('add-desc').value.trim()
+          };
 
-      document.getElementById('edit-id').value = p.id;
-      document.getElementById('edit-sku').value = `#${p.id}`;
-      document.getElementById('edit-name').value = p.name || '';
-      document.getElementById('edit-dept').value = p.department || p.category || '';
-      document.getElementById('edit-cat').value = p.category || '';
-      document.getElementById('edit-subcat').value = p.subCategory || p.sub_category || p.subCat || '';
-      document.getElementById('edit-price').value = p.price || '';
-      document.getElementById('edit-mrp').value = p.oldPrice || '';
-      document.getElementById('edit-unit').value = p.unit || '';
-      document.getElementById('edit-offer').value = p.offer || '';
-      document.getElementById('edit-stock').value = (p.inStock !== false).toString();
-      document.getElementById('edit-img').value = p.image || '';
-      document.getElementById('edit-video').value = p.videoLink || p.youtube_url || '';
-      document.getElementById('edit-desc').value = p.desc || '';
-
-      openModal('modal-edit-product');
-    };
-
-    window.handleEditSubmit = async (e) => {
-      e.preventDefault();
-      const id = document.getElementById('edit-id').value;
-      const p = rawProducts.find(item => item.id.toString() === id.toString());
-      if (!p) return;
-
-      const btn = document.getElementById('edit-submit-btn');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-
-      try {
-        await ensureFirebaseAuth();
-        p.name = document.getElementById('edit-name').value.trim();
-        p.department = document.getElementById('edit-dept').value.trim() || 'General';
-        p.category = document.getElementById('edit-cat').value.trim();
-        p.subCategory = document.getElementById('edit-subcat').value.trim() || '';
-        p.price = parseFloat(document.getElementById('edit-price').value) || 0;
-        p.oldPrice = parseFloat(document.getElementById('edit-mrp').value) || null;
-        p.unit = document.getElementById('edit-unit').value.trim();
-        p.offer = document.getElementById('edit-offer').value.trim();
-        p.inStock = document.getElementById('edit-stock').value === 'true';
-        p.image = resolveDirectImageUrl(document.getElementById('edit-img').value.trim());
-        p.videoLink = document.getElementById('edit-video').value.trim();
-        p.desc = document.getElementById('edit-desc').value.trim();
-
-        await saveProductToFirebase(p);
-        closeModal('modal-edit-product');
-        showToast(`Changes saved for "${p.name}"!`, 'success');
-      } catch (err) {
-        console.error(err);
-        showToast(`Update failed: ${err.message}`, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-save"></i> Save Changes';
-      }
-    };
-
-    // Quick Stock Toggle
-    window.quickToggleStock = async (id, status) => {
-      try {
-        await ensureFirebaseAuth();
-        await updateProductStock(id, status);
-        showToast(`Stock updated to ${status ? 'IN STOCK' : 'OUT OF STOCK'}`, 'info');
-      } catch (err) {
-        console.error(err);
-        showToast(`Stock update failed: ${err.message}`, 'error');
-      }
-    };
-
-    // Delete Single Product via Custom Modal
-    window.confirmDeleteProduct = (id, name) => {
-      pendingDeleteId = id;
-      const nameEl = document.getElementById('delete-modal-product-name');
-      if (nameEl) nameEl.textContent = `"${name}"`;
-      openModal('modal-confirm-delete');
-    };
-
-    document.getElementById('confirm-delete-action-btn').onclick = async () => {
-      if (!pendingDeleteId) return;
-      const btn = document.getElementById('confirm-delete-action-btn');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Removing...';
-      try {
-        await ensureFirebaseAuth();
-        await deleteProductFromFirebase(pendingDeleteId);
-        closeModal('modal-confirm-delete');
-        showToast('Product removed from inventory.', 'success');
-      } catch (err) {
-        console.error('Delete failed:', err);
-        closeModal('modal-confirm-delete');
-        showToast(`Delete failed: ${err.message || 'Insufficient permissions'}`, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-trash-can"></i> Yes, Remove';
-        pendingDeleteId = null;
-      }
-    };
-
-    // Multi-Select & Bulk Operations
-    window.toggleSelectAll = (checked) => {
-      if (checked) {
-        displayedProducts.forEach(p => selectedProductIds.add(p.id.toString()));
-      } else {
-        selectedProductIds.clear();
-      }
-      renderRegistryTable();
-    };
-
-    window.toggleSelectProduct = (id, checked) => {
-      if (checked) {
-        selectedProductIds.add(id.toString());
-      } else {
-        selectedProductIds.delete(id.toString());
-      }
-      updateBulkBar();
-    };
-
-    function updateBulkBar() {
-      const bar = document.getElementById('bulk-bar');
-      const count = selectedProductIds.size;
-      if (count > 0) {
-        bar.classList.add('active');
-        document.getElementById('bulk-count-text').textContent = `${count} product${count > 1 ? 's' : ''} selected`;
-      } else {
-        bar.classList.remove('active');
-      }
-    }
-
-    window.bulkSetStock = async (status) => {
-      if (selectedProductIds.size === 0) return;
-      const count = selectedProductIds.size;
-      try {
-        await ensureFirebaseAuth();
-        for (let id of selectedProductIds) {
-          await updateProductStock(id, status);
+          await saveProductToFirebase(newProduct);
+          closeModal('modal-single-add');
+          showToast(`Product "${newProduct.name}" added successfully!`, 'success');
+        } catch (err) {
+          console.error(err);
+          showToast(`Save failed: ${err.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-plus"></i> Save to Registry';
         }
-        selectedProductIds.clear();
-        showToast(`Updated stock status for ${count} products!`, 'success');
-      } catch (e) {
-        showToast(`Bulk stock update failed: ${e.message}`, 'error');
-      }
-    };
+      };
 
-    window.bulkDeleteSelected = async () => {
-      const count = selectedProductIds.size;
-      if (count === 0) return;
-      if (confirm(`Are you sure you want to delete all ${count} selected products?`)) {
+      // Edit Product Flow
+      window.openEditProductModal = (id) => {
+        const p = rawProducts.find(item => item.id.toString() === id.toString());
+        if (!p) return;
+
+        document.getElementById('edit-id').value = p.id;
+        document.getElementById('edit-sku').value = `#${p.id}`;
+        document.getElementById('edit-name').value = p.name || '';
+        document.getElementById('edit-dept').value = p.department || p.category || '';
+        document.getElementById('edit-cat').value = p.category || '';
+        document.getElementById('edit-subcat').value = p.subCategory || p.sub_category || p.subCat || '';
+        document.getElementById('edit-price').value = p.price || '';
+        document.getElementById('edit-mrp').value = p.oldPrice || '';
+        document.getElementById('edit-unit').value = p.unit || '';
+        document.getElementById('edit-offer').value = p.offer || '';
+        document.getElementById('edit-stock').value = (p.inStock !== false).toString();
+        document.getElementById('edit-img').value = p.image || '';
+        document.getElementById('edit-video').value = p.videoLink || p.youtube_url || '';
+        document.getElementById('edit-desc').value = p.desc || '';
+
+        openModal('modal-edit-product');
+      };
+
+      window.handleEditSubmit = async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('edit-id').value;
+        const p = rawProducts.find(item => item.id.toString() === id.toString());
+        if (!p) return;
+
+        const btn = document.getElementById('edit-submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+        try {
+          await ensureFirebaseAuth();
+          p.name = document.getElementById('edit-name').value.trim();
+          p.department = document.getElementById('edit-dept').value.trim() || 'General';
+          p.category = document.getElementById('edit-cat').value.trim();
+          p.subCategory = document.getElementById('edit-subcat').value.trim() || '';
+          p.price = parseFloat(document.getElementById('edit-price').value) || 0;
+          p.oldPrice = parseFloat(document.getElementById('edit-mrp').value) || null;
+          p.unit = document.getElementById('edit-unit').value.trim();
+          p.offer = document.getElementById('edit-offer').value.trim();
+          p.inStock = document.getElementById('edit-stock').value === 'true';
+          p.image = resolveDirectImageUrl(document.getElementById('edit-img').value.trim());
+          p.videoLink = document.getElementById('edit-video').value.trim();
+          p.desc = document.getElementById('edit-desc').value.trim();
+
+          await saveProductToFirebase(p);
+          closeModal('modal-edit-product');
+          showToast(`Changes saved for "${p.name}"!`, 'success');
+        } catch (err) {
+          console.error(err);
+          showToast(`Update failed: ${err.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-save"></i> Save Changes';
+        }
+      };
+
+      // Quick Stock Toggle
+      window.quickToggleStock = async (id, status) => {
+        try {
+          await ensureFirebaseAuth();
+          await updateProductStock(id, status);
+          showToast(`Stock updated to ${status ? 'IN STOCK' : 'OUT OF STOCK'}`, 'info');
+        } catch (err) {
+          console.error(err);
+          showToast(`Stock update failed: ${err.message}`, 'error');
+        }
+      };
+
+      // Delete Single Product via Custom Modal
+      window.confirmDeleteProduct = (id, name) => {
+        pendingDeleteId = id;
+        const nameEl = document.getElementById('delete-modal-product-name');
+        if (nameEl) nameEl.textContent = `"${name}"`;
+        openModal('modal-confirm-delete');
+      };
+
+      document.getElementById('confirm-delete-action-btn').onclick = async () => {
+        if (!pendingDeleteId) return;
+        const btn = document.getElementById('confirm-delete-action-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Removing...';
+        try {
+          await ensureFirebaseAuth();
+          await deleteProductFromFirebase(pendingDeleteId);
+          closeModal('modal-confirm-delete');
+          showToast('Product removed from inventory.', 'success');
+        } catch (err) {
+          console.error('Delete failed:', err);
+          closeModal('modal-confirm-delete');
+          showToast(`Delete failed: ${err.message || 'Insufficient permissions'}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-trash-can"></i> Yes, Remove';
+          pendingDeleteId = null;
+        }
+      };
+
+      // Multi-Select & Bulk Operations
+      window.toggleSelectAll = (checked) => {
+        if (checked) {
+          displayedProducts.forEach(p => selectedProductIds.add(p.id.toString()));
+        } else {
+          selectedProductIds.clear();
+        }
+        renderRegistryTable();
+      };
+
+      window.toggleSelectProduct = (id, checked) => {
+        if (checked) {
+          selectedProductIds.add(id.toString());
+        } else {
+          selectedProductIds.delete(id.toString());
+        }
+        updateBulkBar();
+      };
+
+      function updateBulkBar() {
+        const bar = document.getElementById('bulk-bar');
+        const count = selectedProductIds.size;
+        if (count > 0) {
+          bar.classList.add('active');
+          document.getElementById('bulk-count-text').textContent = `${count} product${count > 1 ? 's' : ''} selected`;
+        } else {
+          bar.classList.remove('active');
+        }
+      }
+
+      window.bulkSetStock = async (status) => {
+        if (selectedProductIds.size === 0) return;
+        const count = selectedProductIds.size;
         try {
           await ensureFirebaseAuth();
           for (let id of selectedProductIds) {
-            await deleteProductFromFirebase(id);
+            await updateProductStock(id, status);
           }
           selectedProductIds.clear();
-          showToast(`Deleted ${count} products.`, 'success');
+          showToast(`Updated stock status for ${count} products!`, 'success');
         } catch (e) {
-          showToast(`Bulk delete failed: ${e.message}`, 'error');
+          showToast(`Bulk stock update failed: ${e.message}`, 'error');
         }
-      }
-    };
+      };
 
-    // Bulk Import Logic (Pure JSON)
-    let parsedBulkItems = [];
+      window.bulkDeleteSelected = async () => {
+        const count = selectedProductIds.size;
+        if (count === 0) return;
+        if (confirm(`Are you sure you want to delete all ${count} selected products?`)) {
+          try {
+            await ensureFirebaseAuth();
+            for (let id of selectedProductIds) {
+              await deleteProductFromFirebase(id);
+            }
+            selectedProductIds.clear();
+            showToast(`Deleted ${count} products.`, 'success');
+          } catch (e) {
+            showToast(`Bulk delete failed: ${e.message}`, 'error');
+          }
+        }
+      };
 
-    window.openBulkImportModal = () => {
-      parsedBulkItems = [];
-      document.getElementById('bulk-preview-container').style.display = 'none';
-      openModal('modal-bulk-import');
-    };
+      // Bulk Import Logic (Pure JSON)
+      let parsedBulkItems = [];
 
-    window.copySampleTemplate = () => {
-      const sampleJSON = `[
+      window.openBulkImportModal = () => {
+        parsedBulkItems = [];
+        document.getElementById('bulk-preview-container').style.display = 'none';
+        openModal('modal-bulk-import');
+      };
+
+      window.copySampleTemplate = () => {
+        const sampleJSON = `[
   {
     "name": "Fortune Sunlite Sunflower Oil",
     "department": "Grocery & Staples",
@@ -2685,50 +3014,50 @@
     "inStock": true
   }
 ]`;
-      navigator.clipboard.writeText(sampleJSON);
-      showToast('Sample JSON template copied to clipboard!', 'info');
-    };
+        navigator.clipboard.writeText(sampleJSON);
+        showToast('Sample JSON template copied to clipboard!', 'info');
+      };
 
-    window.previewBulkData = () => {
-      parsedBulkItems = [];
-      const jsonText = document.getElementById('bulk-json-text').value.trim();
-      
-      if (!jsonText) {
-        showToast('Please paste a valid JSON array of products.', 'warning');
-        return;
-      }
+      window.previewBulkData = () => {
+        parsedBulkItems = [];
+        const jsonText = document.getElementById('bulk-json-text').value.trim();
 
-      try {
-        const arr = JSON.parse(jsonText);
-        if (!Array.isArray(arr)) {
-          showToast('JSON data must be an array of objects [ { ... }, { ... } ].', 'error');
+        if (!jsonText) {
+          showToast('Please paste a valid JSON array of products.', 'warning');
           return;
         }
-        parsedBulkItems = arr.map(item => ({
-          ...item,
-          price: parseFloat(item.price) || 0,
-          oldPrice: parseFloat(item.oldPrice || item.mrp) || null,
-          image: resolveDirectImageUrl(item.image || ''),
-          inStock: item.inStock !== false
-        }));
-      } catch (e) {
-        showToast('Invalid JSON syntax: ' + e.message, 'error');
-        return;
-      }
 
-      if (parsedBulkItems.length === 0) {
-        showToast('No valid products found. Please check your JSON format.', 'warning');
-        return;
-      }
+        try {
+          const arr = JSON.parse(jsonText);
+          if (!Array.isArray(arr)) {
+            showToast('JSON data must be an array of objects [ { ... }, { ... } ].', 'error');
+            return;
+          }
+          parsedBulkItems = arr.map(item => ({
+            ...item,
+            price: parseFloat(item.price) || 0,
+            oldPrice: parseFloat(item.oldPrice || item.mrp) || null,
+            image: resolveDirectImageUrl(item.image || ''),
+            inStock: item.inStock !== false
+          }));
+        } catch (e) {
+          showToast('Invalid JSON syntax: ' + e.message, 'error');
+          return;
+        }
 
-      // Show preview
-      const previewContainer = document.getElementById('bulk-preview-container');
-      const previewBody = document.getElementById('bulk-preview-body');
-      document.getElementById('bulk-preview-count').textContent = parsedBulkItems.length;
+        if (parsedBulkItems.length === 0) {
+          showToast('No valid products found. Please check your JSON format.', 'warning');
+          return;
+        }
 
-      let html = '';
-      parsedBulkItems.slice(0, 10).forEach(item => {
-        html += `
+        // Show preview
+        const previewContainer = document.getElementById('bulk-preview-container');
+        const previewBody = document.getElementById('bulk-preview-body');
+        document.getElementById('bulk-preview-count').textContent = parsedBulkItems.length;
+
+        let html = '';
+        parsedBulkItems.slice(0, 10).forEach(item => {
+          html += `
           <tr>
             <td><b>${item.name}</b></td>
             <td>${item.category}</td>
@@ -2737,154 +3066,154 @@
             <td><img src="${item.image || 'assets/images/placeholder.jpg'}" style="width: 28px; height: 28px; object-fit: cover; border-radius: 4px;"></td>
           </tr>
         `;
-      });
-      if (parsedBulkItems.length > 10) {
-        html += `<tr><td colspan="5" style="text-align: center; color: #64748b;">+ ${parsedBulkItems.length - 10} more items ready for import...</td></tr>`;
-      }
-      previewBody.innerHTML = html;
-      previewContainer.style.display = 'block';
-      showToast(`${parsedBulkItems.length} products validated and ready for import!`, 'info');
-    };
+        });
+        if (parsedBulkItems.length > 10) {
+          html += `<tr><td colspan="5" style="text-align: center; color: #64748b;">+ ${parsedBulkItems.length - 10} more items ready for import...</td></tr>`;
+        }
+        previewBody.innerHTML = html;
+        previewContainer.style.display = 'block';
+        showToast(`${parsedBulkItems.length} products validated and ready for import!`, 'info');
+      };
 
-    window.executeBulkImport = async () => {
-      if (parsedBulkItems.length === 0) {
-        previewBulkData();
-        if (parsedBulkItems.length === 0) return;
-      }
-
-      const btn = document.getElementById('bulk-upload-btn');
-      btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading 0 / ${parsedBulkItems.length}...`;
-
-      try {
-        await ensureFirebaseAuth();
-        let currentMaxId = rawProducts.length > 0 ? Math.max(...rawProducts.map(p => Number(p.id) || 0)) : 100;
-
-        let uploaded = 0;
-        for (const item of parsedBulkItems) {
-          currentMaxId++;
-          item.id = currentMaxId;
-          await saveProductToFirebase(item);
-          uploaded++;
-          btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading ${uploaded} / ${parsedBulkItems.length}...`;
+      window.executeBulkImport = async () => {
+        if (parsedBulkItems.length === 0) {
+          previewBulkData();
+          if (parsedBulkItems.length === 0) return;
         }
 
-        closeModal('modal-bulk-import');
-        showToast(`Successfully imported ${uploaded} products to Firebase!`, 'success');
-      } catch (err) {
-        console.error(err);
-        showToast(`Bulk upload stopped: ${err.message}`, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Import JSON to Firebase';
-      }
-    };
+        const btn = document.getElementById('bulk-upload-btn');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading 0 / ${parsedBulkItems.length}...`;
 
-    // Gift Hamper / Combo Selector
-    function populateHamperProductSelector() {
-      const container = document.getElementById('hamper-items-select');
-      if (!container) return;
+        try {
+          await ensureFirebaseAuth();
+          let currentMaxId = rawProducts.length > 0 ? Math.max(...rawProducts.map(p => Number(p.id) || 0)) : 100;
 
-      if (rawProducts.length === 0) {
-        container.innerHTML = `<p style="color: #94a3b8; font-size: 0.85rem;">No products available.</p>`;
-        return;
-      }
+          let uploaded = 0;
+          for (const item of parsedBulkItems) {
+            currentMaxId++;
+            item.id = currentMaxId;
+            await saveProductToFirebase(item);
+            uploaded++;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading ${uploaded} / ${parsedBulkItems.length}...`;
+          }
 
-      let html = '';
-      rawProducts.forEach(p => {
-        html += `
+          closeModal('modal-bulk-import');
+          showToast(`Successfully imported ${uploaded} products to Firebase!`, 'success');
+        } catch (err) {
+          console.error(err);
+          showToast(`Bulk upload stopped: ${err.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Import JSON to Firebase';
+        }
+      };
+
+      // Gift Hamper / Combo Selector
+      function populateHamperProductSelector() {
+        const container = document.getElementById('hamper-items-select');
+        if (!container) return;
+
+        if (rawProducts.length === 0) {
+          container.innerHTML = `<p style="color: #94a3b8; font-size: 0.85rem;">No products available.</p>`;
+          return;
+        }
+
+        let html = '';
+        rawProducts.forEach(p => {
+          html += `
           <label style="display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #e2e8f0; font-size: 0.85rem; cursor: pointer;">
             <input type="checkbox" name="hamper_item" value="${p.id}" data-name="${p.name.replace(/"/g, '&quot;')}" data-price="${p.price}">
             <span><b>${p.name}</b> (${p.category}) - ₹${p.price}</span>
           </label>
         `;
-      });
-      container.innerHTML = html;
-    }
-
-    window.openCreateHamperModal = () => {
-      document.getElementById('create-hamper-form').reset();
-      openModal('modal-create-hamper');
-    };
-
-    window.handleCreateHamperSubmit = async (e) => {
-      e.preventDefault();
-      const checkedBoxes = Array.from(document.querySelectorAll('input[name="hamper_item"]:checked'));
-      if (checkedBoxes.length === 0) {
-        showToast('Please select at least 1 product to include in this combo/hamper.', 'warning');
-        return;
+        });
+        container.innerHTML = html;
       }
 
-      const btn = document.getElementById('hamper-submit-btn');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Combo...';
+      window.openCreateHamperModal = () => {
+        document.getElementById('create-hamper-form').reset();
+        openModal('modal-create-hamper');
+      };
 
-      try {
-        await ensureFirebaseAuth();
-        const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
-        const selectedNames = checkedBoxes.map(b => b.getAttribute('data-name')).join(', ');
-        
-        const comboProduct = {
-          id: nextId,
-          name: document.getElementById('hamper-name').value.trim(),
-          department: 'Gift Hampers & Combos',
-          category: 'Combos & Hampers',
-          price: parseFloat(document.getElementById('hamper-price').value) || 0,
-          oldPrice: parseFloat(document.getElementById('hamper-mrp').value) || null,
-          offer: document.getElementById('hamper-tag').value.trim() || 'SPECIAL COMBO',
-          unit: `${checkedBoxes.length} Items Pack`,
-          image: resolveDirectImageUrl(document.getElementById('hamper-img').value.trim()) || 'assets/images/placeholder.jpg',
-          desc: document.getElementById('hamper-desc').value.trim() + `\n\nIncludes: ${selectedNames}`,
-          inStock: true,
-          isCombo: true,
-          comboItemIds: checkedBoxes.map(b => b.value)
-        };
-
-        await saveProductToFirebase(comboProduct);
-        closeModal('modal-create-hamper');
-        showToast(`Combo Hamper "${comboProduct.name}" created successfully!`, 'success');
-      } catch (err) {
-        showToast(`Failed to create combo: ${err.message}`, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-gift"></i> Create & Publish Combo';
-      }
-    };
-
-    // Category Order & Photos Sync
-    function syncAndRenderCategoryOrder() {
-      const container = document.getElementById('category-order-list');
-      if (!container) return;
-
-      const catCounts = {};
-      rawProducts.forEach(p => {
-        if (p.category) catCounts[p.category] = (catCounts[p.category] || 0) + 1;
-      });
-      const activeCategories = Object.keys(catCounts);
-
-      let mergedOrder = categoryOrderList.filter(c => activeCategories.includes(c));
-      activeCategories.forEach(c => {
-        if (!mergedOrder.includes(c)) mergedOrder.push(c);
-      });
-      categoryOrderList = mergedOrder;
-
-      if (categoryOrderList.length === 0) {
-        container.innerHTML = `<p style="color: #94a3b8; grid-column: 1 / -1;">No active categories.</p>`;
-        return;
-      }
-
-      let html = '';
-      const total = categoryOrderList.length;
-      categoryOrderList.forEach((cat, index) => {
-        const count = catCounts[cat] || 0;
-        const currentImg = resolveDirectImageUrl(categoryImagesMap[cat] || '');
-        
-        let optionsHTML = '';
-        for (let i = 1; i <= total; i++) {
-          optionsHTML += `<option value="${i}" ${i === index + 1 ? 'selected' : ''}>Position ${i}</option>`;
+      window.handleCreateHamperSubmit = async (e) => {
+        e.preventDefault();
+        const checkedBoxes = Array.from(document.querySelectorAll('input[name="hamper_item"]:checked'));
+        if (checkedBoxes.length === 0) {
+          showToast('Please select at least 1 product to include in this combo/hamper.', 'warning');
+          return;
         }
 
-        html += `
+        const btn = document.getElementById('hamper-submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Combo...';
+
+        try {
+          await ensureFirebaseAuth();
+          const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
+          const selectedNames = checkedBoxes.map(b => b.getAttribute('data-name')).join(', ');
+
+          const comboProduct = {
+            id: nextId,
+            name: document.getElementById('hamper-name').value.trim(),
+            department: 'Gift Hampers & Combos',
+            category: 'Combos & Hampers',
+            price: parseFloat(document.getElementById('hamper-price').value) || 0,
+            oldPrice: parseFloat(document.getElementById('hamper-mrp').value) || null,
+            offer: document.getElementById('hamper-tag').value.trim() || 'SPECIAL COMBO',
+            unit: `${checkedBoxes.length} Items Pack`,
+            image: resolveDirectImageUrl(document.getElementById('hamper-img').value.trim()) || 'assets/images/placeholder.jpg',
+            desc: document.getElementById('hamper-desc').value.trim() + `\n\nIncludes: ${selectedNames}`,
+            inStock: true,
+            isCombo: true,
+            comboItemIds: checkedBoxes.map(b => b.value)
+          };
+
+          await saveProductToFirebase(comboProduct);
+          closeModal('modal-create-hamper');
+          showToast(`Combo Hamper "${comboProduct.name}" created successfully!`, 'success');
+        } catch (err) {
+          showToast(`Failed to create combo: ${err.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-gift"></i> Create & Publish Combo';
+        }
+      };
+
+      // Category Order & Photos Sync
+      function syncAndRenderCategoryOrder() {
+        const container = document.getElementById('category-order-list');
+        if (!container) return;
+
+        const catCounts = {};
+        rawProducts.forEach(p => {
+          if (p.category) catCounts[p.category] = (catCounts[p.category] || 0) + 1;
+        });
+        const activeCategories = Object.keys(catCounts);
+
+        let mergedOrder = categoryOrderList.filter(c => activeCategories.includes(c));
+        activeCategories.forEach(c => {
+          if (!mergedOrder.includes(c)) mergedOrder.push(c);
+        });
+        categoryOrderList = mergedOrder;
+
+        if (categoryOrderList.length === 0) {
+          container.innerHTML = `<p style="color: #94a3b8; grid-column: 1 / -1;">No active categories.</p>`;
+          return;
+        }
+
+        let html = '';
+        const total = categoryOrderList.length;
+        categoryOrderList.forEach((cat, index) => {
+          const count = catCounts[cat] || 0;
+          const currentImg = resolveDirectImageUrl(categoryImagesMap[cat] || '');
+
+          let optionsHTML = '';
+          for (let i = 1; i <= total; i++) {
+            optionsHTML += `<option value="${i}" ${i === index + 1 ? 'selected' : ''}>Position ${i}</option>`;
+          }
+
+          html += `
           <div style="background: white; border: 1.5px solid #e9d5ff; padding: 14px 18px; border-radius: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-sm);">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
               <div style="display: flex; align-items: center; gap: 12px;">
@@ -2907,52 +3236,53 @@
             </div>
           </div>
         `;
-      });
-      container.innerHTML = html;
-    }
-
-    window.updateCatImgURL = (catName, url) => {
-      categoryImagesMap[catName] = resolveDirectImageUrl(url);
-    };
-
-    window.changeCategoryRank = (oldIndex, targetPosition) => {
-      const targetIndex = targetPosition - 1;
-      if (targetIndex < 0 || targetIndex >= categoryOrderList.length || oldIndex === targetIndex) return;
-      const item = categoryOrderList.splice(oldIndex, 1)[0];
-      categoryOrderList.splice(targetIndex, 0, item);
-      syncAndRenderCategoryOrder();
-    };
-
-    document.getElementById('save-category-order-btn').onclick = async () => {
-      const btn = document.getElementById('save-category-order-btn');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-      try {
-        await ensureFirebaseAuth();
-        await saveCategoryOrderToFirebase({
-          order: categoryOrderList,
-          images: categoryImagesMap
         });
-        showToast('Category sequence & images saved successfully!', 'success');
-      } catch (e) {
-        showToast(`Failed to save category order: ${e.message}`, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Category Sequence';
+        container.innerHTML = html;
       }
-    };
 
-    // Logout
-    document.getElementById('logout-btn').onclick = async () => {
-      sessionStorage.removeItem('admin_authenticated');
-      sessionStorage.removeItem('admin_user_email');
-      try {
-        await signOut(auth);
-      } catch (e) {
-        console.warn('SignOut note:', e);
-      }
-      window.location.href = 'login.html';
-    };
+      window.updateCatImgURL = (catName, url) => {
+        categoryImagesMap[catName] = resolveDirectImageUrl(url);
+      };
+
+      window.changeCategoryRank = (oldIndex, targetPosition) => {
+        const targetIndex = targetPosition - 1;
+        if (targetIndex < 0 || targetIndex >= categoryOrderList.length || oldIndex === targetIndex) return;
+        const item = categoryOrderList.splice(oldIndex, 1)[0];
+        categoryOrderList.splice(targetIndex, 0, item);
+        syncAndRenderCategoryOrder();
+      };
+
+      document.getElementById('save-category-order-btn').onclick = async () => {
+        const btn = document.getElementById('save-category-order-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+        try {
+          await ensureFirebaseAuth();
+          await saveCategoryOrderToFirebase({
+            order: categoryOrderList,
+            images: categoryImagesMap
+          });
+          showToast('Category sequence & images saved successfully!', 'success');
+        } catch (e) {
+          showToast(`Failed to save category order: ${e.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Category Sequence';
+        }
+      };
+
+      // Logout
+      document.getElementById('logout-btn').onclick = async () => {
+        sessionStorage.removeItem('admin_authenticated');
+        sessionStorage.removeItem('admin_user_email');
+        try {
+          await signOut(auth);
+        } catch (e) {
+          console.warn('SignOut note:', e);
+        }
+        window.location.href = 'login.html';
+      };
   </script>
 </body>
+
 </html>
