@@ -7,7 +7,7 @@
   <title>About Us | CHITTORGARH HUB</title>
   <meta name="description"
     content="Learn more about CHITTORGARH HUB, our heritage, our commitment to quality, and our store services.">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=1.1.5">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -20,112 +20,191 @@
         <i class="fa-solid fa-store" style="color: var(--primary);"></i> CHITTORGARH<span>HUB</span>
       </a>
       <button class="menu-btn" aria-label="Toggle Menu"><i class="fa-solid fa-bars"></i></button>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="products.html">All Products & Services</a></li>
-        <li><a href="about.html" class="active">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="terms.html">Terms</a></li>
-        <li><a href="login.html" style="color: var(--primary); font-weight: 700;"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
-      </ul>
+      <div class="nav-links">
+        <div class="drawer-brand-header">
+          <div class="drawer-brand-info">
+            <i class="fa-solid fa-store drawer-logo-icon"></i>
+            <div>
+              <h4>CHITTORGARH<span>HUB</span></h4>
+              <p>Quality Grocery &amp; Daily Needs</p>
+            </div>
+          </div>
+          <button id="mobileNavCloseBtn" class="drawer-close-btn" type="button" aria-label="Close Menu"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <ul class="drawer-menu-list">
+          <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="products.html"><i class="fa-solid fa-basket-shopping"></i> All Products &amp; Services</a></li>
+          <li><a href="about.html" class="active"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+          <li><a href="contact.html"><i class="fa-solid fa-phone"></i> Contact Us</a></li>
+          <li><a href="terms.html"><i class="fa-solid fa-shield-halved"></i> Terms</a></li>
+          <li><a href="login.html" style="color: var(--primary); font-weight: 700;"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 
   <!-- Page Header -->
-  <header class="page-header" style="background: linear-gradient(135deg, #0c831f 0%, #15803d 100%); color: white; padding: 3.5rem 0 2.5rem; text-align: center;">
-    <div class="container">
-      <h1 class="animate-on-scroll" style="color: white; font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;">About CHITTORGARH HUB</h1>
-      <p class="animate-on-scroll" style="transition-delay: 0.2s; color: rgba(255,255,255,0.9); font-size: 1.1rem; max-width: 600px; margin: 0.5rem auto 0;">Trust, Quality, and Service in Chittorgarh</p>
+  <header class="page-header" style="background: linear-gradient(135deg, #0c831f 0%, #15803d 100%); color: white; padding: 2.5rem 1rem 2rem; text-align: center;">
+    <div class="container animate-on-scroll">
+      <span class="page-hero-badge"><i class="fa-solid fa-award"></i> Established 2010</span>
+      <h1 style="color: white; font-size: clamp(1.8rem, 4.5vw, 2.5rem); font-weight: 900; margin: 0 0 0.4rem;">About CHITTORGARH HUB</h1>
+      <p style="color: rgba(255,255,255,0.9); font-size: 0.98rem; max-width: 600px; margin: 0 auto;">Your Trusted Neighborhood Supermarket for Groceries, Daily Needs &amp; Quality Brands</p>
     </div>
   </header>
 
   <!-- About Content -->
-  <section class="section">
-    <div class="container about-grid" style="grid-template-columns: 1fr;">
-      <div class="about-content animate-on-scroll">
-        <h3>Crafting Quality Since 2010</h3>
-        <p>At Chittorgarh Hub, we believe that every interaction should be an experience characterized by convenience,
-          high-quality offerings, and outstanding customer service. Since our inception, we have been committed to
-          bringing the finest selections and premium brands straight to you.</p>
-
-        <div
-          style="margin: 2.5rem 0; padding: 2rem; background: var(--bg-secondary); border-radius: 24px; border-left: 6px solid var(--primary); box-shadow: var(--shadow-sm);">
-          <p style="margin: 0; font-size: 1.1rem; color: var(--text-main); font-weight: 700;">29 Rajive Colony, Meera
-            Market, Chittorgarh, Rajasthan - 312001</p>
+  <section class="section" style="padding: 2rem 0 3.5rem;">
+    <div class="container" style="max-width: 960px;">
+      
+      <!-- Welcome Story Card -->
+      <div class="contact-card-modern animate-on-scroll" style="margin-bottom: 2rem; border-left: 5px solid var(--primary);">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.8rem;">
+          <i class="fa-solid fa-store" style="color: var(--primary); font-size: 1.4rem;"></i>
+          <h2 style="font-size: 1.4rem; font-weight: 800; color: #1e293b; margin: 0;">Serving Chittorgarh with Pride &amp; Trust</h2>
         </div>
-
-
-        <div class="stats-grid">
-          <div class="stat-item">
-            <span class="stat-num">5k+</span>
-            <span class="stat-label">Happy Customers</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-num">100+</span>
-            <span class="stat-label">Curated Brands</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-num">15+</span>
-            <span class="stat-label">Years of Trust</span>
-          </div>
+        <p style="font-size: 0.98rem; color: #475569; line-height: 1.7; margin-bottom: 1rem;">
+          At <strong>Chittorgarh Hub</strong>, we believe grocery shopping should be effortless, delightful, and always affordable. Since our inception in 2010, we have grown into Chittorgarh’s preferred daily essentials destination, curating the freshest provisions, household staples, and premium packaged goods.
+        </p>
+        <div style="background: #f8fafc; border-radius: 12px; padding: 12px 16px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px;">
+          <i class="fa-solid fa-map-pin" style="color: var(--primary); font-size: 1.2rem;"></i>
+          <span style="font-size: 0.9rem; font-weight: 700; color: #1e293b;">29 Rajive Colony, Meera Market, Chittorgarh, Rajasthan - 312001</span>
         </div>
       </div>
+
+      <!-- 4 Core Value Pillars -->
+      <div class="about-pillars-grid animate-on-scroll">
+        <div class="pillar-card">
+          <div class="pillar-icon-box" style="background: #ecfdf5; color: #166534;">
+            <i class="fa-solid fa-seedling"></i>
+          </div>
+          <h4>100% Quality Fresh</h4>
+          <p>Hand-inspected daily essentials and authentic branded goods straight from trusted sources.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box" style="background: #fefce8; color: #ca8a04;">
+            <i class="fa-solid fa-tags"></i>
+          </div>
+          <h4>Best Price Guarantee</h4>
+          <p>Unmatched daily discounts, bundled offers, and competitive supermarket pricing.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box" style="background: #eff6ff; color: #2563eb;">
+            <i class="fa-solid fa-truck-fast"></i>
+          </div>
+          <h4>Prompt Local Service</h4>
+          <p>Fast order processing, instant counter pickups, and supportive neighborhood service.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box" style="background: #fdf2f8; color: #db2777;">
+            <i class="fa-solid fa-handshake"></i>
+          </div>
+          <h4>Community Trust</h4>
+          <p>Over 15 years of transparent customer relationships built right here in Chittorgarh.</p>
+        </div>
+      </div>
+
+      <!-- Stats Banner -->
+      <div class="about-stats-container animate-on-scroll">
+        <div class="about-stat-box">
+          <div class="stat-num">5,000+</div>
+          <div class="stat-label">Happy Families</div>
+        </div>
+        <div class="about-stat-box">
+          <div class="stat-num">100+</div>
+          <div class="stat-label">Curated Brands</div>
+        </div>
+        <div class="about-stat-box">
+          <div class="stat-num">15+</div>
+          <div class="stat-label">Years of Service</div>
+        </div>
+      </div>
+
+      <!-- Browse Store CTA -->
+      <div style="text-align: center; margin-top: 2rem;" class="animate-on-scroll">
+        <a href="products.html" class="contact-action-btn wa-btn" style="display: inline-flex; width: auto; padding: 14px 32px; font-size: 1rem; border-radius: 50px; background: var(--primary);">
+          <i class="fa-solid fa-basket-shopping"></i> Browse All Products &amp; Services
+        </a>
+      </div>
+
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Modern Compact E-Commerce Footer -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-about">
-          <h3>CHITTORGARH<span>HUB</span></h3>
-          <p>Our priority is Your Trust and Satisfaction. Dedicated to serving our community with love and care.</p>
-          <div class="social-links" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-            <a href="https://www.facebook.com/share/17CsmEXSUP/" target="_blank"
-              style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/chittorgarh.sonu?igsh=MXFlMDkxaHEzanRzNg==" target="_blank"
-              style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://wa.me/917014974762" target="_blank" style="color: white; font-size: 1.2rem;"><i
-                class="fa-brands fa-whatsapp"></i></a>
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid-compact">
+          
+          <!-- Col 1: Brand & Bio -->
+          <div class="footer-brand-col">
+            <div class="footer-brand-title">
+              <i class="fa-solid fa-store" style="color: var(--primary);"></i> CHITTORGARH<span>HUB</span>
+            </div>
+            <p class="footer-brand-desc">
+              Your trusted destination in Chittorgarh for fresh groceries, daily essentials &amp; best local prices.
+            </p>
+            <div class="footer-social-links">
+              <a href="https://www.facebook.com/share/17CsmEXSUP/" target="_blank" class="footer-social-btn" aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+              </a>
+              <a href="https://www.instagram.com/chittorgarh.sonu?igsh=MXFlMDkxaHEzanRzNg==" target="_blank" class="footer-social-btn" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+              <a href="https://wa.me/917014974762" target="_blank" class="footer-social-btn" aria-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+            </div>
           </div>
-        </div>
-        <div class="footer-links">
-          <h4>Explore</h4>
-          <ul style="padding: 0;">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="products.html">Our Services</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="terms.html">Terms & Conditions</a></li>
-            <li><a href="about-developer.html">About Developer</a></li>
-            <li><a href="login.html" style="color: var(--accent); font-weight: 700;"><i class="fa-solid fa-lock"></i>
-                Admin Login</a></li>
-          </ul>
-        </div>
-        <div class="footer-contact">
-          <h4>Get Support</h4>
-          <p><a href="https://www.google.com/maps/search/?api=1&query=29+Rajive+Colony+Meera+Market+Chittorgarh"
-              target="_blank" style="color: inherit;"><i class="fa-solid fa-location-dot"></i> Office: 29 Rajive Colony, Meera
-              Market, Chittorgarh</a></p>
-          <p><a href="https://wa.me/917014974762" target="_blank" style="color: inherit; text-decoration: none;"><i class="fa-solid fa-phone"></i> Phone: +91 7014974762, +91 9680580008</a></p>
-          <p><a href="mailto:Chittorgarhsonu@gmail.com" style="color: inherit; text-decoration: none;"><i class="fa-solid fa-envelope"></i> Email: Chittorgarhsonu@gmail.com</a></p>
-          <p><i class="fa-solid fa-clock"></i> Time: Daily: 8:00 AM - 10:00 PM</p>
+
+          <!-- Col 2: Quick Links -->
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul class="footer-links-list">
+              <li><a href="index.html"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
+              <li><a href="products.html"><i class="fa-solid fa-chevron-right"></i> All Products &amp; Offers</a></li>
+              <li><a href="about.html"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
+              <li><a href="contact.html"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
+              <li><a href="terms.html"><i class="fa-solid fa-chevron-right"></i> Terms &amp; Policies</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Assistance & Admin -->
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul class="footer-links-list">
+              <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Customer Help</a></li>
+              <li><a href="about-developer.html"><i class="fa-solid fa-code"></i> About Developer</a></li>
+              <li><a href="login.html" style="color: #ffc72c;"><i class="fa-solid fa-lock"></i> Admin Portal</a></li>
+            </ul>
+            <div class="footer-timings-badge">
+              <i class="fa-solid fa-clock"></i> 8:00 AM - 10:00 PM
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="premium-footer">
-        <a href="https://www.chittortech.online/" target="_blank" class="ct-badge">
-          <div class="ct-logo-box">
-            <img src="chittortech_logo_1775884354186.png" alt="ChittorTech">
-          </div>
-          <div class="ct-badge-text">
-            <span>A PRODUCT OF</span>
-            <h5>ChittorTech</h5>
+    </div>
+
+    <!-- Footer Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-flex">
+        <p class="footer-copyright">
+          &copy; 2026 <strong>CHITTORGARH HUB</strong>. All rights reserved.
+        </p>
+        <a href="https://www.chittortech.online/" target="_blank" class="footer-ct-badge">
+          <img src="chittortech_logo_1775884354186.png" alt="ChittorTech Logo" class="footer-ct-logo">
+          <div class="footer-ct-text">
+            <span>DEVELOPED &amp; POWERED BY</span>
+            <strong>ChittorTech</strong>
           </div>
         </a>
       </div>
     </div>
   </footer>
 
-  <script type="module" src="app.js?v=1.1.0"></script>
+  <script type="module" src="app.js?v=1.1.5"></script>
 </body>
 </html>

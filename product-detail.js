@@ -31,21 +31,59 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mobile Menu Toggle
   const menuBtn = document.querySelector('.menu-btn');
   const navLinks = document.querySelector('.nav-links');
-  if (menuBtn && navLinks) {
-    menuBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+  const mobileNavCloseBtn = document.getElementById('mobileNavCloseBtn');
+  let backdrop = document.querySelector('.filter-backdrop');
+  if (!backdrop) {
+    backdrop = document.createElement('div');
+    backdrop.className = 'filter-backdrop';
+    document.body.appendChild(backdrop);
+  }
+
+  const closeNavDrawer = () => {
+    if (navLinks) navLinks.classList.remove('nav-active');
+    if (backdrop) backdrop.classList.remove('active');
+    if (menuBtn) {
       const icon = menuBtn.querySelector('i');
       if (icon) {
-        if (navLinks.classList.contains('active')) {
-          icon.classList.remove('fa-bars');
-          icon.classList.add('fa-times');
-        } else {
-          icon.classList.remove('fa-times');
-          icon.classList.add('fa-bars');
-        }
+        icon.classList.remove('fa-times', 'fa-xmark');
+        icon.classList.add('fa-bars');
+      }
+    }
+  };
+
+  const openNavDrawer = () => {
+    if (navLinks) navLinks.classList.add('nav-active');
+    if (backdrop) backdrop.classList.add('active');
+    if (menuBtn) {
+      const icon = menuBtn.querySelector('i');
+      if (icon) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-xmark');
+      }
+    }
+  };
+
+  if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+      if (navLinks && navLinks.classList.contains('nav-active')) {
+        closeNavDrawer();
+      } else {
+        openNavDrawer();
       }
     });
   }
+
+  if (mobileNavCloseBtn) {
+    mobileNavCloseBtn.addEventListener('click', closeNavDrawer);
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', closeNavDrawer);
+  }
+
+  document.querySelectorAll('.drawer-menu-list a').forEach(link => {
+    link.addEventListener('click', closeNavDrawer);
+  });
 
   const container = document.getElementById('productDetailContainer');
   const urlParams = new URLSearchParams(window.location.search);
@@ -80,9 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render product details
     const inStock = product.inStock !== false;
+    const customOffer = (product.offer || product.offerBadge || '').trim();
     const discountPercent = (product.oldPrice && Number(product.oldPrice) > Number(product.price)) 
       ? Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100) 
       : null;
+    const badgeLabel = customOffer || (discountPercent ? `${discountPercent}% OFF` : '');
 
     // Collect all candidate video links from all fields
     const candidateLinks = [
@@ -172,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="product-page-layout">
         <!-- Image Section -->
         <div class="product-page-img-container">
-          ${discountPercent ? `<div class="product-badge" style="background: #2563eb; position: absolute; top: 1rem; left: 1rem; padding: 6px 12px; border-radius: 8px; color: white; font-weight: 800; font-size: 0.9rem;">${discountPercent}% OFF</div>` : (product.offer ? `<div class="product-badge" style="position: absolute; top: 1rem; left: 1rem;">${product.offer}</div>` : '')}
           <img src="${product.image}" alt="${product.name}" class="product-page-img" ${!inStock ? 'style="filter: grayscale(1); opacity: 0.6;"' : ''}>
           ${!inStock ? '<div class="out-of-stock-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; padding: 10px 20px; border-radius: 8px; font-weight: 800;">OUT OF STOCK</div>' : ''}
         </div>
@@ -194,7 +233,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="product-page-price-box">
             <span class="product-page-price">₹${product.price}</span>
-            ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `<span class="product-page-old-price">₹${product.oldPrice}</span>` : ''}
+            ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `
+              <span class="product-page-old-price">MRP ₹${product.oldPrice}</span>
+              <span class="product-page-discount-tag">${Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100)}% off</span>
+            ` : ''}
           </div>
           
           <div class="product-page-desc">

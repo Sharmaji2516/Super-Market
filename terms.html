@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Terms & Conditions | CHITTORGARH HUB</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.1.5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -16,231 +16,197 @@
                 <i class="fa-solid fa-store" style="color: var(--primary);"></i> CHITTORGARH<span>HUB</span>
             </a>
             <button class="menu-btn" aria-label="Toggle Menu"><i class="fa-solid fa-bars"></i></button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">All Products & Services</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="terms.html" class="active">Terms</a></li>
-                <li><a href="login.html" style="color: var(--primary); font-weight: 700;"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
-            </ul>
+            <div class="nav-links">
+                <div class="drawer-brand-header">
+                    <div class="drawer-brand-info">
+                        <i class="fa-solid fa-store drawer-logo-icon"></i>
+                        <div>
+                            <h4>CHITTORGARH<span>HUB</span></h4>
+                            <p>Quality Grocery &amp; Daily Needs</p>
+                        </div>
+                    </div>
+                    <button id="mobileNavCloseBtn" class="drawer-close-btn" type="button" aria-label="Close Menu"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <ul class="drawer-menu-list">
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="products.html"><i class="fa-solid fa-basket-shopping"></i> All Products &amp; Services</a></li>
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                    <li><a href="contact.html"><i class="fa-solid fa-phone"></i> Contact Us</a></li>
+                    <li><a href="terms.html" class="active"><i class="fa-solid fa-shield-halved"></i> Terms</a></li>
+                    <li><a href="login.html" style="color: var(--primary); font-weight: 700;"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
     <!-- Page Header -->
-    <header class="page-header" style="background: linear-gradient(135deg, #0c831f 0%, #15803d 100%); color: white; padding: 3.5rem 0 2.5rem; text-align: center;">
-        <div class="container">
-            <h1 style="color: white; font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;">Terms & Conditions</h1>
-            <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem; max-width: 600px; margin: 0.5rem auto 0;">Transparency and Trust in Every Transaction</p>
+    <header class="page-header" style="background: linear-gradient(135deg, #0c831f 0%, #15803d 100%); color: white; padding: 2.5rem 1rem 2rem; text-align: center;">
+        <div class="container animate-on-scroll">
+            <span class="page-hero-badge"><i class="fa-solid fa-shield-halved"></i> Transparency &amp; Trust</span>
+            <h1 style="color: white; font-size: clamp(1.8rem, 4.5vw, 2.5rem); font-weight: 900; margin: 0 0 0.4rem;">Terms &amp; Conditions</h1>
+            <p style="color: rgba(255,255,255,0.9); font-size: 0.98rem; max-width: 600px; margin: 0 auto;">Guidelines, Customer Rights, and Store Policy for Chittorgarh Hub</p>
         </div>
     </header>
 
-    <section class="section">
-        <div class="container" style="max-width: 1000px;">
-            <div class="policy-grid animate-on-scroll">
+    <section class="section" style="padding: 2rem 0 3.5rem;">
+        <div class="container" style="max-width: 960px;">
+            
+            <!-- Summary Introduction Card -->
+            <div class="contact-card-modern animate-on-scroll" style="margin-bottom: 2rem; border-left: 5px solid var(--primary);">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.6rem;">
+                    <i class="fa-solid fa-file-contract" style="color: var(--primary); font-size: 1.3rem;"></i>
+                    <h2 style="font-size: 1.3rem; font-weight: 800; color: #1e293b; margin: 0;">General Agreement &amp; Disclaimer</h2>
+                </div>
+                <p style="font-size: 0.94rem; color: #475569; line-height: 1.7; margin: 0;">
+                    Welcome to <strong>CHITTORGARH HUB</strong>. All information, products, prices, and services available on this platform are provided for direct grocery assistance and general convenience. By accessing or using this website, you agree to these standard terms.
+                </p>
+            </div>
+
+            <!-- Structured Terms Cards Grid -->
+            <div class="terms-cards-grid animate-on-scroll">
                 
-                <!-- Disclaimer Card -->
-                <div class="policy-card">
-                    <div class="policy-header">
-                        <div class="policy-icon">
-                            <i class="fa-solid fa-file-contract"></i>
-                        </div>
-                        <h3>Disclaimer</h3>
+                <div class="term-card">
+                    <div class="term-card-header">
+                        <span class="term-num-badge">1</span>
+                        <h3>Accuracy of Information</h3>
                     </div>
-                    <div class="policy-list">
-                        <p style="margin-bottom: 2rem; color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;">
-                            Welcome to our website. All information available on this website is provided for general informational purposes only. By using this website, you agree to the terms and conditions stated below.
-                        </p>
-                        
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>1. Accuracy of Information</h4>
-                                <p>We make every effort to provide accurate, useful, and updated information on this website. However, we do not guarantee the complete accuracy, reliability, availability, or timeliness of any information.</p>
-                            </div>
-                        </div>
-
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>2. Business and Service Information</h4>
-                                <p>This website may display information related to shops, businesses, services, and institutions. Shop timings, addresses, mobile numbers, prices, offers, services, or other details may change at any time without prior notice.</p>
-                            </div>
-                        </div>
-
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>3. Third-Party Responsibility</h4>
-                                <p>We are not responsible for the products, services, conduct, quality, claims, or activities of any listed shops, businesses, individuals, institutions, or external service providers.</p>
-                            </div>
-                        </div>
-
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>4. Purchases / Transactions</h4>
-                                <p>If you make any purchase, payment, or transaction with any shop, business, or service provider, please verify all details yourself. The website shall not be responsible for any financial loss, dispute, fraud, or other damages.</p>
-                            </div>
-                        </div>
-
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>5. External Links</h4>
-                                <p>Our website may contain links to other websites. We have no control over the content, policies, security, services, or availability of such external websites and are not liable for them.</p>
-                            </div>
-                        </div>
-
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>6. Use at Your Own Risk</h4>
-                                <p>Any use of the information, content, suggestions, or services available on this website is entirely at your own risk and responsibility.</p>
-                            </div>
-                        </div>
-
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>7. Copyright</h4>
-                                <p>All content, text, logos, designs, images, and other materials on this website may be protected by intellectual property rights. Unauthorized copying, reproduction, or commercial use is strictly prohibited without prior written permission.</p>
-                            </div>
-                        </div>
-
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>8. Limitation of Liability</h4>
-                                <p>If any user suffers any loss, damage, business loss, technical issue, decision-related loss, or any other problem arising from the use of information on this website, the website owner / management shall not be held liable.</p>
-                            </div>
-                        </div>
-
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>9. Jurisdiction</h4>
-                                <p>By using this website, both parties mutually agree that any dispute, claim, or legal proceeding arising out of or related to this website shall be subject exclusively to the jurisdiction of the courts of Chittorgarh, Rajasthan, India.</p>
-                            </div>
-                        </div>
-
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>10. Right to Modify</h4>
-                                <p>We reserve the right to modify, update, or change this Disclaimer at any time without prior notice.</p>
-                            </div>
-                        </div>
-
-                        <div class="policy-item">
-                            <div class="policy-point">
-                                <h4>11. Contact Us</h4>
-                                <p>If you have any questions regarding this Disclaimer, please contact us through our website’s Contact Us page.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <p>We make every reasonable effort to keep product details, stock statuses, and prices updated. However, slight variations may occasionally occur during store operations.</p>
                 </div>
 
-                <!-- Comments Policy Card -->
-                <div class="policy-card">
-                    <div class="policy-header">
-                        <div class="policy-icon">
-                            <i class="fa-solid fa-comments"></i>
-                        </div>
-                        <h3>User Comments and Content Policy</h3>
+                <div class="term-card">
+                    <div class="term-card-header">
+                        <span class="term-num-badge">2</span>
+                        <h3>Store Timings &amp; Offers</h3>
                     </div>
-                    <div class="policy-list">
-                        <div class="policy-item">
-                            <i class="fa-solid fa-circle-check"></i>
-                            <div class="policy-point">
-                                <p>Users are expected to use respectful and appropriate language while posting comments on the digital platform.</p>
-                            </div>
-                        </div>
-                        <div class="policy-item">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
-                            <div class="policy-point">
-                                <p>Any offensive, abusive, defamatory, discriminatory, misleading, or unlawful content will not be tolerated.</p>
-                            </div>
-                        </div>
-                        <div class="policy-item">
-                            <i class="fa-solid fa-shield-halved"></i>
-                            <div class="policy-point">
-                                <p>The website owner reserves the full right to review, edit, reject, or remove any comment without prior notice, if found inappropriate or in violation of these policies.</p>
-                            </div>
-                        </div>
-                        <div class="policy-item">
-                            <i class="fa-solid fa-heart"></i>
-                            <div class="policy-point">
-                                <p>These rules are intended to maintain a safe, respectful, and positive environment for all users.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <p>Store timings (8:00 AM – 10:00 PM), special festival discounts, and bundled promotions may be revised dynamically in accordance with store inventory.</p>
                 </div>
 
-                <!-- Complaint Process Card -->
-                <div class="policy-card">
-                    <div class="policy-header">
-                        <div class="policy-icon">
-                            <i class="fa-solid fa-envelopes-bulk"></i>
-                        </div>
-                        <h3>Complaint and Reporting Process</h3>
+                <div class="term-card">
+                    <div class="term-card-header">
+                        <span class="term-num-badge">3</span>
+                        <h3>Purchases &amp; Transactions</h3>
                     </div>
-                    <div class="policy-list">
-                        <div class="policy-item">
-                            <i class="fa-solid fa-flag"></i>
-                            <div class="policy-point">
-                                <p>Users may submit complaints or report inappropriate content through email or by using the Contact Us / Report a Comment option available on the website.</p>
-                            </div>
-                        </div>
-                        <div class="policy-item">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <div class="policy-point">
-                                <p>All complaints will be reviewed within a reasonable timeframe, and necessary action will be taken accordingly.</p>
-                            </div>
-                        </div>
+                    <p>All transactions, counter payments, and WhatsApp orders are processed transparently. Customers are welcome to verify billing details and product freshness upon receipt.</p>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-card-header">
+                        <span class="term-num-badge">4</span>
+                        <h3>Quality &amp; Expiry Standards</h3>
                     </div>
+                    <p>We source only original, genuine, and packaged items from reputed manufacturers. Expired or damaged items are immediately replaced under our customer trust policy.</p>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-card-header">
+                        <span class="term-num-badge">5</span>
+                        <h3>User Comments &amp; Feedback Policy</h3>
+                    </div>
+                    <p>We welcome constructive feedback and reviews. Any offensive, discriminatory, or unlawful submissions will be moderated to maintain a family-friendly community space.</p>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-card-header">
+                        <span class="term-num-badge">6</span>
+                        <h3>Copyright &amp; Intellectual Property</h3>
+                    </div>
+                    <p>Brand logos, trademarks, and store content displayed on this website belong to their respective owners and CHITTORGARH HUB. Unauthorized commercial reproduction is prohibited.</p>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-card-header">
+                        <span class="term-num-badge">7</span>
+                        <h3>Jurisdiction</h3>
+                    </div>
+                    <p>Any disputes or inquiries related to store services shall be subject exclusively to the local jurisdiction of Chittorgarh, Rajasthan, India.</p>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-card-header">
+                        <span class="term-num-badge">8</span>
+                        <h3>Customer Assistance &amp; Inquiries</h3>
+                    </div>
+                    <p>If you have any questions or require help regarding any of our policies, our team is always accessible via our <a href="contact.html" style="color: var(--primary); font-weight: 700; text-decoration: underline;">Contact Us</a> page or WhatsApp Helpline (+91 7014974762).</p>
                 </div>
 
             </div>
+
         </div>
     </section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-about">
-                    <h3>CHITTORGARH<span>HUB</span></h3>
-                    <p>Our priority is Your Trust and Satisfaction. Dedicated to serving our community with love and
-                        care.</p>
-                    <div class="social-links" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-                        <a href="https://www.facebook.com/share/17CsmEXSUP/" target="_blank" style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/chittorgarh.sonu?igsh=MXFlMDkxaHEzanRzNg==" target="_blank" style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/917014974762" target="_blank" style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <h4>Explore</h4>
-                    <ul style="padding: 0;">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="products.html">Our Services</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="terms.html">Terms</a></li>
-                        <li><a href="about-developer.html">About Developer</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h4>Get Support</h4>
-                    <p><a href="https://www.google.com/maps/search/?api=1&query=29+Rajive+Colony+Meera+Market+Chittorgarh" target="_blank" style="color: inherit;"><i class="fa-solid fa-location-dot"></i> Office: 29 Rajive Colony, Meera Market, Chittorgarh</a></p>
-                    <p><a href="https://wa.me/917014974762" target="_blank" style="color: inherit; text-decoration: none;"><i class="fa-solid fa-phone"></i> Phone: +91 7014974762, +91 9680580008</a></p>
-                    <p><a href="mailto:Chittorgarhsonu@gmail.com" style="color: inherit; text-decoration: none;"><i class="fa-solid fa-envelope"></i> Email: Chittorgarhsonu@gmail.com</a></p>
-                    <p><i class="fa-solid fa-clock"></i> Time: Daily: 8:00 AM - 10:00 PM</p>
-                </div>
+  <!-- Modern Compact E-Commerce Footer -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid-compact">
+          
+          <!-- Col 1: Brand & Bio -->
+          <div class="footer-brand-col">
+            <div class="footer-brand-title">
+              <i class="fa-solid fa-store" style="color: var(--primary);"></i> CHITTORGARH<span>HUB</span>
             </div>
-            <div class="premium-footer">
-                <a href="https://www.chittortech.online/" target="_blank" class="ct-badge">
-                    <div class="ct-logo-box">
-                        <img src="chittortech_logo_1775884354186.png" alt="ChittorTech">
-                    </div>
-                    <div class="ct-badge-text">
-                        <span>A PRODUCT OF</span>
-                        <h5>ChittorTech</h5>
-                    </div>
-                </a>
+            <p class="footer-brand-desc">
+              Your trusted destination in Chittorgarh for fresh groceries, daily essentials &amp; best local prices.
+            </p>
+            <div class="footer-social-links">
+              <a href="https://www.facebook.com/share/17CsmEXSUP/" target="_blank" class="footer-social-btn" aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+              </a>
+              <a href="https://www.instagram.com/chittorgarh.sonu?igsh=MXFlMDkxaHEzanRzNg==" target="_blank" class="footer-social-btn" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+              <a href="https://wa.me/917014974762" target="_blank" class="footer-social-btn" aria-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
             </div>
-        </div>
-    </footer>
+          </div>
 
-    <script src="app.js?v=1.1.0" type="module"></script>
+          <!-- Col 2: Quick Links -->
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul class="footer-links-list">
+              <li><a href="index.html"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
+              <li><a href="products.html"><i class="fa-solid fa-chevron-right"></i> All Products &amp; Offers</a></li>
+              <li><a href="about.html"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
+              <li><a href="contact.html"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
+              <li><a href="terms.html"><i class="fa-solid fa-chevron-right"></i> Terms &amp; Policies</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Assistance & Admin -->
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul class="footer-links-list">
+              <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Customer Help</a></li>
+              <li><a href="about-developer.html"><i class="fa-solid fa-code"></i> About Developer</a></li>
+              <li><a href="login.html" style="color: #ffc72c;"><i class="fa-solid fa-lock"></i> Admin Portal</a></li>
+            </ul>
+            <div class="footer-timings-badge">
+              <i class="fa-solid fa-clock"></i> 8:00 AM - 10:00 PM
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-flex">
+        <p class="footer-copyright">
+          &copy; 2026 <strong>CHITTORGARH HUB</strong>. All rights reserved.
+        </p>
+        <a href="https://www.chittortech.online/" target="_blank" class="footer-ct-badge">
+          <img src="chittortech_logo_1775884354186.png" alt="ChittorTech Logo" class="footer-ct-logo">
+          <div class="footer-ct-text">
+            <span>DEVELOPED &amp; POWERED BY</span>
+            <strong>ChittorTech</strong>
+          </div>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js?v=1.1.5" type="module"></script>
 </body>
 </html>

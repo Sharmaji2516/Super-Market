@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Contact Us | CHITTORGARH HUB</title>
   <meta name="description" content="Get in touch with CHITTORGARH HUB. Find our store location, contact numbers, and send us a direct message.">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=1.1.5">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -17,119 +17,224 @@
         <i class="fa-solid fa-store" style="color: var(--primary);"></i> CHITTORGARH<span>HUB</span>
       </a>
       <button class="menu-btn" aria-label="Toggle Menu"><i class="fa-solid fa-bars"></i></button>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="products.html">All Products & Services</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html" class="active">Contact Us</a></li>
-        <li><a href="terms.html">Terms</a></li>
-        <li><a href="login.html" style="color: var(--primary); font-weight: 700;"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
-      </ul>
+      <div class="nav-links">
+        <div class="drawer-brand-header">
+          <div class="drawer-brand-info">
+            <i class="fa-solid fa-store drawer-logo-icon"></i>
+            <div>
+              <h4>CHITTORGARH<span>HUB</span></h4>
+              <p>Quality Grocery &amp; Daily Needs</p>
+            </div>
+          </div>
+          <button id="mobileNavCloseBtn" class="drawer-close-btn" type="button" aria-label="Close Menu"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <ul class="drawer-menu-list">
+          <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="products.html"><i class="fa-solid fa-basket-shopping"></i> All Products &amp; Services</a></li>
+          <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+          <li><a href="contact.html" class="active"><i class="fa-solid fa-phone"></i> Contact Us</a></li>
+          <li><a href="terms.html"><i class="fa-solid fa-shield-halved"></i> Terms</a></li>
+          <li><a href="login.html" style="color: var(--primary); font-weight: 700;"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 
   <!-- Contact Hero -->
-  <header class="page-header" style="background: linear-gradient(135deg, #0c831f 0%, #15803d 100%); color: white; padding: 3.5rem 0 2.5rem; text-align: center;">
+  <header class="page-header" style="background: linear-gradient(135deg, #0c831f 0%, #15803d 100%); color: white; padding: 2.5rem 1rem 2rem; text-align: center;">
     <div class="container animate-on-scroll">
-      <h1 style="color: white; font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;">Get in Touch</h1>
-      <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem; max-width: 600px; margin: 0.5rem auto 0;">Have questions or need assistance? Visit our store or message us directly.</p>
+      <span class="page-hero-badge"><i class="fa-solid fa-headset"></i> We're Here For You</span>
+      <h1 style="color: white; font-size: clamp(1.8rem, 4.5vw, 2.5rem); font-weight: 900; margin: 0 0 0.4rem;">Contact Chittorgarh Hub</h1>
+      <p style="color: rgba(255,255,255,0.9); font-size: 0.98rem; max-width: 580px; margin: 0 auto;">Need grocery assistance, special orders, or store inquiries? Connect with us directly!</p>
     </div>
   </header>
 
-  <section class="section">
-    <div class="container" style="max-width: 900px;">
-      <div class="contact-wrapper animate-on-scroll" style="grid-template-columns: 1fr;">
-        <!-- Info Panel -->
-        <div class="contact-info-panel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; text-align: center;">
-          <div style="grid-column: 1 / -1;">
-            <h3 style="color: white; margin-bottom: 1.5rem; font-size: 2.5rem; font-weight: 900;">Get in Touch</h3>
-            <p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem; font-size: 1.2rem;">Visit our location or reach out to us directly through any of these channels.</p>
+  <section class="section" style="padding: 2rem 0 3.5rem;">
+    <div class="container" style="max-width: 960px;">
+      
+      <!-- 4 Modern Contact Cards (2x2 Grid) -->
+      <div class="contact-cards-grid animate-on-scroll">
+        
+        <!-- Card 1: Store Location -->
+        <div class="contact-card-modern">
+          <div class="contact-card-header">
+            <div class="contact-card-icon" style="background: #ecfdf5; color: #166534; border: 1px solid #bbf7d0;">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div>
+              <h3>Our Store</h3>
+              <p>Chittorgarh, Rajasthan</p>
+            </div>
           </div>
-
-          <a href="https://www.google.com/maps/search/?api=1&query=29+Rajive+Colony+Meera+Market+Chittorgarh" target="_blank" class="info-item" style="flex-direction: column; align-items: center; gap: 1rem; color: inherit; text-decoration: none;">
-            <i class="fa-solid fa-location-dot"></i>
-            <div>
-              <h4 style="font-size: 1.4rem;">Our Location</h4>
-              <p>29 Rajive Colony, Meera Market, <br>Chittorgarh, Rajasthan - 312001</p>
-            </div>
+          <div class="contact-card-body">
+            <strong>29 Rajive Colony, Meera Market</strong><br>
+            Chittorgarh, Rajasthan - 312001
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=29+Rajive+Colony+Meera+Market+Chittorgarh" target="_blank" class="contact-action-btn map-btn">
+            <i class="fa-solid fa-map-location-dot"></i> Open in Google Maps
           </a>
+        </div>
 
-          <a href="https://wa.me/917014974762" target="_blank" class="info-item" style="flex-direction: column; align-items: center; gap: 1rem; color: inherit; text-decoration: none;">
-            <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
-            <div>
-              <h4 style="font-size: 1.4rem;">Call Support</h4>
-              <p>+91 7014974762<br>+91 9680580008</p>
+        <!-- Card 2: WhatsApp Chat -->
+        <div class="contact-card-modern">
+          <div class="contact-card-header">
+            <div class="contact-card-icon" style="background: #f0fdf4; color: #25d366; border: 1px solid #bbf7d0;">
+              <i class="fa-brands fa-whatsapp"></i>
             </div>
-          </a>
-
-          <a href="mailto:Chittorgarhsonu@gmail.com" class="info-item" style="flex-direction: column; align-items: center; gap: 1rem; color: inherit; text-decoration: none;">
-            <i class="fa-solid fa-envelope"></i>
             <div>
-              <h4 style="font-size: 1.4rem;">Email Us</h4>
+              <h3>WhatsApp Chat</h3>
+              <p>Instant Support &amp; Orders</p>
+            </div>
+          </div>
+          <div class="contact-card-body">
+            <strong>+91 7014974762</strong><br>
+            Chat directly with our store team for instant replies.
+          </div>
+          <a href="https://wa.me/917014974762" target="_blank" class="contact-action-btn wa-btn">
+            <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+          </a>
+        </div>
+
+        <!-- Card 3: Call Support -->
+        <div class="contact-card-modern">
+          <div class="contact-card-header">
+            <div class="contact-card-icon" style="background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd;">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <div>
+              <h3>Phone Helpline</h3>
+              <p>Daily 8 AM - 10 PM</p>
+            </div>
+          </div>
+          <div class="contact-card-body">
+            <strong>+91 7014974762</strong><br>
+            Alt: +91 9680580008
+          </div>
+          <a href="tel:+917014974762" class="contact-action-btn call-btn">
+            <i class="fa-solid fa-phone-volume"></i> Call Store Now
+          </a>
+        </div>
+
+        <!-- Card 4: Email & Hours -->
+        <div class="contact-card-modern">
+          <div class="contact-card-header">
+            <div class="contact-card-icon" style="background: #fefce8; color: #ca8a04; border: 1px solid #fef08a;">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div>
+              <h3>Store Timings</h3>
               <p>Chittorgarhsonu@gmail.com</p>
             </div>
-          </a>
-
-          <div class="info-item" style="flex-direction: column; align-items: center; gap: 1rem;">
-            <i class="fa-solid fa-clock"></i>
-            <div>
-              <h4 style="font-size: 1.4rem;">Support Hours</h4>
-              <p>Open Daily: 8:00 AM - 10:00 PM</p>
-            </div>
           </div>
+          <div class="contact-card-body">
+            <strong>Open 7 Days a Week</strong><br>
+            Timings: 8:00 AM – 10:00 PM Daily
+          </div>
+          <a href="mailto:Chittorgarhsonu@gmail.com" class="contact-action-btn email-btn">
+            <i class="fa-solid fa-envelope"></i> Send Email
+          </a>
         </div>
+
       </div>
+
+      <!-- Quick WhatsApp Message Form -->
+      <div class="contact-form-card animate-on-scroll">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem;">
+          <i class="fa-solid fa-paper-plane" style="color: var(--primary); font-size: 1.3rem;"></i>
+          <h3 style="margin: 0;">Send Direct Message</h3>
+        </div>
+        <p>Send a quick inquiry or grocery request directly to our WhatsApp.</p>
+        
+        <form id="contactForm">
+          <div class="form-grid-compact" style="margin-bottom: 1rem;">
+            <input type="text" id="firstName" class="form-input-modern" placeholder="Your Name" required>
+            <input type="text" id="lastName" class="form-input-modern" placeholder="Phone Number (Optional)">
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <textarea id="message" class="form-input-modern" rows="3" placeholder="Type your message or items needed..." required style="resize: vertical;"></textarea>
+          </div>
+          <button type="submit" class="contact-action-btn wa-btn" style="border: none; cursor: pointer; font-size: 1rem; padding: 13px;">
+            <i class="fa-brands fa-whatsapp"></i> Send via WhatsApp
+          </button>
+        </form>
+      </div>
+
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Modern Compact E-Commerce Footer -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-about">
-          <h3>CHITTORGARH<span>HUB</span></h3>
-          <p>Our priority is Your Trust and Satisfaction. Dedicated to serving our community with love and care.</p>
-          <div class="social-links" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-            <a href="https://www.facebook.com/share/17CsmEXSUP/" target="_blank" style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/chittorgarh.sonu?igsh=MXFlMDkxaHEzanRzNg==" target="_blank" style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://wa.me/917014974762" target="_blank" style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-whatsapp"></i></a>
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid-compact">
+          
+          <!-- Col 1: Brand & Bio -->
+          <div class="footer-brand-col">
+            <div class="footer-brand-title">
+              <i class="fa-solid fa-store" style="color: var(--primary);"></i> CHITTORGARH<span>HUB</span>
+            </div>
+            <p class="footer-brand-desc">
+              Your trusted destination in Chittorgarh for fresh groceries, daily essentials &amp; best local prices.
+            </p>
+            <div class="footer-social-links">
+              <a href="https://www.facebook.com/share/17CsmEXSUP/" target="_blank" class="footer-social-btn" aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+              </a>
+              <a href="https://www.instagram.com/chittorgarh.sonu?igsh=MXFlMDkxaHEzanRzNg==" target="_blank" class="footer-social-btn" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+              <a href="https://wa.me/917014974762" target="_blank" class="footer-social-btn" aria-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+            </div>
           </div>
-        </div>
-        <div class="footer-links">
-          <h4>Explore</h4>
-          <ul style="padding: 0;">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="products.html">Our Services</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="terms.html">Terms & Conditions</a></li>
-            <li><a href="about-developer.html">About Developer</a></li>
-            <li><a href="login.html" style="color: var(--accent); font-weight: 700;"><i class="fa-solid fa-lock"></i> Admin Login</a></li>
-          </ul>
-        </div>
-        <div class="footer-contact">
-          <h4>Get Support</h4>
-          <p><a href="https://www.google.com/maps/search/?api=1&query=29+Rajive+Colony+Meera+Market+Chittorgarh" target="_blank" style="color: inherit;"><i class="fa-solid fa-location-dot"></i> Office: 29 Rajive Colony, Meera Market, Chittorgarh</a></p>
-          <p><a href="https://wa.me/917014974762" target="_blank" style="color: inherit; text-decoration: none;"><i class="fa-solid fa-phone"></i> Phone: +91 7014974762, +91 9680580008</a></p>
-          <p><a href="mailto:Chittorgarhsonu@gmail.com" style="color: inherit; text-decoration: none;"><i class="fa-solid fa-envelope"></i> Email: Chittorgarhsonu@gmail.com</a></p>
-          <p><i class="fa-solid fa-clock"></i> Time: Daily: 8:00 AM - 10:00 PM</p>
+
+          <!-- Col 2: Quick Links -->
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul class="footer-links-list">
+              <li><a href="index.html"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
+              <li><a href="products.html"><i class="fa-solid fa-chevron-right"></i> All Products &amp; Offers</a></li>
+              <li><a href="about.html"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
+              <li><a href="contact.html"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
+              <li><a href="terms.html"><i class="fa-solid fa-chevron-right"></i> Terms &amp; Policies</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Assistance & Admin -->
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul class="footer-links-list">
+              <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Customer Help</a></li>
+              <li><a href="about-developer.html"><i class="fa-solid fa-code"></i> About Developer</a></li>
+              <li><a href="login.html" style="color: #ffc72c;"><i class="fa-solid fa-lock"></i> Admin Portal</a></li>
+            </ul>
+            <div class="footer-timings-badge">
+              <i class="fa-solid fa-clock"></i> 8:00 AM - 10:00 PM
+            </div>
+          </div>
+
         </div>
       </div>
-      </div>
-      <div class="premium-footer">
-        <a href="https://www.chittortech.online/" target="_blank" class="ct-badge">
-          <div class="ct-logo-box">
-            <img src="chittortech_logo_1775884354186.png" alt="ChittorTech">
-          </div>
-          <div class="ct-badge-text">
-            <span>A PRODUCT OF</span>
-            <h5>ChittorTech</h5>
+    </div>
+
+    <!-- Footer Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-flex">
+        <p class="footer-copyright">
+          &copy; 2026 <strong>CHITTORGARH HUB</strong>. All rights reserved.
+        </p>
+        <a href="https://www.chittortech.online/" target="_blank" class="footer-ct-badge">
+          <img src="chittortech_logo_1775884354186.png" alt="ChittorTech Logo" class="footer-ct-logo">
+          <div class="footer-ct-text">
+            <span>DEVELOPED &amp; POWERED BY</span>
+            <strong>ChittorTech</strong>
           </div>
         </a>
       </div>
     </div>
   </footer>
 
-  <script type="module" src="app.js?v=1.1.0"></script>
+  <script type="module" src="app.js?v=1.1.5"></script>
 </body>
 </html>

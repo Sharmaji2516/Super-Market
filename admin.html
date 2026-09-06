@@ -320,6 +320,143 @@
     .stat-icon.amber { background: #fffbeb; color: #d97706; }
     .stat-icon.red { background: #fef2f2; color: #dc2626; }
     .stat-icon.purple { background: #faf5ff; color: #9333ea; }
+    .stat-icon.blue { background: #eff6ff; color: #2563eb; }
+
+    .clickable-stat {
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      border: 1.5px solid transparent;
+    }
+    .clickable-stat:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+      border-color: #38bdf8;
+      background: #f8fafc;
+    }
+    .stat-click-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #2563eb;
+      margin-top: 5px;
+      letter-spacing: 0.2px;
+    }
+    .clickable-stat:hover .stat-click-hint {
+      text-decoration: underline;
+    }
+
+    /* Category Analytics Modal UI */
+    .cat-stat-badge {
+      font-size: 0.8rem;
+      color: #334155;
+      background: #e2e8f0;
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cat-stat-badge strong {
+      color: #0f172a;
+      font-weight: 800;
+    }
+    .analytics-tab-btn {
+      background: none;
+      border: none;
+      padding: 8px 16px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+    .analytics-tab-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .analytics-tab-btn.active {
+      background: #0f172a;
+      color: white;
+    }
+
+    .analytics-cat-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px;
+      transition: all 0.2s ease;
+    }
+    .analytics-cat-card:hover {
+      border-color: #93c5fd;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+    .analytics-cat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .analytics-cat-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .subcat-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .subcat-tag-pill:hover {
+      background: #dcfce7;
+      border-color: #86efac;
+      transform: translateY(-1px);
+    }
+    .subcat-tag-pill .count {
+      background: #166534;
+      color: white;
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+    .btn-filter-registry {
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: 0.15s;
+    }
+    .btn-filter-registry:hover {
+      background: #2563eb;
+      color: white;
+    }
 
     /* Action Toolbar (Orient Style) */
     .registry-header-card {
@@ -1092,12 +1229,21 @@
           </div>
           <div class="stat-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card clickable-stat" onclick="openCategoryAnalyticsModal('categories')" title="Click to view all categories, subcategories & product counts">
           <div class="stat-info">
             <h4>Active Categories</h4>
             <div class="stat-num" id="stat-categories">0</div>
+            <span class="stat-click-hint"><i class="fa-solid fa-folder-open"></i> View Categories &rsaquo;</span>
           </div>
           <div class="stat-icon amber"><i class="fa-solid fa-tags"></i></div>
+        </div>
+        <div class="stat-card clickable-stat" onclick="openCategoryAnalyticsModal('subcategories')" title="Click to view all active subcategories">
+          <div class="stat-info">
+            <h4>Active Subcategories</h4>
+            <div class="stat-num" id="stat-subcategories">0</div>
+            <span class="stat-click-hint"><i class="fa-solid fa-tags"></i> View Subcategories &rsaquo;</span>
+          </div>
+          <div class="stat-icon blue"><i class="fa-solid fa-sitemap"></i></div>
         </div>
       </div>
 
@@ -1352,6 +1498,69 @@
 
   </main>
 
+  <!-- MODAL: CATEGORY & SUBCATEGORY DIRECTORY (CLEAN SIMPLE ENGLISH) -->
+  <div id="modal-category-analytics" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width: 860px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; border-bottom: none; border-radius: 20px 20px 0 0; padding: 18px 24px;">
+        <div>
+          <h3 style="color: white; margin: 0; display: flex; align-items: center; gap: 10px; font-size: 1.25rem;">
+            <i class="fa-solid fa-layer-group" style="color: #38bdf8;"></i> Categories & Subcategories
+          </h3>
+          <p style="margin: 4px 0 0; font-size: 0.82rem; color: #94a3b8;">
+            Overview of store categories, assigned subcategories, and product stock levels
+          </p>
+        </div>
+        <button class="modal-close-btn" style="color: #94a3b8;" onclick="closeModal('modal-category-analytics')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      
+      <!-- Summary Strip -->
+      <div style="background: #f8fafc; padding: 14px 24px; border-bottom: 1px solid var(--admin-border); display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <div class="cat-stat-badge"><i class="fa-solid fa-box" style="color: #059669;"></i> Total Products: <strong id="modal-sku-count">0</strong></div>
+          <div class="cat-stat-badge"><i class="fa-solid fa-folder" style="color: #d97706;"></i> Categories: <strong id="modal-cat-count">0</strong></div>
+          <div class="cat-stat-badge"><i class="fa-solid fa-tag" style="color: #2563eb;"></i> Subcategories: <strong id="modal-subcat-count">0</strong></div>
+        </div>
+        
+        <!-- Search within Categories -->
+        <div style="position: relative; min-width: 220px; flex-grow: 1; max-width: 300px;">
+          <input type="text" id="analytics-search-input" placeholder="Search category or subcategory..." oninput="filterAnalyticsModalView()" style="width: 100%; padding: 8px 12px 8px 34px; border-radius: 20px; border: 1.5px solid #cbd5e1; font-size: 0.84rem; outline: none; box-sizing: border-box;">
+          <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 11px; font-size: 0.78rem; color: #94a3b8;"></i>
+        </div>
+      </div>
+
+      <!-- Segmented View Tabs inside Modal -->
+      <div style="padding: 10px 24px 0; background: #ffffff; border-bottom: 1px solid #e2e8f0;">
+        <div style="display: flex; gap: 10px;">
+          <button id="modal-tab-btn-cat" class="analytics-tab-btn active" onclick="switchAnalyticsModalTab('cat')">
+            <i class="fa-solid fa-folder-tree"></i> Categories Breakdown
+          </button>
+          <button id="modal-tab-btn-subcat" class="analytics-tab-btn" onclick="switchAnalyticsModalTab('subcat')">
+            <i class="fa-solid fa-tags"></i> All Subcategories
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-body" style="padding: 20px 24px; max-height: 60vh; overflow-y: auto; background: #f8fafc;">
+        <!-- TAB 1: ALL CATEGORIES & PHOTOS VIEW -->
+        <div id="analytics-category-view">
+          <div id="analytics-categories-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;"></div>
+        </div>
+
+        <!-- TAB 2: ACTIVE SUBCATEGORIES VIEW -->
+        <div id="analytics-subcategory-view" style="display: none;">
+          <div id="analytics-subcategories-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px;"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; background: white; border-top: 1px solid var(--admin-border); padding: 14px 24px;">
+        <span style="font-size: 0.8rem; color: #475569;">
+          <i class="fa-solid fa-circle-info" style="color: #0284c7;"></i> Click <b>"Edit"</b> on any product in the registry table to assign or change its Subcategory.
+        </span>
+        <button type="button" class="btn-cancel" onclick="closeModal('modal-category-analytics')">Close Window</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: SINGLE ADD PRODUCT -->
   <div id="modal-single-add" class="admin-modal-overlay">
     <div class="admin-modal">
@@ -1386,7 +1595,7 @@
             </div>
           </div>
 
-          <div class="form-grid-2">
+          <div class="form-grid-3">
             <div class="form-group">
               <label>Department / Super Category</label>
               <input type="text" id="add-dept" class="form-control" placeholder="e.g. Grocery & Staples">
@@ -1394,6 +1603,10 @@
             <div class="form-group">
               <label>Category *</label>
               <input type="text" id="add-cat" class="form-control" placeholder="e.g. Cooking Oil" required>
+            </div>
+            <div class="form-group">
+              <label>Subcategory (Optional)</label>
+              <input type="text" id="add-subcat" class="form-control" placeholder="e.g. Sunflower Oil, Mustard Oil">
             </div>
           </div>
 
@@ -1415,7 +1628,7 @@
           <div class="form-grid-2">
             <div class="form-group">
               <label>Offer / Badge Text</label>
-              <input type="text" id="add-offer" class="form-control" placeholder="e.g. 15% OFF, Best Seller">
+              <input type="text" id="add-offer" class="form-control" placeholder="e.g. 15% OFF, ₹20 OFF, Best Seller">
             </div>
             <div class="form-group">
               <label>Stock Status</label>
@@ -1488,7 +1701,7 @@
             </div>
           </div>
 
-          <div class="form-grid-2">
+          <div class="form-grid-3">
             <div class="form-group">
               <label>Department</label>
               <input type="text" id="edit-dept" class="form-control">
@@ -1496,6 +1709,10 @@
             <div class="form-group">
               <label>Category *</label>
               <input type="text" id="edit-cat" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Subcategory (Optional)</label>
+              <input type="text" id="edit-subcat" class="form-control" placeholder="e.g. Men T-Shirts, Cotton">
             </div>
           </div>
 
@@ -1516,8 +1733,8 @@
 
           <div class="form-grid-2">
             <div class="form-group">
-              <label>Offer Badge</label>
-              <input type="text" id="edit-offer" class="form-control">
+              <label>Offer Badge (e.g. 15% OFF, ₹50 OFF, Special)</label>
+              <input type="text" id="edit-offer" class="form-control" placeholder="Leave empty for auto or enter custom badge">
             </div>
             <div class="form-group">
               <label>Stock Status</label>
@@ -1858,12 +2075,248 @@
       const total = rawProducts.length;
       const inStock = rawProducts.filter(p => p.inStock !== false).length;
       const outStock = total - inStock;
-      const cats = new Set(rawProducts.map(p => p.category).filter(Boolean)).size;
+      const cats = new Set(rawProducts.map(p => p.category ? p.category.trim() : '').filter(Boolean)).size;
+      const subcats = new Set(rawProducts.map(p => p.subCategory ? p.subCategory.trim() : '').filter(Boolean)).size;
 
       document.getElementById('stat-total-products').textContent = total;
       document.getElementById('stat-in-stock').textContent = inStock;
       document.getElementById('stat-out-stock').textContent = outStock;
       document.getElementById('stat-categories').textContent = cats;
+      const subcatEl = document.getElementById('stat-subcategories');
+      if (subcatEl) subcatEl.textContent = subcats;
+    }
+
+    // Category & Subcategory Analytics Directory Modal Logic
+    let currentAnalyticsTab = 'cat';
+    let currentAnalyticsSearch = '';
+
+    window.openCategoryAnalyticsModal = (defaultTab = 'categories') => {
+      const targetTab = (defaultTab === 'subcategories' || defaultTab === 'subcat') ? 'subcat' : 'cat';
+      currentAnalyticsTab = targetTab;
+      currentAnalyticsSearch = '';
+      const searchInput = document.getElementById('analytics-search-input');
+      if (searchInput) searchInput.value = '';
+      
+      switchAnalyticsModalTab(targetTab);
+      openModal('modal-category-analytics');
+    };
+
+    window.switchAnalyticsModalTab = (tab) => {
+      currentAnalyticsTab = tab;
+      const btnCat = document.getElementById('modal-tab-btn-cat');
+      const btnSubcat = document.getElementById('modal-tab-btn-subcat');
+      const viewCat = document.getElementById('analytics-category-view');
+      const viewSubcat = document.getElementById('analytics-subcategory-view');
+
+      if (tab === 'cat') {
+        if (btnCat) btnCat.classList.add('active');
+        if (btnSubcat) btnSubcat.classList.remove('active');
+        if (viewCat) viewCat.style.display = 'block';
+        if (viewSubcat) viewSubcat.style.display = 'none';
+      } else {
+        if (btnCat) btnCat.classList.remove('active');
+        if (btnSubcat) btnSubcat.classList.add('active');
+        if (viewCat) viewCat.style.display = 'none';
+        if (viewSubcat) viewSubcat.style.display = 'block';
+      }
+      renderAnalyticsModalData();
+    };
+
+    window.filterAnalyticsModalView = () => {
+      const searchInput = document.getElementById('analytics-search-input');
+      currentAnalyticsSearch = (searchInput ? searchInput.value : '').toLowerCase().trim();
+      renderAnalyticsModalData();
+    };
+
+    window.filterRegistryFromAnalytics = (catName, subcatName = '') => {
+      closeModal('modal-category-analytics');
+      switchAdminTab('inventory');
+      
+      const catSelect = document.getElementById('filter-category');
+      const searchInput = document.getElementById('registry-search');
+      
+      if (catName && catSelect) {
+        const exists = Array.from(catSelect.options).some(opt => opt.value === catName);
+        if (exists) {
+          catSelect.value = catName;
+        } else {
+          catSelect.value = 'ALL';
+        }
+      } else if (catSelect) {
+        catSelect.value = 'ALL';
+      }
+      
+      if (subcatName && searchInput) {
+        searchInput.value = subcatName;
+      } else if (searchInput && !catName) {
+        searchInput.value = '';
+      }
+      
+      renderRegistryTable();
+      showToast(`Filtered registry by: ${subcatName ? `${catName} → ${subcatName}` : catName}`, 'info');
+    };
+
+    function renderAnalyticsModalData() {
+      // Aggregate data from rawProducts
+      const catMap = new Map(); // catName -> { total: 0, inStock: 0, outStock: 0, subcategories: Map(subName -> count) }
+      const allSubcatsMap = new Map(); // subName -> { count: 0, inStock: 0, parentCategories: Set() }
+
+      rawProducts.forEach(p => {
+        const cat = (p.category || 'Uncategorized').trim();
+        const sub = (p.subCategory || '').trim();
+        const isIn = p.inStock !== false;
+
+        if (!catMap.has(cat)) {
+          catMap.set(cat, {
+            total: 0,
+            inStock: 0,
+            outStock: 0,
+            subcategories: new Map()
+          });
+        }
+        const cEntry = catMap.get(cat);
+        cEntry.total++;
+        if (isIn) cEntry.inStock++; else cEntry.outStock++;
+
+        if (sub) {
+          cEntry.subcategories.set(sub, (cEntry.subcategories.get(sub) || 0) + 1);
+          
+          if (!allSubcatsMap.has(sub)) {
+            allSubcatsMap.set(sub, { count: 0, inStock: 0, parentCategories: new Set() });
+          }
+          const sEntry = allSubcatsMap.get(sub);
+          sEntry.count++;
+          if (isIn) sEntry.inStock++;
+          sEntry.parentCategories.add(cat);
+        }
+      });
+
+      // Update Header Stats
+      const modalCatCount = document.getElementById('modal-cat-count');
+      const modalSubcatCount = document.getElementById('modal-subcat-count');
+      const modalSkuCount = document.getElementById('modal-sku-count');
+      if (modalCatCount) modalCatCount.textContent = catMap.size;
+      if (modalSubcatCount) modalSubcatCount.textContent = allSubcatsMap.size;
+      if (modalSkuCount) modalSkuCount.textContent = rawProducts.length;
+
+      // Render Tab 1: Categories with Images & Product Counts
+      const catListContainer = document.getElementById('analytics-categories-list');
+      if (catListContainer) {
+        let catHtml = '';
+        const sortedCats = Array.from(catMap.keys()).sort();
+        
+        let matchedCats = sortedCats.filter(c => {
+          if (!currentAnalyticsSearch) return true;
+          return c.toLowerCase().includes(currentAnalyticsSearch);
+        });
+
+        if (matchedCats.length === 0) {
+          catHtml = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 35px 20px; background: white; border-radius: 14px; border: 1.5px dashed #cbd5e1;">
+              <p style="font-weight: 700; color: #64748b; margin: 0;">No categories matched "${currentAnalyticsSearch}"</p>
+            </div>
+          `;
+        } else {
+          matchedCats.forEach(cat => {
+            const data = catMap.get(cat);
+            const prodWithImg = rawProducts.find(p => p.category === cat && p.image);
+            const catImgUrl = categoryImagesMap[cat] || (prodWithImg ? resolveDirectImageUrl(prodWithImg.image) : '');
+            const subCount = data.subcategories.size;
+
+            catHtml += `
+              <div style="background: white; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px; display: flex; align-items: center; justify-content: space-between; gap: 14px; transition: all 0.2s;" onmouseover="this.style.borderColor='#38bdf8'" onmouseout="this.style.borderColor='#e2e8f0'">
+                <div style="display: flex; align-items: center; gap: 14px; min-width: 0;">
+                  <div style="width: 52px; height: 52px; border-radius: 12px; background: #f1f5f9; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+                    ${catImgUrl 
+                      ? `<img src="${catImgUrl}" alt="${cat}" style="width: 100%; height: 100%; object-fit: cover;">` 
+                      : `<i class="fa-solid fa-folder-open" style="font-size: 1.3rem; color: #f59e0b;"></i>`}
+                  </div>
+                  <div style="min-width: 0;">
+                    <h4 style="margin: 0 0 4px; font-size: 0.98rem; color: #0f172a; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                      ${cat}
+                    </h4>
+                    <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                      <span style="font-size: 0.74rem; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 10px;">
+                        ${data.total} Products
+                      </span>
+                      <span style="font-size: 0.74rem; font-weight: 700; background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 10px;">
+                        ${subCount > 0 ? `${subCount} Subcategories` : 'Direct Category'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <button type="button" class="btn-filter-registry" style="flex-shrink: 0; padding: 6px 12px; border-radius: 8px;" onclick="filterRegistryFromAnalytics('${cat.replace(/'/g, "\\'")}', '')">
+                  <i class="fa-solid fa-filter"></i> View in Table
+                </button>
+              </div>
+            `;
+          });
+        }
+        catListContainer.innerHTML = catHtml;
+      }
+
+      // Render Tab 2: Subcategories List View
+      const subListContainer = document.getElementById('analytics-subcategories-list');
+      if (subListContainer) {
+        let subHtml = '';
+        const sortedSubcats = Array.from(allSubcatsMap.keys()).sort();
+        
+        const matchedSubs = sortedSubcats.filter(s => {
+          if (!currentAnalyticsSearch) return true;
+          if (s.toLowerCase().includes(currentAnalyticsSearch)) return true;
+          const pCats = Array.from(allSubcatsMap.get(s).parentCategories);
+          return pCats.some(c => c.toLowerCase().includes(currentAnalyticsSearch));
+        });
+
+        if (sortedSubcats.length === 0) {
+          subHtml = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; background: white; border: 1.5px dashed #cbd5e1; border-radius: 16px;">
+              <div style="width: 52px; height: 52px; border-radius: 50%; background: #eff6ff; color: #2563eb; display: inline-flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 12px;">
+                <i class="fa-solid fa-tags"></i>
+              </div>
+              <h4 style="margin: 0 0 6px; font-size: 1.05rem; color: #0f172a; font-weight: 800;">No Subcategories Created Yet</h4>
+              <p style="margin: 0 0 16px; font-size: 0.86rem; color: #64748b; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.55;">
+                To assign subcategories, click <b>"EDIT"</b> on any product in your registry table and type a Subcategory (such as <i>Atta, Cooking Oil, Cookies, Soap, Cold Drinks</i>).
+              </p>
+              <button type="button" class="btn-action btn-single-add" onclick="closeModal('modal-category-analytics'); openSingleAddModal();" style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; padding: 8px 18px;">
+                <i class="fa-solid fa-plus"></i> + Add Product with Subcategory
+              </button>
+            </div>
+          `;
+        } else if (matchedSubs.length === 0) {
+          subHtml = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 35px 20px; background: white; border: 1.5px dashed #cbd5e1; border-radius: 16px;">
+              <p style="font-weight: 700; color: #64748b; margin: 0;">No subcategories matched "${currentAnalyticsSearch}"</p>
+            </div>
+          `;
+        } else {
+          matchedSubs.forEach(sub => {
+            const data = allSubcatsMap.get(sub);
+            const parentCats = Array.from(data.parentCategories).join(', ');
+            const primaryParent = Array.from(data.parentCategories)[0] || '';
+
+            subHtml += `
+              <div style="background: white; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+                <div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                    <strong style="color: #0f172a; font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
+                      <i class="fa-solid fa-tag" style="color: #10b981; font-size: 0.8rem;"></i> ${sub}
+                    </strong>
+                    <span style="font-weight: 800; font-size: 0.78rem; background: #ecfdf5; color: #047857; padding: 2px 8px; border-radius: 20px;">${data.count} items</span>
+                  </div>
+                  <div style="font-size: 0.78rem; color: #64748b;">
+                    Parent: <strong style="color: #1e293b;">${parentCats}</strong>
+                  </div>
+                </div>
+                <button type="button" class="btn-filter-registry" style="width: 100%; justify-content: center; margin-top: 4px;" onclick="filterRegistryFromAnalytics('${primaryParent.replace(/'/g, "\\'")}', '${sub.replace(/'/g, "\\'")}')">
+                  <i class="fa-solid fa-filter"></i> Filter in Table
+                </button>
+              </div>
+            `;
+          });
+        subListContainer.innerHTML = subHtml;
+      }
     }
 
     // Modal Manager
@@ -1952,7 +2405,10 @@
               ${p.unit ? `<span class="unit-tag"><i class="fa-solid fa-scale-balanced" style="font-size: 0.7rem;"></i> ${p.unit}</span>` : ''}
             </td>
             <td><span class="dept-tag">${p.department || p.category || 'General'}</span></td>
-            <td><span class="cat-tag">${p.category || '-'}</span></td>
+            <td>
+              <span class="cat-tag">${p.category || '-'}</span>
+              ${(p.subCategory || p.sub_category) ? `<div style="margin-top: 3px;"><small style="color: #64748b; font-weight: 700; font-size: 0.72rem; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; display: inline-block;">▸ ${p.subCategory || p.sub_category}</small></div>` : ''}
+            </td>
             <td class="price-cell">
               <span class="price-main">₹${Number(p.price || 0).toFixed(2)}</span>
               ${p.oldPrice ? `<span class="price-mrp">₹${Number(p.oldPrice).toFixed(2)}</span>` : ''}
@@ -2007,6 +2463,7 @@
           name: document.getElementById('add-name').value.trim(),
           department: document.getElementById('add-dept').value.trim() || 'General',
           category: document.getElementById('add-cat').value.trim(),
+          subCategory: document.getElementById('add-subcat').value.trim() || '',
           price: parseFloat(document.getElementById('add-price').value) || 0,
           oldPrice: parseFloat(document.getElementById('add-mrp').value) || null,
           unit: document.getElementById('add-unit').value.trim(),
@@ -2039,6 +2496,7 @@
       document.getElementById('edit-name').value = p.name || '';
       document.getElementById('edit-dept').value = p.department || p.category || '';
       document.getElementById('edit-cat').value = p.category || '';
+      document.getElementById('edit-subcat').value = p.subCategory || p.sub_category || p.subCat || '';
       document.getElementById('edit-price').value = p.price || '';
       document.getElementById('edit-mrp').value = p.oldPrice || '';
       document.getElementById('edit-unit').value = p.unit || '';
@@ -2066,6 +2524,7 @@
         p.name = document.getElementById('edit-name').value.trim();
         p.department = document.getElementById('edit-dept').value.trim() || 'General';
         p.category = document.getElementById('edit-cat').value.trim();
+        p.subCategory = document.getElementById('edit-subcat').value.trim() || '';
         p.price = parseFloat(document.getElementById('edit-price').value) || 0;
         p.oldPrice = parseFloat(document.getElementById('edit-mrp').value) || null;
         p.unit = document.getElementById('edit-unit').value.trim();

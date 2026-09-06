@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>All Products & Catalogue | CHITTORGARH HUB</title>
   <meta name="description" content="Browse our wide selection of groceries, daily essentials, and fresh items at CHITTORGARH HUB.">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=1.3.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -17,14 +17,26 @@
         <i class="fa-solid fa-store" style="color: var(--primary);"></i> CHITTORGARH<span>HUB</span>
       </a>
       <button class="menu-btn" aria-label="Toggle Menu"><i class="fa-solid fa-bars"></i></button>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="products.html" class="active">All Products & Services</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="terms.html">Terms</a></li>
-        <li><a href="login.html" style="color: var(--primary); font-weight: 700;"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
-      </ul>
+      <div class="nav-links">
+        <div class="drawer-brand-header">
+          <div class="drawer-brand-info">
+            <i class="fa-solid fa-store drawer-logo-icon"></i>
+            <div>
+              <h4>CHITTORGARH<span>HUB</span></h4>
+              <p>Quality Grocery &amp; Daily Needs</p>
+            </div>
+          </div>
+          <button id="mobileNavCloseBtn" class="drawer-close-btn" type="button" aria-label="Close Menu"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <ul class="drawer-menu-list">
+          <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="products.html" class="active"><i class="fa-solid fa-basket-shopping"></i> All Products &amp; Services</a></li>
+          <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+          <li><a href="contact.html"><i class="fa-solid fa-phone"></i> Contact Us</a></li>
+          <li><a href="terms.html"><i class="fa-solid fa-shield-halved"></i> Terms</a></li>
+          <li><a href="login.html" style="color: var(--primary); font-weight: 700;"><i class="fa-solid fa-user-lock"></i> Admin</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 
@@ -32,19 +44,85 @@
   <section class="section" style="padding-top: 1.5rem;">
     <div class="container catalog-container">
       
-      <!-- Catalog Page Header -->
-      <div class="catalog-page-header">
-        <h1 class="catalog-title">All Products &amp; Catalogue</h1>
-        <p class="catalog-subtitle">Explore daily groceries, personal care, snacks &amp; household essentials</p>
+      <!-- Amazon-Style Top Search & Header Bar -->
+      <div class="amazon-top-search-section">
+        <div class="amazon-search-bar-wrap">
+          <div class="amazon-search-input-group">
+            <i class="fa-solid fa-magnifying-glass amazon-search-icon"></i>
+            <input type="text" id="productSearch" placeholder="Search groceries, essentials, brands..." autocomplete="off">
+            <button id="clearSearchBtn" class="amazon-search-action clear-btn" style="display: none;" type="button" title="Clear Search">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <!-- Search Suggestions & History Dropdown -->
+            <div id="searchHistoryList" class="search-history-dropdown"></div>
+          </div>
+        </div>
+
+        <!-- Filter Action Bar & Quick Pills (4 Focused Quick Actions) -->
+        <div class="amazon-filter-grid">
+          <button id="mobileFilterOpenBtn" class="amazon-filter-trigger-btn" type="button">
+            <i class="fa-solid fa-sliders"></i> Filters <span id="activeFilterBadge" class="filter-count-badge" style="display: none;">0</span>
+          </button>
+          <button class="quick-chip-btn" data-filter="discount" type="button">
+            <i class="fa-solid fa-tag"></i> Special Offers
+          </button>
+          <button class="quick-chip-btn" data-filter="in-stock" type="button">
+            <i class="fa-solid fa-circle-check"></i> In Stock
+          </button>
+          <button class="quick-chip-btn" data-filter="out-of-stock" type="button">
+            <i class="fa-solid fa-circle-xmark"></i> Out of Stock
+          </button>
+        </div>
+
+        <!-- Tier 1: Main Categories Visual Strip (Always visible with all categories) -->
+        <div class="amazon-subcategory-section tier-1-categories">
+          <div class="subcat-strip-label">
+            <span id="allCategoriesStripLabel">All Categories</span>
+          </div>
+          <div class="subcat-carousel-wrapper">
+            <button id="catScrollLeftBtn" class="subcat-scroll-arrow left-arrow" aria-label="Scroll Categories Left" type="button">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div id="categoryPillsContainer" class="subcategory-pills-row">
+              <!-- Dynamic Category pills with pictures injected via JS -->
+              <div class="subcat-pill skeleton-subcat"><div class="subcat-img-box"></div><span>Loading...</span></div>
+              <div class="subcat-pill skeleton-subcat"><div class="subcat-img-box"></div><span>Loading...</span></div>
+              <div class="subcat-pill skeleton-subcat"><div class="subcat-img-box"></div><span>Loading...</span></div>
+              <div class="subcat-pill skeleton-subcat"><div class="subcat-img-box"></div><span>Loading...</span></div>
+            </div>
+            <button id="catScrollRightBtn" class="subcat-scroll-arrow right-arrow" aria-label="Scroll Categories Right" type="button">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tier 2: Dedicated Subcategories Strip (Appears below Tier 1 when a Category is selected) -->
+        <div id="subCategoryStripSection" class="amazon-subcategory-section tier-2-subcategories" style="display: none;">
+          <div class="subcat-strip-label">
+            <span id="currentCatLabel">Subcategories</span>
+            <span id="clearSubcatBtn" class="clear-subcat-link"><i class="fa-solid fa-rotate-left"></i> View All in Category</span>
+          </div>
+          <div class="subcat-carousel-wrapper">
+            <button id="subcatScrollLeftBtn" class="subcat-scroll-arrow left-arrow" aria-label="Scroll Subcategories Left" type="button">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div id="subcategoryPillsContainer" class="subcategory-pills-row">
+              <!-- Dynamic Subcategory pills injected via JS -->
+            </div>
+            <button id="subcatScrollRightBtn" class="subcat-scroll-arrow right-arrow" aria-label="Scroll Subcategories Right" type="button">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="catalog-layout">
         
-        <!-- Sidebar Filters -->
-        <aside class="sidebar-filters">
+        <!-- Filter Drawer / Sidebar Filters -->
+        <aside class="sidebar-filters" id="sidebarFiltersDrawer">
           <div class="sidebar-header">
             <h3><i class="fa-solid fa-sliders"></i> Filters</h3>
-            <button id="mobileFilterCloseBtn" class="mobile-close-btn" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
+            <button id="mobileFilterCloseBtn" class="mobile-close-btn" type="button"><i class="fa-solid fa-xmark"></i></button>
           </div>
           
           <!-- Category Filter Accordion -->
@@ -92,27 +170,21 @@
               </label>
             </div>
           </div>
+
+          <!-- Filter Action Footer for Drawer -->
+          <div class="filter-drawer-actions">
+            <button id="resetFiltersBtn" class="btn-reset-filter" type="button"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+            <button id="applyFiltersBtn" class="btn-apply-filter" type="button">Apply Filters</button>
+          </div>
         </aside>
 
         <!-- Main Products Area -->
         <div class="main-products-content">
-          
-          <!-- Premium Search Section -->
-          <div class="search-section animate-on-scroll">
-            <div class="search-wrapper" style="width: 100%;">
-              <button id="mobileFilterOpenBtn" class="mobile-filter-btn" type="button">
-                <i class="fa-solid fa-filter"></i> Filters
-              </button>
-              <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" id="productSearch" placeholder="Search by name, item, brand..." autocomplete="off">
-                <button id="clearSearchBtn" class="clear-btn" style="display: none;" type="button" title="Clear Search">
-                  <i class="fa-solid fa-xmark"></i>
-                </button>
-                <!-- Search Suggestions & History Dropdown -->
-                <div id="searchHistoryList" class="search-history-dropdown"></div>
-              </div>
-            </div>
+          <!-- Active filter status indicator bar -->
+          <div id="activeFilterTagsBar" class="active-filter-tags-bar" style="display: none;">
+            <span class="active-filter-title">Active Filters:</span>
+            <div id="activeFilterChipsContainer" class="active-chips-inline"></div>
+            <button id="clearAllFiltersInline" class="clear-all-btn" type="button">Clear All</button>
           </div>
 
           <!-- Container populated via JS with Skeleton Placeholders on first load -->
@@ -134,48 +206,73 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Modern Compact E-Commerce Footer -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-about">
-          <h3>CHITTORGARH<span>HUB</span></h3>
-          <p>Our priority is Your Trust and Satisfaction. Dedicated to serving our community with love and care.</p>
-          <div class="social-links" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-            <a href="https://www.facebook.com/share/17CsmEXSUP/" target="_blank" style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/chittorgarh.sonu?igsh=MXFlMDkxaHEzanRzNg==" target="_blank" style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://wa.me/917014974762" target="_blank" style="color: white; font-size: 1.2rem;"><i class="fa-brands fa-whatsapp"></i></a>
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid-compact">
+          
+          <!-- Col 1: Brand & Bio -->
+          <div class="footer-brand-col">
+            <div class="footer-brand-title">
+              <i class="fa-solid fa-store" style="color: var(--primary);"></i> CHITTORGARH<span>HUB</span>
+            </div>
+            <p class="footer-brand-desc">
+              Your trusted destination in Chittorgarh for fresh groceries, daily essentials &amp; best local prices.
+            </p>
+            <div class="footer-social-links">
+              <a href="https://www.facebook.com/share/17CsmEXSUP/" target="_blank" class="footer-social-btn" aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+              </a>
+              <a href="https://www.instagram.com/chittorgarh.sonu?igsh=MXFlMDkxaHEzanRzNg==" target="_blank" class="footer-social-btn" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+              <a href="https://wa.me/917014974762" target="_blank" class="footer-social-btn" aria-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+            </div>
           </div>
-        </div>
-        <div class="footer-links">
-          <h4>Explore</h4>
-          <ul style="padding: 0;">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="products.html">Our Services</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="terms.html">Terms & Conditions</a></li>
-            <li><a href="about-developer.html">About Developer</a></li>
-            <li><a href="login.html" style="color: var(--accent); font-weight: 700;"><i class="fa-solid fa-lock"></i> Admin Login</a></li>
-          </ul>
-        </div>
-        <div class="footer-contact">
-          <h4>Get Support</h4>
-          <p><a href="https://www.google.com/maps/search/?api=1&query=29+Rajive+Colony+Meera+Market+Chittorgarh" target="_blank" style="color: inherit;"><i class="fa-solid fa-location-dot"></i> Office: 29 Rajive Colony, Meera Market, Chittorgarh</a></p>
-          <p><a href="https://wa.me/917014974762" target="_blank" style="color: inherit; text-decoration: none;"><i class="fa-solid fa-phone"></i> Phone: +91 7014974762, +91 9680580008</a></p>
-          <p><a href="mailto:Chittorgarhsonu@gmail.com" style="color: inherit; text-decoration: none;"><i class="fa-solid fa-envelope"></i> Email: Chittorgarhsonu@gmail.com</a></p>
-          <p><i class="fa-solid fa-clock"></i> Time: Daily: 8:00 AM - 10:00 PM</p>
+
+          <!-- Col 2: Quick Links -->
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul class="footer-links-list">
+              <li><a href="index.html"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
+              <li><a href="products.html"><i class="fa-solid fa-chevron-right"></i> All Products &amp; Offers</a></li>
+              <li><a href="about.html"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
+              <li><a href="contact.html"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
+              <li><a href="terms.html"><i class="fa-solid fa-chevron-right"></i> Terms &amp; Policies</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Assistance & Admin -->
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul class="footer-links-list">
+              <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Customer Help</a></li>
+              <li><a href="about-developer.html"><i class="fa-solid fa-code"></i> About Developer</a></li>
+              <li><a href="login.html" style="color: #ffc72c;"><i class="fa-solid fa-lock"></i> Admin Portal</a></li>
+            </ul>
+            <div class="footer-timings-badge">
+              <i class="fa-solid fa-clock"></i> 8:00 AM - 10:00 PM
+            </div>
+          </div>
+
         </div>
       </div>
-      </div>
-      <div class="premium-footer">
-        <a href="https://www.chittortech.online/" target="_blank" class="ct-badge">
-          <div class="ct-logo-box">
-            <img src="chittortech_logo_1775884354186.png" alt="ChittorTech">
-          </div>
-          <div class="ct-badge-text">
-            <span>A PRODUCT OF</span>
-            <h5>ChittorTech</h5>
+    </div>
+
+    <!-- Footer Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-flex">
+        <p class="footer-copyright">
+          &copy; 2026 <strong>CHITTORGARH HUB</strong>. All rights reserved.
+        </p>
+        <a href="https://www.chittortech.online/" target="_blank" class="footer-ct-badge">
+          <img src="chittortech_logo_1775884354186.png" alt="ChittorTech Logo" class="footer-ct-logo">
+          <div class="footer-ct-text">
+            <span>DEVELOPED &amp; POWERED BY</span>
+            <strong>ChittorTech</strong>
           </div>
         </a>
       </div>
@@ -195,7 +292,7 @@
     </div>
   </div>
 
-  <script type="module" src="app.js?v=1.1.0"></script>
+  <script type="module" src="app.js?v=1.3.1"></script>
 
 </body>
 </html>
