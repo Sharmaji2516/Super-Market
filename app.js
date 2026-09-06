@@ -562,20 +562,33 @@ function renderProductsUI(products) {
           <h3 class="product-title" style="${!inStock ? 'color: var(--text-muted);' : ''}">${product.name}</h3>
           ${product.desc ? `<p class="product-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0.8rem; line-height: 1.6;">${product.desc}</p>` : ''}
           
-          <div class="product-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 0.65rem; border-top: 1px solid #f1f5f9;">
+          <div class="product-footer" style="display: flex; flex-direction: column; gap: 0.65rem; margin-top: auto; padding-top: 0.75rem; border-top: 1px solid #f1f5f9;">
             ${product.price ? `
             <div class="product-price-amazon">
-              <span class="price-main">₹${product.price}</span>
               ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `
-                <span class="price-mrp">MRP ₹${product.oldPrice}</span>
-                <span class="price-off">${Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100)}% off</span>
-              ` : ''}
+                <div class="price-mrp-row">
+                  <span class="price-mrp-label">MRP:</span>
+                  <span class="price-mrp">₹${product.oldPrice}</span>
+                  <span class="price-off">${Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100)}% OFF</span>
+                </div>
+                <div class="price-offer-row">
+                  <span class="price-offer-label">Offer Price:</span>
+                  <span class="price-main">₹${product.price}</span>
+                </div>
+              ` : `
+                <div class="price-offer-row">
+                  <span class="price-offer-label">Price:</span>
+                  <span class="price-main">₹${product.price}</span>
+                </div>
+              `}
             </div>
             ` : '<div></div>'}
 
-            <div class="status-badge ${inStock ? 'in-stock' : 'out-stock'}">
-              <span class="status-dot"></span>
-              ${inStock ? 'In Stock' : 'Out of Stock'}
+            <div class="product-stock-center">
+              <div class="status-badge ${inStock ? 'in-stock' : 'out-stock'}">
+                <span class="status-dot"></span>
+                ${inStock ? 'IN STOCK' : 'OUT OF STOCK'}
+              </div>
             </div>
           </div>
         </div>

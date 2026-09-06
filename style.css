@@ -3096,43 +3096,151 @@ textarea.form-input {
 /* Amazon / Flipkart Style Pricing */
 .product-price-amazon {
   display: flex;
-  align-items: baseline;
-  gap: 6px;
-  flex-wrap: wrap;
-  line-height: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  line-height: 1.15;
 }
 
-.price-main {
-  font-size: 1.28rem;
-  font-weight: 900;
+.price-mrp-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.price-mrp-label {
+  font-size: 0.88rem;
+  font-weight: 800;
   color: #0f172a;
   font-family: 'Outfit', -apple-system, sans-serif;
-  line-height: 1;
+  letter-spacing: 0.3px;
 }
 
 .price-mrp {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #878787;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
   text-decoration: line-through;
+  text-decoration-color: #64748b;
+  text-decoration-thickness: 1.5px;
   font-family: 'Outfit', -apple-system, sans-serif;
+  line-height: 1;
 }
 
 .price-off {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  color: #16a34a;
+  color: #15803d;
   background: #dcfce7;
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 4px;
   letter-spacing: 0.2px;
   display: inline-block;
+  line-height: 1.2;
+}
+
+.price-offer-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.price-offer-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #059669;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-family: 'Outfit', -apple-system, sans-serif;
+}
+
+.price-main {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #0f172a;
+  font-family: 'Outfit', -apple-system, sans-serif;
+  line-height: 1.1;
+}
+
+.product-stock-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.product-stock-center .status-badge {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+}
+
+.product-page-price-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.product-page-mrp-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.product-page-mrp-label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+  font-family: 'Outfit', -apple-system, sans-serif;
+}
+
+.product-page-old-price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  text-decoration: line-through;
+  text-decoration-color: #64748b;
+  text-decoration-thickness: 1.5px;
+  font-family: 'Outfit', -apple-system, sans-serif;
+}
+
+.product-page-offer-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.product-page-offer-label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #059669;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Outfit', -apple-system, sans-serif;
+}
+
+.product-page-price {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #0f172a;
+  font-family: 'Outfit', -apple-system, sans-serif;
 }
 
 .product-page-discount-tag {
   font-size: 0.85rem;
   font-weight: 800;
-  color: #16a34a;
+  color: #15803d;
   background: #dcfce7;
   padding: 3px 8px;
   border-radius: 6px;

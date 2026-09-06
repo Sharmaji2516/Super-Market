@@ -232,11 +232,22 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="product-page-price-box">
-            <span class="product-page-price">₹${product.price}</span>
             ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `
-              <span class="product-page-old-price">MRP ₹${product.oldPrice}</span>
-              <span class="product-page-discount-tag">${Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100)}% off</span>
-            ` : ''}
+              <div class="product-page-mrp-row">
+                <span class="product-page-mrp-label">MRP:</span>
+                <span class="product-page-old-price">₹${product.oldPrice}</span>
+                <span class="product-page-discount-tag">${Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100)}% OFF</span>
+              </div>
+              <div class="product-page-offer-row">
+                <span class="product-page-offer-label">Offer Price:</span>
+                <span class="product-page-price">₹${product.price}</span>
+              </div>
+            ` : `
+              <div class="product-page-offer-row">
+                <span class="product-page-offer-label">Price:</span>
+                <span class="product-page-price">₹${product.price}</span>
+              </div>
+            `}
           </div>
           
           <div class="product-page-desc">
