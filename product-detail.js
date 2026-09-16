@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = `
       <div class="product-page-layout">
         <!-- Image Section -->
-        <div class="product-page-img-container">
+        <div class="product-page-img-container" style="position: relative;">
           <button class="share-product-btn" onclick="shareProduct('${product.name.replace(/'/g, "\\'")}', '${product.id}')" title="Share Product" aria-label="Share">
             <i class="fa-solid fa-share-nodes"></i>
           </button>

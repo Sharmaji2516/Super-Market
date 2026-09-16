@@ -550,9 +550,14 @@ function renderProductsUI(products) {
 
     html += `
       <div class="product-card ${!inStock ? 'out-of-stock' : ''}" onclick="window.location.href='product-detail.html?id=${product.id}'" style="cursor: pointer;">
-        <div class="product-img-wrapper">
+        <div class="product-img-wrapper" style="position: relative;">
           <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" style="${!inStock ? 'filter: grayscale(1); opacity: 0.6;' : ''}">
           ${!inStock ? '<div class="out-of-stock-overlay">OUT OF STOCK</div>' : ''}
+          
+          <!-- Share Button -->
+          <button class="share-product-btn" style="position: absolute; bottom: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%; background: white; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 0.8rem; color: #4b5563; z-index: 5;" onclick="event.stopPropagation(); window.shareProduct('${product.name.replace(/'/g, "\\'")}', '${product.id}')">
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
         </div>
         <div class="product-content">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
@@ -1159,3 +1164,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 });
+
+// Global Share Product function for all product cards across the site
+window.shareProduct = async (title, id) => {
+  const url = window.location.origin + '/product-detail.html?id=' + id;
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: title + ' | CHITTORGARH HUB',
+        text: 'Check out this product on Chittorgarh Hub!',
+        url: url
+      });
+    } catch (err) {
+      console.log('User cancelled share or error:', err);
+    }
+  } else {
+    navigator.clipboard.writeText(url)
+      .then(() => alert('Link copied to clipboard!'))
+      .catch(err => console.error('Failed to copy link: ', err));
+  }
+};
