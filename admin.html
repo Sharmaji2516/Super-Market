@@ -1355,7 +1355,7 @@
   <!-- Top Navigation Bar -->
   <header class="admin-navbar">
     <div class="nav-left">
-      <a href="https://www.chittortech.online/" target="_blank" class="admin-ct-brand"
+      <a href="https://chittortech.in/" target="_blank" class="admin-ct-brand"
         title="Official Developer: ChittorTech">
         <img src="chittortech_logo_1775884354186.png" alt="ChittorTech Logo" class="ct-nav-logo">
         <div class="ct-nav-text">
@@ -1639,7 +1639,7 @@
             <p>Need technical help, bulk inventory uploads, custom feature requests, or troubleshooting? Contact us
               anytime.</p>
           </div>
-          <a href="https://www.chittortech.online/" target="_blank" class="btn-action"
+          <a href="https://chittortech.in/" target="_blank" class="btn-action"
             style="background: #0f172a; color: white;">
             <i class="fa-solid fa-globe"></i> Visit ChittorTech
           </a>
@@ -1677,7 +1677,7 @@
           </a>
 
           <!-- Email Official -->
-          <a href="mailto:support@chittortech.online"
+          <a href="mailto:contact@chittortech.in"
             style="background: #eff6ff; border: 1.5px solid #bfdbfe; padding: 18px 20px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; gap: 14px; transition: 0.2s;">
             <div
               style="width: 44px; height: 44px; background: #3b82f6; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">
@@ -1688,12 +1688,12 @@
                 Support Email</div>
               <div
                 style="font-size: 0.88rem; color: #0f172a; font-weight: 800; margin-top: 2px; word-break: break-all;">
-                support@chittortech.online</div>
+                contact@chittortech.in</div>
             </div>
           </a>
 
           <!-- Email Secondary -->
-          <a href="mailto:chittortech@gmail.com"
+          <a href="mailto:business@chittortech.in"
             style="background: #fef2f2; border: 1.5px solid #fecaca; padding: 18px 20px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; gap: 14px; transition: 0.2s;">
             <div
               style="width: 44px; height: 44px; background: #ef4444; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">
@@ -1704,7 +1704,7 @@
               </div>
               <div
                 style="font-size: 0.88rem; color: #0f172a; font-weight: 800; margin-top: 2px; word-break: break-all;">
-                chittortech@gmail.com</div>
+                business@chittortech.in</div>
             </div>
           </a>
         </div>
@@ -2238,6 +2238,52 @@
     </div>
   </div>
 
+  <!-- MODAL: GLOBAL ACTION CONFIRMATION -->
+  <div id="modal-action-confirm" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width: 460px; text-align: center;">
+      <div style="padding: 30px 24px 20px;">
+        <div
+          style="width: 64px; height: 64px; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 16px; border: 2px solid #fde68a;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h3 id="action-confirm-title" style="font-size: 1.35rem; color: #0f172a; margin-bottom: 8px; font-weight: 800;">Confirm Action</h3>
+        <p id="action-confirm-message" style="color: #64748b; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; font-weight: 500;">
+          Are you sure you want to proceed? This will change the database.
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+          <button type="button" class="btn-action" onclick="closeModal('modal-action-confirm')"
+            style="background: #f1f5f9; color: #475569; flex: 1; border: 1px solid #cbd5e1;">
+            Cancel
+          </button>
+          <button type="button" class="btn-action" id="action-confirm-btn" onclick="executeActionConfirm()"
+            style="background: #059669; color: white; flex: 1;">
+            <i class="fa-solid fa-check"></i> Proceed
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GLOBAL ACTION SUCCESS -->
+  <div id="modal-action-success" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width: 440px; text-align: center;">
+      <div style="padding: 35px 24px 25px;">
+        <div
+          style="width: 72px; height: 72px; border-radius: 50%; background: #dcfce7; color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 18px; border: 3px solid #bbf7d0; box-shadow: 0 4px 10px rgba(22, 163, 74, 0.15);">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <h3 id="action-success-title" style="font-size: 1.4rem; color: #0f172a; margin-bottom: 10px; font-weight: 800;">Success!</h3>
+        <p id="action-success-message" style="color: #64748b; font-size: 0.95rem; line-height: 1.5; margin-bottom: 24px; font-weight: 500;">
+          The action was completed successfully.
+        </p>
+        <button type="button" class="btn-action" onclick="closeModal('modal-action-success')"
+          style="background: #16a34a; color: white; padding: 10px 30px; font-size: 1rem;">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Bottom-Right Multi-Toast Container -->
   <div id="toast-container" class="toast-container-bottom-right"></div>
 
@@ -2262,6 +2308,29 @@
     window.closeModal = function (id) {
       const modal = document.getElementById(id);
       if (modal) modal.classList.remove('active');
+    };
+
+    let currentActionCallback = null;
+    window.openActionConfirmModal = function(title, message, btnText, callback) {
+        document.getElementById('action-confirm-title').textContent = title;
+        document.getElementById('action-confirm-message').textContent = message;
+        document.getElementById('action-confirm-btn').innerHTML = btnText;
+        currentActionCallback = callback;
+        window.openModal('modal-action-confirm');
+    };
+
+    window.executeActionConfirm = function() {
+        window.closeModal('modal-action-confirm');
+        if (currentActionCallback) {
+            currentActionCallback();
+            currentActionCallback = null;
+        }
+    };
+
+    window.openActionSuccessModal = function(title, message) {
+        document.getElementById('action-success-title').textContent = title;
+        document.getElementById('action-success-message').textContent = message;
+        window.openModal('modal-action-success');
     };
   </script>
 
@@ -2772,47 +2841,57 @@
 
       // Single Add Flow
       window.openSingleAddModal = () => {
-        document.getElementById('single-add-form').reset();
-        const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
-        document.getElementById('add-sku').value = `#${nextId}`;
-        openModal('modal-single-add');
+        openActionConfirmModal(
+          "Add New Product",
+          "You are about to add a new product to the live inventory. Please ensure all details like Price, Category, and Stock are correct.",
+          "Understood, Proceed",
+          () => {
+            document.getElementById('single-add-form').reset();
+            const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
+            document.getElementById('add-sku').value = `#${nextId}`;
+            openModal('modal-single-add');
+          }
+        );
       };
 
-      window.handleSingleAddSubmit = async (e) => {
+      window.handleSingleAddSubmit = (e) => {
         e.preventDefault();
-        const btn = document.getElementById('add-submit-btn');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+        openActionConfirmModal("Add New Product", "Are you sure you want to add this product to the live database?", "<i class='fa-solid fa-check'></i> Yes, Add Product", async () => {
+          const btn = document.getElementById('add-submit-btn');
+          btn.disabled = true;
+          btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
 
-        try {
-          await ensureFirebaseAuth();
-          const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
-          const newProduct = {
-            id: nextId,
-            name: document.getElementById('add-name').value.trim(),
-            department: document.getElementById('add-dept').value.trim() || 'General',
-            category: document.getElementById('add-cat').value.trim(),
-            subCategory: document.getElementById('add-subcat').value.trim() || '',
-            price: parseFloat(document.getElementById('add-price').value) || 0,
-            oldPrice: parseFloat(document.getElementById('add-mrp').value) || null,
-            unit: document.getElementById('add-unit').value.trim(),
-            offer: document.getElementById('add-offer').value.trim(),
-            inStock: document.getElementById('add-stock').value === 'true',
-            image: resolveDirectImageUrl(document.getElementById('add-img').value.trim()),
-            videoLink: document.getElementById('add-video').value.trim(),
-            desc: document.getElementById('add-desc').value.trim()
-          };
+          try {
+            await ensureFirebaseAuth();
+            const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
+            const newProduct = {
+              id: nextId,
+              name: document.getElementById('add-name').value.trim(),
+              department: document.getElementById('add-dept').value.trim() || 'General',
+              category: document.getElementById('add-cat').value.trim(),
+              subCategory: document.getElementById('add-subcat').value.trim() || '',
+              price: parseFloat(document.getElementById('add-price').value) || 0,
+              oldPrice: parseFloat(document.getElementById('add-mrp').value) || null,
+              unit: document.getElementById('add-unit').value.trim(),
+              offer: document.getElementById('add-offer').value.trim(),
+              inStock: document.getElementById('add-stock').value === 'true',
+              image: resolveDirectImageUrl(document.getElementById('add-img').value.trim()),
+              videoLink: document.getElementById('add-video').value.trim(),
+              desc: document.getElementById('add-desc').value.trim()
+            };
 
-          await saveProductToFirebase(newProduct);
-          closeModal('modal-single-add');
-          showToast(`Product "${newProduct.name}" added successfully!`, 'success');
-        } catch (err) {
-          console.error(err);
-          showToast(`Save failed: ${err.message}`, 'error');
-        } finally {
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-plus"></i> Save to Registry';
-        }
+            await saveProductToFirebase(newProduct);
+            closeModal('modal-single-add');
+            showToast(`Product "${newProduct.name}" added successfully!`, 'success');
+            openActionSuccessModal("Product Added", `"${newProduct.name}" has been successfully added to the database.`);
+          } catch (err) {
+            console.error(err);
+            showToast(`Save failed: ${err.message}`, 'error');
+          } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-plus"></i> Save to Registry';
+          }
+        });
       };
 
       // Edit Product Flow
@@ -2838,41 +2917,44 @@
         openModal('modal-edit-product');
       };
 
-      window.handleEditSubmit = async (e) => {
+      window.handleEditSubmit = (e) => {
         e.preventDefault();
         const id = document.getElementById('edit-id').value;
         const p = rawProducts.find(item => item.id.toString() === id.toString());
         if (!p) return;
 
-        const btn = document.getElementById('edit-submit-btn');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+        openActionConfirmModal("Save Changes", `Are you sure you want to save changes for "${p.name}"?`, "<i class='fa-solid fa-save'></i> Yes, Save Changes", async () => {
+          const btn = document.getElementById('edit-submit-btn');
+          btn.disabled = true;
+          btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
 
-        try {
-          await ensureFirebaseAuth();
-          p.name = document.getElementById('edit-name').value.trim();
-          p.department = document.getElementById('edit-dept').value.trim() || 'General';
-          p.category = document.getElementById('edit-cat').value.trim();
-          p.subCategory = document.getElementById('edit-subcat').value.trim() || '';
-          p.price = parseFloat(document.getElementById('edit-price').value) || 0;
-          p.oldPrice = parseFloat(document.getElementById('edit-mrp').value) || null;
-          p.unit = document.getElementById('edit-unit').value.trim();
-          p.offer = document.getElementById('edit-offer').value.trim();
-          p.inStock = document.getElementById('edit-stock').value === 'true';
-          p.image = resolveDirectImageUrl(document.getElementById('edit-img').value.trim());
-          p.videoLink = document.getElementById('edit-video').value.trim();
-          p.desc = document.getElementById('edit-desc').value.trim();
+          try {
+            await ensureFirebaseAuth();
+            p.name = document.getElementById('edit-name').value.trim();
+            p.department = document.getElementById('edit-dept').value.trim() || 'General';
+            p.category = document.getElementById('edit-cat').value.trim();
+            p.subCategory = document.getElementById('edit-subcat').value.trim() || '';
+            p.price = parseFloat(document.getElementById('edit-price').value) || 0;
+            p.oldPrice = parseFloat(document.getElementById('edit-mrp').value) || null;
+            p.unit = document.getElementById('edit-unit').value.trim();
+            p.offer = document.getElementById('edit-offer').value.trim();
+            p.inStock = document.getElementById('edit-stock').value === 'true';
+            p.image = resolveDirectImageUrl(document.getElementById('edit-img').value.trim());
+            p.videoLink = document.getElementById('edit-video').value.trim();
+            p.desc = document.getElementById('edit-desc').value.trim();
 
-          await saveProductToFirebase(p);
-          closeModal('modal-edit-product');
-          showToast(`Changes saved for "${p.name}"!`, 'success');
-        } catch (err) {
-          console.error(err);
-          showToast(`Update failed: ${err.message}`, 'error');
-        } finally {
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-save"></i> Save Changes';
-        }
+            await saveProductToFirebase(p);
+            closeModal('modal-edit-product');
+            showToast(`Changes saved for "${p.name}"!`, 'success');
+            openActionSuccessModal("Product Updated", `Changes for "${p.name}" have been saved to the database.`);
+          } catch (err) {
+            console.error(err);
+            showToast(`Update failed: ${err.message}`, 'error');
+          } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-save"></i> Save Changes';
+          }
+        });
       };
 
       // Quick Stock Toggle
@@ -2905,6 +2987,7 @@
           await deleteProductFromFirebase(pendingDeleteId);
           closeModal('modal-confirm-delete');
           showToast('Product removed from inventory.', 'success');
+          openActionSuccessModal("Product Deleted", "The product was successfully removed from the database.");
         } catch (err) {
           console.error('Delete failed:', err);
           closeModal('modal-confirm-delete');
@@ -2946,25 +3029,31 @@
         }
       }
 
-      window.bulkSetStock = async (status) => {
+      window.bulkSetStock = (status) => {
         if (selectedProductIds.size === 0) return;
         const count = selectedProductIds.size;
-        try {
-          await ensureFirebaseAuth();
-          for (let id of selectedProductIds) {
-            await updateProductStock(id, status);
+        const actionStr = status ? 'IN STOCK' : 'OUT OF STOCK';
+        
+        openActionConfirmModal("Bulk Update Stock", `Are you sure you want to mark ${count} products as ${actionStr}?`, "<i class='fa-solid fa-check'></i> Yes, Update", async () => {
+          try {
+            await ensureFirebaseAuth();
+            for (let id of selectedProductIds) {
+              await updateProductStock(id, status);
+            }
+            selectedProductIds.clear();
+            showToast(`Updated stock status for ${count} products!`, 'success');
+            openActionSuccessModal("Stock Updated", `Successfully updated stock status for ${count} products to ${actionStr}.`);
+          } catch (e) {
+            showToast(`Bulk stock update failed: ${e.message}`, 'error');
           }
-          selectedProductIds.clear();
-          showToast(`Updated stock status for ${count} products!`, 'success');
-        } catch (e) {
-          showToast(`Bulk stock update failed: ${e.message}`, 'error');
-        }
+        });
       };
 
-      window.bulkDeleteSelected = async () => {
+      window.bulkDeleteSelected = () => {
         const count = selectedProductIds.size;
         if (count === 0) return;
-        if (confirm(`Are you sure you want to delete all ${count} selected products?`)) {
+        
+        openActionConfirmModal("Bulk Delete Products", `Are you sure you want to permanently delete all ${count} selected products?`, "<i class='fa-solid fa-trash-can'></i> Yes, Delete All", async () => {
           try {
             await ensureFirebaseAuth();
             for (let id of selectedProductIds) {
@@ -2972,19 +3061,27 @@
             }
             selectedProductIds.clear();
             showToast(`Deleted ${count} products.`, 'success');
+            openActionSuccessModal("Products Deleted", `Successfully deleted ${count} products from the database.`);
           } catch (e) {
             showToast(`Bulk delete failed: ${e.message}`, 'error');
           }
-        }
+        });
       };
 
       // Bulk Import Logic (Pure JSON)
       let parsedBulkItems = [];
 
       window.openBulkImportModal = () => {
-        parsedBulkItems = [];
-        document.getElementById('bulk-preview-container').style.display = 'none';
-        openModal('modal-bulk-import');
+        openActionConfirmModal(
+          "Bulk Import Warning",
+          "Bulk importing will add multiple products at once. Ensure your JSON format is strictly correct to avoid corrupting the database.",
+          "Understood, Proceed",
+          () => {
+            parsedBulkItems = [];
+            document.getElementById('bulk-preview-container').style.display = 'none';
+            openModal('modal-bulk-import');
+          }
+        );
       };
 
       window.copySampleTemplate = () => {
@@ -3136,7 +3233,7 @@
         openModal('modal-create-hamper');
       };
 
-      window.handleCreateHamperSubmit = async (e) => {
+      window.handleCreateHamperSubmit = (e) => {
         e.preventDefault();
         const checkedBoxes = Array.from(document.querySelectorAll('input[name="hamper_item"]:checked'));
         if (checkedBoxes.length === 0) {
@@ -3144,40 +3241,45 @@
           return;
         }
 
-        const btn = document.getElementById('hamper-submit-btn');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Combo...';
+        const hamperName = document.getElementById('hamper-name').value.trim();
 
-        try {
-          await ensureFirebaseAuth();
-          const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
-          const selectedNames = checkedBoxes.map(b => b.getAttribute('data-name')).join(', ');
+        openActionConfirmModal("Create Combo", `Are you sure you want to create the combo "${hamperName}" with ${checkedBoxes.length} items?`, "<i class='fa-solid fa-gift'></i> Yes, Create", async () => {
+          const btn = document.getElementById('hamper-submit-btn');
+          btn.disabled = true;
+          btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Combo...';
 
-          const comboProduct = {
-            id: nextId,
-            name: document.getElementById('hamper-name').value.trim(),
-            department: 'Gift Hampers & Combos',
-            category: 'Combos & Hampers',
-            price: parseFloat(document.getElementById('hamper-price').value) || 0,
-            oldPrice: parseFloat(document.getElementById('hamper-mrp').value) || null,
-            offer: document.getElementById('hamper-tag').value.trim() || 'SPECIAL COMBO',
-            unit: `${checkedBoxes.length} Items Pack`,
-            image: resolveDirectImageUrl(document.getElementById('hamper-img').value.trim()) || 'assets/images/placeholder.jpg',
-            desc: document.getElementById('hamper-desc').value.trim() + `\n\nIncludes: ${selectedNames}`,
-            inStock: true,
-            isCombo: true,
-            comboItemIds: checkedBoxes.map(b => b.value)
-          };
+          try {
+            await ensureFirebaseAuth();
+            const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
+            const selectedNames = checkedBoxes.map(b => b.getAttribute('data-name')).join(', ');
 
-          await saveProductToFirebase(comboProduct);
-          closeModal('modal-create-hamper');
-          showToast(`Combo Hamper "${comboProduct.name}" created successfully!`, 'success');
-        } catch (err) {
-          showToast(`Failed to create combo: ${err.message}`, 'error');
-        } finally {
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-gift"></i> Create & Publish Combo';
-        }
+            const comboProduct = {
+              id: nextId,
+              name: hamperName,
+              department: 'Gift Hampers & Combos',
+              category: 'Combos & Hampers',
+              price: parseFloat(document.getElementById('hamper-price').value) || 0,
+              oldPrice: parseFloat(document.getElementById('hamper-mrp').value) || null,
+              offer: document.getElementById('hamper-tag').value.trim() || 'SPECIAL COMBO',
+              unit: `${checkedBoxes.length} Items Pack`,
+              image: resolveDirectImageUrl(document.getElementById('hamper-img').value.trim()) || 'assets/images/placeholder.jpg',
+              desc: document.getElementById('hamper-desc').value.trim() + `\n\nIncludes: ${selectedNames}`,
+              inStock: true,
+              isCombo: true,
+              comboItemIds: checkedBoxes.map(b => b.value)
+            };
+
+            await saveProductToFirebase(comboProduct);
+            closeModal('modal-create-hamper');
+            showToast(`Combo Hamper "${comboProduct.name}" created successfully!`, 'success');
+            openActionSuccessModal("Combo Created", `"${comboProduct.name}" has been added to your store.`);
+          } catch (err) {
+            showToast(`Failed to create combo: ${err.message}`, 'error');
+          } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-gift"></i> Create & Publish Combo';
+          }
+        });
       };
 
       // Category Order & Photos Sync

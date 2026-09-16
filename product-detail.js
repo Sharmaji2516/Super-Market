@@ -208,10 +208,138 @@ document.addEventListener('DOMContentLoaded', () => {
       ? `<div class="product-video-embed-section">${videoCardsHtml}</div>` 
       : '';
 
+    // -----------------------------------------------------
+    // "You may also like" Section Logic
+    // -----------------------------------------------------
+    // Utility to shuffle an array
+    const shuffleArray = (array) => {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    };
+
+    const activeProductsList = products.filter(p => p.isDeleted !== true && String(p.id) !== String(product.id));
+    
+    // Get same category products and shuffle them so it's dynamic
+    let sameCatProducts = activeProductsList.filter(p => p.category === product.category);
+    let relatedProducts = shuffleArray(sameCatProducts);
+    
+    if (relatedProducts.length < 10) {
+      const otherProducts = activeProductsList.filter(p => p.category !== product.category);
+      // Sort by newest first
+      otherProducts.sort((a, b) => Number(b.id) - Number(a.id));
+      // Take top 30 newest and shuffle them to add variety
+      const recentOtherProducts = shuffleArray(otherProducts.slice(0, 30));
+      
+      const needed = 10 - relatedProducts.length;
+      relatedProducts = relatedProducts.concat(recentOtherProducts.slice(0, needed));
+    }
+    
+    relatedProducts = relatedProducts.slice(0, 10);
+
+    let relatedHtml = '';
+    if (relatedProducts.length > 0) {
+      let cardsHtml = '';
+      relatedProducts.forEach(relProd => {
+        const inStockRel = relProd.inStock !== false;
+        const discountPercentRel = (relProd.oldPrice && Number(relProd.oldPrice) > Number(relProd.price)) 
+          ? Math.round(((Number(relProd.oldPrice) - Number(relProd.price)) / Number(relProd.oldPrice)) * 100) 
+          : null;
+        
+        cardsHtml += `
+          <div class="product-card ${!inStockRel ? 'out-of-stock' : ''}" onclick="window.location.href='product-detail.html?id=${relProd.id}'" style="cursor: pointer;">
+            <div class="product-img-wrapper" style="position: relative;">
+              <img src="${relProd.image}" alt="${relProd.name}" class="product-img" loading="lazy" style="${!inStockRel ? 'filter: grayscale(1); opacity: 0.6;' : ''}">
+              ${!inStockRel ? '<div class="out-of-stock-overlay">OUT OF STOCK</div>' : ''}
+              
+              <!-- Share Button -->
+              <button class="share-product-btn" style="position: absolute; bottom: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%; background: white; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 0.8rem; color: #4b5563; z-index: 5;" onclick="event.stopPropagation(); shareProduct('${relProd.name.replace(/'/g, "\\'")}', '${relProd.id}')">
+                <i class="fa-solid fa-share-nodes"></i>
+              </button>
+            </div>
+            <div class="product-content">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <span class="product-category">${relProd.category}${relProd.subCategory ? ` > ${relProd.subCategory}` : ''}</span>
+                ${relProd.unit ? `<span class="product-unit-pill">${relProd.unit}</span>` : ''}
+              </div>
+              <h3 class="product-title" style="${!inStockRel ? 'color: var(--text-muted);' : ''}">${relProd.name}</h3>
+              
+              <div class="product-footer" style="display: flex; flex-direction: column; gap: 0.65rem; margin-top: auto; padding-top: 0.75rem; border-top: 1px solid #f1f5f9;">
+                  ${relProd.price ? `
+                  <div class="product-price-amazon">
+                    ${(relProd.oldPrice && Number(relProd.oldPrice) > Number(relProd.price)) ? `
+                      <div class="price-mrp-row">
+                        <span class="price-mrp-label">MRP:</span>
+                        <span class="price-mrp">₹${relProd.oldPrice}</span>
+                        <span class="price-off">${discountPercentRel}% OFF</span>
+                      </div>
+                      <div class="price-offer-row">
+                        <span class="price-offer-label">Offer Price:</span>
+                        <span class="price-main">₹${relProd.price}</span>
+                      </div>
+                    ` : `
+                      <div class="price-offer-row">
+                        <span class="price-offer-label">Price:</span>
+                        <span class="price-main">₹${relProd.price}</span>
+                      </div>
+                    `}
+                  </div>
+                  ` : '<div></div>'}
+
+                  <div class="product-stock-center">
+                    <div class="status-badge ${inStockRel ? 'in-stock' : 'out-stock'}">
+                      <span class="status-dot"></span>
+                      ${inStockRel ? 'IN STOCK' : 'OUT OF STOCK'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        `;
+      });
+
+      relatedHtml = `
+        <div class="related-products-section" style="margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid #e5e7eb;">
+          <div style="margin-bottom: 1.5rem;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #047857; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">MORE FOR YOU</div>
+            <h2 style="font-size: 1.4rem; font-weight: 800; color: #111827; margin: 0;">You may also like</h2>
+          </div>
+          <div class="products-grid">
+            ${cardsHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    window.shareProduct = async (title, id) => {
+      const url = window.location.origin + window.location.pathname + '?id=' + id;
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: title + ' | CHITTORGARH HUB',
+            text: 'Check out this product on Chittorgarh Hub!',
+            url: url
+          });
+        } catch (err) {
+          console.log('User cancelled share or error:', err);
+        }
+      } else {
+        navigator.clipboard.writeText(url)
+          .then(() => alert('Product link copied to clipboard!'))
+          .catch(err => console.error('Error copying link: ', err));
+      }
+    };
+
     container.innerHTML = `
       <div class="product-page-layout">
         <!-- Image Section -->
         <div class="product-page-img-container">
+          <button class="share-product-btn" onclick="shareProduct('${product.name.replace(/'/g, "\\'")}', '${product.id}')" title="Share Product" aria-label="Share">
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
           <img src="${product.image}" alt="${product.name}" class="product-page-img" ${!inStock ? 'style="filter: grayscale(1); opacity: 0.6;"' : ''}>
           ${!inStock ? '<div class="out-of-stock-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; padding: 10px 20px; border-radius: 8px; font-weight: 800;">OUT OF STOCK</div>' : ''}
         </div>
@@ -220,10 +348,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="product-page-details">
           <div class="product-page-meta">
             <span class="product-page-cat">${product.category}${product.subCategory ? ` <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem; margin: 0 4px;"></i> ${product.subCategory}` : ''}</span>
-            ${product.unit ? `<span class="product-page-unit">Unit: ${product.unit}</span>` : ''}
           </div>
           
-          <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 1.5rem;">
+          <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 1rem;">
             <h1 class="product-page-title" style="margin-bottom: 0;">${product.name}</h1>
             <div class="product-page-stock ${inStock ? 'stock-in' : 'stock-out'}" style="margin-bottom: 0; padding: 6px 16px; font-size: 0.85rem; box-shadow: none;">
               <i class="fa-solid ${inStock ? 'fa-check-circle' : 'fa-times-circle'}"></i> 
@@ -231,32 +358,44 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
 
-          <div class="product-page-price-box">
+          <div class="product-page-price-box" style="margin-bottom: 1.5rem; padding: 0; background: none; border: none; box-shadow: none;">
             ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `
-              <div class="product-page-mrp-row">
-                <span class="product-page-mrp-label">MRP:</span>
-                <span class="product-page-old-price">₹${product.oldPrice}</span>
-                <span class="product-page-discount-tag">${Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100)}% OFF</span>
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                <span style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark);">₹${product.price}</span>
+                <span style="font-size: 1.1rem; color: #9ca3af; text-decoration: line-through;">₹${product.oldPrice}</span>
+                <span style="background: #0d8320; color: white; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">${Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100)}% OFF</span>
               </div>
-              <div class="product-page-offer-row">
-                <span class="product-page-offer-label">Offer Price:</span>
-                <span class="product-page-price">₹${product.price}</span>
+              <div style="color: #0d8320; font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;">
+                You save ₹${Number(product.oldPrice) - Number(product.price)} on this item
               </div>
             ` : `
-              <div class="product-page-offer-row">
-                <span class="product-page-offer-label">Price:</span>
-                <span class="product-page-price">₹${product.price}</span>
+              <div style="margin-bottom: 4px;">
+                <span style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark);">₹${product.price}</span>
               </div>
             `}
+            <div style="color: #6b7280; font-size: 0.85rem;">Inclusive of all taxes</div>
           </div>
           
-          <div class="product-page-desc">
-            <h3>Description</h3>
-            <p>${product.desc ? product.desc.replace(/\n/g, '<br>') : 'No description available for this product.'}</p>
+          ${product.unit ? `
+          <div class="product-page-pack-size" style="margin-bottom: 2rem;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #6b7280; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;">PACK SIZE / OPTION</div>
+            <div style="display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; border: 1px solid #10b981; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: #047857; background: #ecfdf5; min-width: 80px;">
+              ${product.unit}
+            </div>
+          </div>
+          ` : ''}
+
+          <div class="product-page-desc" style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.25rem;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <i class="fa-solid fa-circle-info" style="color: #6b7280; font-size: 1.2rem;"></i>
+              <h3 style="margin: 0; font-size: 1.05rem; color: #111827; font-weight: 700;">About this product</h3>
+            </div>
+            <p style="color: #4b5563; font-size: 0.95rem; line-height: 1.5; margin: 0;">${product.desc ? product.desc.replace(/\n/g, '<br>') : 'No description available for this product.'}</p>
           </div>
         </div>
       </div>
       ${videoSectionHtml}
+      ${relatedHtml}
     `;
   });
 });
