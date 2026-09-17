@@ -2877,7 +2877,8 @@
               inStock: document.getElementById('add-stock').value === 'true',
               image: resolveDirectImageUrl(document.getElementById('add-img').value.trim()),
               videoLink: document.getElementById('add-video').value.trim(),
-              desc: document.getElementById('add-desc').value.trim()
+              desc: document.getElementById('add-desc').value.trim(),
+              isDeleted: false
             };
 
             await saveProductToFirebase(newProduct);
@@ -3135,7 +3136,8 @@
             price: parseFloat(item.price) || 0,
             oldPrice: parseFloat(item.oldPrice || item.mrp) || null,
             image: resolveDirectImageUrl(item.image || ''),
-            inStock: item.inStock !== false
+            inStock: item.inStock !== false,
+            isDeleted: false
           }));
         } catch (e) {
           showToast('Invalid JSON syntax: ' + e.message, 'error');
@@ -3266,7 +3268,8 @@
               desc: document.getElementById('hamper-desc').value.trim() + `\n\nIncludes: ${selectedNames}`,
               inStock: true,
               isCombo: true,
-              comboItemIds: checkedBoxes.map(b => b.value)
+              comboItemIds: checkedBoxes.map(b => b.value),
+              isDeleted: false
             };
 
             await saveProductToFirebase(comboProduct);
