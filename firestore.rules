@@ -1,0 +1,70 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: is user authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper: check user role from admin_roles collection
+    function getRole() {
+      return get(/databases/$(database)/documents/admin_roles/$(request.auth.uid)).data.role;
+    }
+
+    // Super Admin check (lavsharma.it25@gmail.com, business, contact, orient)
+    function isSuperAdmin() {
+      return isAuthenticated() && (
+        getRole() == 'super_admin' || 
+        request.auth.token.email in [
+          'lavsharma.it25@gmail.com', 
+          'business@chittortech.in', 
+          'contact@chittortech.in', 
+          'admin@orient.com'
+        ]
+      );
+    }
+
+    // Product Admin check (Includes SoniSuperMarket@chittortech.in)
+    function isProductAdmin() {
+      return isAuthenticated() && (
+        getRole() == 'product_admin' ||
+        getRole() == 'super_admin' ||
+        isSuperAdmin() ||
+        request.auth.token.email in [
+          'sonisupermarket@chittortech.in',
+          'SoniSuperMarket@chittortech.in'
+        ]
+      );
+    }
+
+    // Live Store Products:
+    // Anyone can read products; only Super Admin can write/delete directly
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+
+    // Store Settings & Category Sequence
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+
+    // Product Requests (Staging Area for Product Admin)
+    // - Authenticated users can view requests
+    // - Product Admins can create pending requests
+    // - Only Super Admin can approve, reject, or delete requests
+    match /product_requests/{requestId} {
+      allow read: if isAuthenticated();
+      allow create: if isProductAdmin() && request.resource.data.status == 'pending';
+      allow update, delete: if isSuperAdmin();
+    }
+
+    // Admin Roles collection
+    match /admin_roles/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
+    }
+  }
+}

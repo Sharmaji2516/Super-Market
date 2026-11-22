@@ -375,6 +375,16 @@ document.addEventListener('DOMContentLoaded', () => {
             `}
             <div style="color: #6b7280; font-size: 0.85rem;">Inclusive of all taxes</div>
           </div>
+
+          <!-- In-Store Actions (Check Stock & Call) -->
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1.75rem;">
+            <a href="https://wa.me/917014974762?text=Namaste%20Soni%20Super%20Market!%20Kya%20yeh%20item%20store%20par%20available%20hai%3F%0A*%E2%80%A2%20Item:*%20${encodeURIComponent(product.name)}%0A*%E2%80%A2%20Rate:*%20%E2%82%B9${product.price}" target="_blank" style="flex: 1; min-width: 180px; background: #25d366; color: white; padding: 12px 18px; border-radius: 12px; font-weight: 800; font-size: 0.95rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(37,211,102,0.3); text-decoration: none;">
+              <i class="fa-brands fa-whatsapp" style="font-size: 1.15rem;"></i> Check Stock on WhatsApp
+            </a>
+            <a href="tel:+917014974762" style="background: #f8fafc; color: #1e293b; border: 1px solid #cbd5e1; padding: 12px 18px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;">
+              <i class="fa-solid fa-phone"></i> Call Store
+            </a>
+          </div>
           
           ${product.unit ? `
           <div class="product-page-pack-size" style="margin-bottom: 2rem;">

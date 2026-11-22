@@ -623,7 +623,7 @@
             <label for="email">Admin Email Address</label>
             <div class="input-wrapper">
               <i class="fa-regular fa-envelope input-icon"></i>
-              <input type="email" id="email" class="form-input" placeholder="lavsharma.cor@gmail.com" value="lavsharma.cor@gmail.com" required autocomplete="username">
+              <input type="email" id="email" class="form-input" placeholder="lavsharma.it25@gmail.com" value="lavsharma.it25@gmail.com" required autocomplete="username">
             </div>
           </div>
 
@@ -682,8 +682,8 @@
   </div>
 
   <script type="module">
-    import { auth } from './firebase-config.js?v=1.3.0';
-    import { signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { auth, getUserRole } from './firebase-config.js?v=1.4.0';
+    import { signInWithEmailAndPassword, sendPasswordResetEmail, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     const loginForm = document.getElementById('login-form');
     const messageBox = document.getElementById('message-box');
@@ -692,12 +692,17 @@
     const forgotPasswordLink = document.getElementById('forgot-password');
     const submitBtn = document.getElementById('submit-btn');
 
-    // Authorized Admin Whitelist
+    // Authorized Super Admin Whitelist
     const AUTHORIZED_ADMIN_EMAILS = [
-      'lavsharma.cor@gmail.com',
+      'lavsharma.it25@gmail.com',
       'business@chittortech.in',
       'admin@orient.com',
       'contact@chittortech.in'
+    ];
+
+    // Authorized Product Admin Whitelist
+    const AUTHORIZED_PRODUCT_ADMIN_EMAILS = [
+      'sonisupermarket@chittortech.in'
     ];
 
     // Password Visibility Toggle
@@ -724,28 +729,48 @@
       const password = passwordInput.value;
 
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing In...';
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying Access...';
 
-      // 1. Check if it's an authorized admin email
-      const isAuthorized = AUTHORIZED_ADMIN_EMAILS.includes(email);
+      // 1. Check if it's an authorized super admin email
+      const isSuperAdminEmail = AUTHORIZED_ADMIN_EMAILS.includes(email);
+      const isProductAdminEmail = AUTHORIZED_PRODUCT_ADMIN_EMAILS.includes(email);
 
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        sessionStorage.setItem('admin_authenticated', 'true');
-        sessionStorage.setItem('admin_user_email', email);
-        window.location.href = 'admin.html';
-      } catch (error) {
-        console.warn("Firebase Auth response:", error.code || error.message);
-        
-        // If authorized admin email, grant instant dashboard access
-        if (isAuthorized) {
-          sessionStorage.setItem('admin_authenticated', 'true');
-          sessionStorage.setItem('admin_user_email', email);
-          window.location.href = 'admin.html';
-          return;
+        await setPersistence(auth, browserLocalPersistence);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Fetch role from Firestore
+        let role = await getUserRole(user.uid, email);
+
+        if (!role) {
+          if (isProductAdminEmail) role = 'product_admin';
+          else if (isSuperAdminEmail) role = 'super_admin';
         }
 
-        showMessage("Invalid credentials. Please verify your email & password or contact ChittorTech Developer Support.", "error");
+        sessionStorage.setItem('admin_authenticated', 'true');
+        sessionStorage.setItem('admin_user_email', email);
+        sessionStorage.setItem('admin_user_uid', user.uid);
+        sessionStorage.setItem('admin_user_role', role || 'super_admin');
+
+        if (role === 'product_admin') {
+          window.location.href = 'product-admin.html';
+        } else {
+          window.location.href = 'admin.html';
+        }
+      } catch (error) {
+        console.error("Firebase Auth failed:", error.code || error.message);
+        
+        let errorMsg = "Invalid credentials. Please verify your email & password or contact ChittorTech Developer Support.";
+        if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+          errorMsg = "Incorrect password. Please enter the correct password.";
+        } else if (error.code === 'auth/user-not-found') {
+          errorMsg = "No admin account registered with this email address.";
+        } else if (error.code === 'auth/too-many-requests') {
+          errorMsg = "Too many failed attempts. Please wait a minute and try again.";
+        }
+
+        showMessage(errorMsg, "error");
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<span>Sign In to Dashboard</span>';
       }

@@ -107,6 +107,97 @@ function renderHomeCategories(products) {
   homeGrid.innerHTML = html;
 }
 
+// Special In-Store Deals Renderer for Homepage
+function renderHomeDeals(products) {
+  const dealsSection = document.getElementById('homeDealsSection');
+  const dealsContainer = document.getElementById('homeDealsContainer');
+  if (!dealsContainer || !products || products.length === 0) return;
+
+  // Filter products that have discounts or special offer badges
+  const deals = products.filter(p => {
+    const hasDiscount = p.oldPrice && Number(p.oldPrice) > Number(p.price);
+    const hasOffer = (p.offer || p.offerBadge || '').trim().length > 0;
+    return (hasDiscount || hasOffer) && p.inStock !== false;
+  }).slice(0, 8); // Top 8 deals
+
+  if (deals.length === 0) {
+    if (dealsSection) dealsSection.style.display = 'none';
+    return;
+  }
+
+  if (dealsSection) dealsSection.style.display = 'block';
+
+  let html = '';
+  deals.forEach(p => {
+    const oldP = Number(p.oldPrice || 0);
+    const curP = Number(p.price || 0);
+    const diff = (oldP > curP) ? (oldP - curP) : 0;
+    const discountPercent = oldP > curP ? Math.round((diff / oldP) * 100) : 0;
+    const badgeText = (p.offer || p.offerBadge || (diff > 0 ? `SAVE ₹${diff}` : 'SPECIAL OFFER')).toUpperCase();
+
+    const safeTitle = (p.name || '').replace(/'/g, "\\'");
+    const safeImg = (p.image || '').replace(/'/g, "\\'");
+    const safeUnit = (p.unit || '').replace(/'/g, "\\'");
+
+    html += `
+      <div class="product-card-deal">
+        <span class="deal-discount-badge">${badgeText}</span>
+        <div class="deal-img-box" onclick="window.location.href='product-detail.html?id=${p.id}'" style="cursor: pointer;">
+          <img src="${p.image}" alt="${p.name}" loading="lazy">
+        </div>
+        <div class="deal-title" title="${p.name}">${p.name}</div>
+        <div class="deal-pricing">
+          <span class="deal-price">₹${curP}</span>
+          ${oldP > curP ? `<span class="deal-mrp">₹${oldP}</span>` : ''}
+          ${discountPercent > 0 ? `<span style="font-size: 0.72rem; color: #16a34a; font-weight: 700;">${discountPercent}% OFF</span>` : ''}
+        </div>
+        <div class="product-actions-row">
+          <a href="product-detail.html?id=${p.id}" class="btn-deal-view" style="flex: 1; background: #f0fdf4; color: #166534; border: 1.5px solid #bbf7d0; padding: 7px 10px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;">
+            <i class="fa-solid fa-eye"></i> View Details
+          </a>
+          <button type="button" class="btn-stock-check" title="Check Stock via WhatsApp" onclick="event.stopPropagation(); window.checkProductStock('${safeTitle}', ${curP})">
+            <i class="fa-brands fa-whatsapp"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  });
+
+  dealsContainer.innerHTML = html;
+}
+
+// Live Store Status Evaluator (8:00 AM - 10:00 PM IST)
+function updateLiveStoreStatus() {
+  const badge = document.getElementById('liveStoreStatusBadge');
+  const text = document.getElementById('liveStoreStatusText');
+  if (!text) return;
+
+  const now = new Date();
+  // Convert to Indian Standard Time (IST) UTC+5:30
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  const istNow = new Date(utc + (3600000 * 5.5));
+  const hours = istNow.getHours();
+
+  // Store opens at 8 AM (8) and closes at 10 PM (22)
+  if (hours >= 8 && hours < 22) {
+    text.textContent = 'Open Today • 8:00 AM – 10:00 PM';
+    if (badge) {
+      badge.style.background = '#ecfdf5';
+      badge.style.color = '#065f46';
+      badge.style.borderColor = '#a7f3d0';
+    }
+  } else {
+    text.textContent = 'Closed Now • Opens at 8:00 AM';
+    if (badge) {
+      badge.style.background = '#fef2f2';
+      badge.style.color = '#991b1b';
+      badge.style.borderColor = '#fecaca';
+      const dot = badge.querySelector('.status-dot-pulse');
+      if (dot) dot.style.background = '#ef4444';
+    }
+  }
+}
+
 // 1. Tier 1: Main Category Visual Strip Renderer (Always Visible with All Categories)
 function renderCategoryPills(products, currentCategory) {
   const container = document.getElementById('categoryPillsContainer');
@@ -503,59 +594,222 @@ function performSearch() {
   renderProductsUI(filtered);
 }
 
+// ==========================================================================
+// SMART IN-STORE SHOPPING LIST (DIGITAL PARCHI) ENGINE
+// ==========================================================================
+function getShoppingList() {
+  try {
+    const data = localStorage.getItem('soni_shopping_list');
+    return data ? JSON.parse(data) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveShoppingList(list) {
+  try {
+    localStorage.setItem('soni_shopping_list', JSON.stringify(list));
+  } catch (e) {}
+  updateParchiUI();
+}
+
+window.addToShoppingList = (id, name, price, oldPrice, unit, image) => {
+  let list = getShoppingList();
+  const existing = list.find(item => String(item.id) === String(id));
+  if (existing) {
+    existing.qty = (existing.qty || 1) + 1;
+  } else {
+    list.push({
+      id: String(id),
+      name: name || 'Item',
+      price: Number(price) || 0,
+      oldPrice: Number(oldPrice) || 0,
+      unit: unit || '',
+      image: image || '',
+      qty: 1,
+      checked: false
+    });
+  }
+  saveShoppingList(list);
+};
+
+window.updateParchiQty = (id, delta) => {
+  let list = getShoppingList();
+  const item = list.find(it => String(it.id) === String(id));
+  if (item) {
+    item.qty = (item.qty || 1) + delta;
+    if (item.qty <= 0) {
+      list = list.filter(it => String(it.id) !== String(id));
+    }
+    saveShoppingList(list);
+  }
+};
+
+window.removeFromShoppingList = (id) => {
+  let list = getShoppingList();
+  list = list.filter(it => String(it.id) !== String(id));
+  saveShoppingList(list);
+};
+
+window.clearShoppingList = () => {
+  if (confirm('Are you sure you want to clear your shopping list?')) {
+    saveShoppingList([]);
+  }
+};
+
+window.toggleParchiItemCheck = (id) => {
+  let list = getShoppingList();
+  const item = list.find(it => String(it.id) === String(id));
+  if (item) {
+    item.checked = !item.checked;
+    saveShoppingList(list);
+  }
+};
+
+window.toggleShoppingListDrawer = (forceOpen = null) => {
+  const drawer = document.getElementById('shoppingListDrawer');
+  let backdrop = document.querySelector('.filter-backdrop');
+  if (!drawer) return;
+
+  const shouldOpen = forceOpen !== null ? forceOpen : !drawer.classList.contains('active');
+  if (shouldOpen) {
+    drawer.classList.add('active');
+    if (backdrop) backdrop.classList.add('active');
+    updateParchiUI();
+  } else {
+    drawer.classList.remove('active');
+    if (backdrop && !document.querySelector('.sidebar-filters.open') && !document.querySelector('.nav-links.nav-active')) {
+      backdrop.classList.remove('active');
+    }
+  }
+};
+
+window.checkProductStock = (name, price) => {
+  const msg = `Namaste Soni Super Market! 🏪%0AKya yeh product store par available hai?%0A*• Item:* ${encodeURIComponent(name)}%0A*• Rate:* ₹${price}`;
+  window.open(`https://wa.me/917014974762?text=${msg}`, '_blank');
+};
+
+window.sendListToWhatsApp = () => {
+  const list = getShoppingList();
+  if (list.length === 0) {
+    alert('Your shopping list is empty! Add products first.');
+    return;
+  }
+
+  let text = `*Namaste Soni Super Market!* 🛒%0AYeh meri in-store shopping list hai:%0A%0A`;
+  let total = 0;
+
+  list.forEach((item, index) => {
+    const itemTotal = (item.price || 0) * (item.qty || 1);
+    total += itemTotal;
+    text += `${index + 1}. *${encodeURIComponent(item.name)}* ${item.unit ? `(${item.unit})` : ''} x ${item.qty} = ₹${itemTotal}%0A`;
+  });
+
+  text += `%0A*Total Estimated Bill:* ₹${total}%0AKripya bataiye kya sab items stock me hain. Dhanyawad!`;
+  window.open(`https://wa.me/917014974762?text=${text}`, '_blank');
+};
+
+function updateParchiUI() {
+  const list = getShoppingList();
+  const totalCount = list.reduce((sum, it) => sum + (it.qty || 1), 0);
+  const totalVal = list.reduce((sum, it) => sum + ((it.price || 0) * (it.qty || 1)), 0);
+
+  // Update badge elements
+  const floatingBtn = document.getElementById('floatingParchiBtn');
+  const floatingCount = document.getElementById('parchiFloatingCount');
+  const barCount = document.getElementById('barParchiCount');
+  const drawerCount = document.getElementById('parchiTotalCount');
+  const drawerTotal = document.getElementById('parchiEstimatedTotal');
+  const itemsContainer = document.getElementById('parchiItemsContainer');
+
+  if (floatingBtn) {
+    floatingBtn.style.display = 'none';
+  }
+  if (floatingCount) floatingCount.textContent = totalCount;
+  if (barCount) barCount.textContent = totalCount;
+  if (drawerCount) drawerCount.textContent = totalCount;
+  if (drawerTotal) drawerTotal.textContent = `₹${totalVal}`;
+
+  if (itemsContainer) {
+    if (list.length === 0) {
+      itemsContainer.innerHTML = `
+        <div style="text-align: center; padding: 3rem 1rem; color: #94a3b8;">
+          <i class="fa-solid fa-basket-shopping" style="font-size: 2.5rem; margin-bottom: 0.8rem; color: #cbd5e1;"></i>
+          <p style="font-size: 0.95rem; font-weight: 700; color: #475569; margin-bottom: 0.3rem;">Your Shopping List is Empty</p>
+          <p style="font-size: 0.82rem;">Click "+ Add to List" on any product to create your in-store checklist!</p>
+        </div>
+      `;
+    } else {
+      let html = '';
+      list.forEach(item => {
+        html += `
+          <div class="parchi-item-row ${item.checked ? 'checked' : ''}">
+            <input type="checkbox" class="parchi-checkbox" ${item.checked ? 'checked' : ''} onchange="window.toggleParchiItemCheck('${item.id}')" title="Mark as picked in store">
+            ${item.image ? `<img src="${item.image}" alt="" class="parchi-item-img">` : ''}
+            <div class="parchi-item-details">
+              <div class="parchi-item-title">${item.name}</div>
+              <div class="parchi-item-meta">
+                <span>₹${item.price} each</span>
+                ${item.unit ? `<span>• ${item.unit}</span>` : ''}
+              </div>
+            </div>
+            <div class="parchi-qty-controls">
+              <button type="button" class="btn-qty-step" onclick="window.updateParchiQty('${item.id}', -1)">-</button>
+              <span class="parchi-qty-num">${item.qty}</span>
+              <button type="button" class="btn-qty-step" onclick="window.updateParchiQty('${item.id}', 1)">+</button>
+            </div>
+            <button type="button" class="btn-remove-parchi" onclick="window.removeFromShoppingList('${item.id}')" title="Remove">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        `;
+      });
+      itemsContainer.innerHTML = html;
+    }
+  }
+
+  // Update product card list buttons if on products page
+  document.querySelectorAll('.btn-add-list').forEach(btn => {
+    const pid = btn.getAttribute('data-pid');
+    const inList = list.find(it => String(it.id) === String(pid));
+    if (inList) {
+      btn.classList.add('in-list');
+      btn.innerHTML = `<i class="fa-solid fa-check"></i> In List (${inList.qty})`;
+    } else {
+      btn.classList.remove('in-list');
+      btn.innerHTML = `<i class="fa-solid fa-plus"></i> Add to List`;
+    }
+  });
+}
+
 function renderProductsUI(products) {
   const productsContainer = document.getElementById('products-container');
   if (!productsContainer) return;
   
+  const shoppingList = getShoppingList();
   let html = '';
+
   // Sort by ID descending to show newest products first
   products.sort((a, b) => Number(b.id) - Number(a.id)).forEach(product => {
     const inStock = product.inStock !== false;
+    const oldP = Number(product.oldPrice || 0);
+    const curP = Number(product.price || 0);
     const customOffer = (product.offer || product.offerBadge || '').trim();
-    const discountPercent = (product.oldPrice && Number(product.oldPrice) > Number(product.price)) 
-      ? Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100) 
-      : null;
-    const badgeLabel = customOffer || (discountPercent ? `${discountPercent}% OFF` : '');
-
-    const rawYt = product.youtube_url || product.videoLink || '';
-    const rawIg = product.instagram_url || '';
-    let finalYtUrl = rawYt.trim();
-    let finalIgUrl = rawIg.trim();
     
-    if (finalYtUrl.includes('instagram.com')) {
-      finalIgUrl = finalYtUrl;
-      finalYtUrl = '';
-    } else if (finalIgUrl.includes('youtube.com') || finalIgUrl.includes('youtu.be')) {
-      finalYtUrl = finalIgUrl;
-      finalIgUrl = '';
-    }
-
-    let ytEmbed = null;
-    if (finalYtUrl) {
-      const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
-      const match = finalYtUrl.match(regExp);
-      ytEmbed = (match && match[1]) ? `https://www.youtube.com/embed/${match[1]}?autoplay=0&rel=0&modestbranding=1` : null;
-    }
-
-    let igEmbed = null;
-    if (finalIgUrl) {
-      const match = finalIgUrl.match(/instagram\.com\/(reel|p|tv)\/([^/?#&]+)/i);
-      if (match) {
-        const mediaType = match[1] === 'tv' ? 'reel' : match[1];
-        igEmbed = `https://www.instagram.com/${mediaType}/${match[2]}/embed`;
-      }
-    }
-
-    const isYtShort = finalYtUrl.includes('/shorts/');
+    const inList = shoppingList.find(it => String(it.id) === String(product.id));
+    const safeTitle = (product.name || '').replace(/'/g, "\\'");
+    const safeImg = (product.image || '').replace(/'/g, "\\'");
+    const safeUnit = (product.unit || '').replace(/'/g, "\\'");
 
     html += `
       <div class="product-card ${!inStock ? 'out-of-stock' : ''}" onclick="window.location.href='product-detail.html?id=${product.id}'" style="cursor: pointer;">
         <div class="product-img-wrapper" style="position: relative;">
           <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" style="${!inStock ? 'filter: grayscale(1); opacity: 0.6;' : ''}">
           ${!inStock ? '<div class="out-of-stock-overlay">OUT OF STOCK</div>' : ''}
+          ${customOffer ? `<div class="product-save-badge"><i class="fa-solid fa-tag"></i> ${customOffer}</div>` : ''}
           
           <!-- Share Button -->
-          <button class="share-product-btn" style="position: absolute; bottom: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%; background: white; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 0.8rem; color: #4b5563; z-index: 5;" onclick="event.stopPropagation(); window.shareProduct('${product.name.replace(/'/g, "\\'")}', '${product.id}')">
+          <button class="share-product-btn" style="position: absolute; bottom: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%; background: white; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 0.8rem; color: #4b5563; z-index: 5;" onclick="event.stopPropagation(); window.shareProduct('${safeTitle}', '${product.id}')">
             <i class="fa-solid fa-share-nodes"></i>
           </button>
         </div>
@@ -570,20 +824,19 @@ function renderProductsUI(products) {
           <div class="product-footer" style="display: flex; flex-direction: column; gap: 0.65rem; margin-top: auto; padding-top: 0.75rem; border-top: 1px solid #f1f5f9;">
             ${product.price ? `
             <div class="product-price-amazon">
-              ${(product.oldPrice && Number(product.oldPrice) > Number(product.price)) ? `
+              ${(oldP > curP) ? `
                 <div class="price-mrp-row">
                   <span class="price-mrp-label">MRP:</span>
-                  <span class="price-mrp">₹${product.oldPrice}</span>
-                  <span class="price-off">${Math.round(((Number(product.oldPrice) - Number(product.price)) / Number(product.oldPrice)) * 100)}% OFF</span>
+                  <span class="price-mrp">₹${oldP}</span>
                 </div>
                 <div class="price-offer-row">
-                  <span class="price-offer-label">Offer Price:</span>
-                  <span class="price-main">₹${product.price}</span>
+                  <span class="price-offer-label">Store Price:</span>
+                  <span class="price-main">₹${curP}</span>
                 </div>
               ` : `
                 <div class="price-offer-row">
-                  <span class="price-offer-label">Price:</span>
-                  <span class="price-main">₹${product.price}</span>
+                  <span class="price-offer-label">Store Price:</span>
+                  <span class="price-main">₹${curP}</span>
                 </div>
               `}
             </div>
@@ -594,6 +847,17 @@ function renderProductsUI(products) {
                 <span class="status-dot"></span>
                 ${inStock ? 'IN STOCK' : 'OUT OF STOCK'}
               </div>
+            </div>
+
+            <!-- In-Store Shopping List & WhatsApp Stock Check Row -->
+            <div class="product-actions-row">
+              <button type="button" class="btn-add-list ${inList ? 'in-list' : ''}" data-pid="${product.id}" onclick="event.stopPropagation(); window.addToShoppingList('${product.id}', '${safeTitle}', ${curP}, ${oldP}, '${safeUnit}', '${safeImg}')">
+                <i class="fa-solid ${inList ? 'fa-check' : 'fa-plus'}"></i>
+                <span>${inList ? `In List (${inList.qty})` : 'Add to List'}</span>
+              </button>
+              <button type="button" class="btn-stock-check" title="Ask Availability on WhatsApp" onclick="event.stopPropagation(); window.checkProductStock('${safeTitle}', ${curP})">
+                <i class="fa-brands fa-whatsapp"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -695,12 +959,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderCategoryPills(allProducts, activeCategory);
         renderSubCategoryPills(allProducts, activeCategory, activeSubCategory);
         renderHomeCategories(allProducts);
+        renderHomeDeals(allProducts);
         performSearch();
       }
     }
   } catch (e) {
     console.warn("Local storage cache read error:", e);
   }
+
+  // Initialize Live Store Timings & Shopping List UI
+  updateLiveStoreStatus();
+  updateParchiUI();
+
+  // URL search query handler (e.g. products.html?search=atta)
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    const pSearchInput = document.getElementById('productSearch');
+    if (searchParam && pSearchInput) {
+      pSearchInput.value = searchParam;
+      setTimeout(() => performSearch(), 100);
+    }
+  } catch(e) {}
 
   // Listen for real-time Category Order & Metadata from Firestore
   listenForCategoryOrder((savedData) => {
@@ -747,6 +1027,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderCategoryPills(activeProducts, activeCategory);
     renderSubCategoryPills(activeProducts, activeCategory, activeSubCategory);
     renderHomeCategories(activeProducts);
+    renderHomeDeals(activeProducts);
     performSearch();
   });
 

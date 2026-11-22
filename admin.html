@@ -35,7 +35,7 @@
       min-height: 100vh;
     }
 
-    /* Top Navigation */
+    /* Top Navigation - Clean Professional Executive Header */
     .admin-navbar {
       background: #0f172a;
       color: white;
@@ -46,8 +46,8 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      border-bottom: 1px solid #1e293b;
     }
 
     .nav-left {
@@ -59,25 +59,23 @@
     .admin-ct-brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 6px 14px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 30px;
+      gap: 10px;
+      padding: 5px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
       text-decoration: none;
       transition: all 0.2s;
     }
 
     .admin-ct-brand:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: #34d399;
-      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
     }
 
     .ct-nav-logo {
-      height: 32px;
+      height: 28px;
       object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     }
 
     .ct-nav-text {
@@ -87,16 +85,16 @@
 
     .ct-nav-name {
       color: #ffffff;
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 0.3px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
     }
 
     .ct-nav-tag {
-      color: #34d399;
+      color: #94a3b8;
       font-size: 0.62rem;
-      font-weight: 700;
-      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.3px;
     }
 
     .nav-center {
@@ -108,154 +106,213 @@
     .admin-store-brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       text-decoration: none;
-      padding: 4px 16px;
+      padding: 4px 14px;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+
+    .admin-store-brand:hover {
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
     }
 
     .store-nav-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.5));
-      border: 1px solid rgba(52, 211, 153, 0.4);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #10b981;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #34d399;
-      font-size: 1.1rem;
+      color: #ffffff;
+      font-size: 1rem;
     }
 
     .store-nav-title {
-      color: white;
+      color: #ffffff;
       font-family: 'Outfit', sans-serif;
-      font-weight: 900;
-      font-size: 1.35rem;
-      letter-spacing: 0.5px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 0.4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .store-nav-title span {
-      color: #34d399;
+      color: #10b981;
     }
 
     .admin-nav-pill {
-      font-size: 0.68rem;
-      font-weight: 800;
-      color: #94a3b8;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 3px 8px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 2px 8px;
       border-radius: 6px;
-      letter-spacing: 0.5px;
-      margin-left: 4px;
+      letter-spacing: 0.4px;
+      margin-left: 6px;
+      text-transform: uppercase;
     }
 
     .nav-right {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 12px;
+      gap: 10px;
+    }
+
+    .admin-user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .user-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
     }
 
     .badge-live {
-      background: rgba(16, 185, 129, 0.18);
+      background: rgba(16, 185, 129, 0.12);
       color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 6px 12px;
-      border-radius: 20px;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 5px 10px;
+      border-radius: 8px;
       font-size: 0.72rem;
-      font-weight: 800;
+      font-weight: 700;
       display: flex;
       align-items: center;
       gap: 6px;
-      letter-spacing: 0.4px;
-    }
-
-    .badge-live::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      background: #10b981;
-      border-radius: 50%;
-      animation: pulseDot 2s infinite;
-    }
-
-    @keyframes pulseDot {
-
-      0%,
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      50% {
-        opacity: 0.4;
-        transform: scale(0.8);
-      }
     }
 
     .btn-nav {
-      background: rgba(255, 255, 255, 0.08);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 7px 14px;
-      border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
+      background: rgba(255, 255, 255, 0.06);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       text-decoration: none;
       transition: all 0.2s;
     }
 
     .btn-nav:hover {
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.12);
       color: white;
-      transform: translateY(-1px);
     }
 
     .btn-logout {
-      background: #ef4444;
-      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
     }
 
     .btn-logout:hover {
-      background: #dc2626;
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+
+    /* Quick Action Buttons in Table Rows */
+    .btn-quick-action {
+      padding: 5px 10px;
+      border-radius: 7px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-quick-action.accept {
+      background: #10b981;
+      color: white;
+    }
+
+    .btn-quick-action.accept:hover {
+      background: #059669;
+      transform: translateY(-1px);
+    }
+
+    .btn-quick-action.reject {
+      background: #fee2e2;
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+    }
+
+    .btn-quick-action.reject:hover {
+      background: #fecaca;
+      transform: translateY(-1px);
+    }
+
+    .btn-quick-action.edit {
+      background: #0284c7;
+      color: white;
+    }
+
+    .btn-quick-action.edit:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
     }
 
     /* Main Container */
     .admin-main {
       max-width: 1440px;
       margin: 0 auto;
-      padding: 22px 28px 80px;
+      padding: 24px 32px 80px;
     }
 
-    /* Segmented Tab Navigation */
+    /* Segmented Tab Navigation - Floating Modern Luxury Bar */
     .tabs-header-wrapper {
-      background: #0f172a;
-      border-radius: 16px;
+      background: linear-gradient(180deg, #090d16 0%, #0f172a 100%);
+      border-radius: 18px;
       padding: 8px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 25px rgba(15, 23, 42, 0.1);
+      margin-bottom: 26px;
+      box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.18);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
     }
 
     .tabs-header {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 8px;
+    }
+
+    @media (max-width: 1100px) {
+      .tabs-header {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
     }
 
     .tab-btn {
       background: transparent;
       border: none;
       color: #94a3b8;
-      padding: 12px 16px;
-      border-radius: 10px;
+      padding: 12px 18px;
+      border-radius: 12px;
       font-size: 0.88rem;
       font-weight: 700;
       cursor: pointer;
@@ -263,108 +320,125 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      transition: all 0.2s;
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
       font-family: inherit;
       white-space: nowrap;
+      position: relative;
     }
 
     .tab-btn:hover {
-      color: white;
+      color: #f8fafc;
       background: rgba(255, 255, 255, 0.06);
     }
 
     .tab-btn.active {
       background: #ffffff;
       color: #0f172a;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
       font-weight: 800;
+      transform: translateY(-1px);
     }
 
     .tab-btn.active i {
       color: #059669;
     }
 
-    /* Stat Cards */
+    /* Stat Cards - Luxury Modern SaaS Elevation */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      margin-bottom: 24px;
+      gap: 20px;
+      margin-bottom: 26px;
     }
 
     .stat-card {
-      background: white;
-      padding: 20px 24px;
-      border-radius: 16px;
+      background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+      padding: 22px 26px;
+      border-radius: 20px;
       border: 1px solid var(--admin-border);
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px -6px rgba(15, 23, 42, 0.08), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
+      border-color: #cbd5e1;
     }
 
     .stat-info h4 {
       margin: 0;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--admin-muted);
       text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
     }
 
     .stat-info .stat-num {
-      font-size: 1.8rem;
+      font-size: 2.1rem;
       font-weight: 900;
       color: var(--admin-primary);
       margin: 4px 0 0;
       font-family: 'Outfit', sans-serif;
+      line-height: 1.1;
     }
 
     .stat-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
     }
 
     .stat-icon.green {
-      background: #ecfdf5;
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
       color: #059669;
+      border: 1px solid #a7f3d0;
     }
 
     .stat-icon.amber {
-      background: #fffbeb;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
       color: #d97706;
+      border: 1px solid #fde68a;
     }
 
     .stat-icon.red {
-      background: #fef2f2;
+      background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
       color: #dc2626;
+      border: 1px solid #fecaca;
     }
 
     .stat-icon.purple {
-      background: #faf5ff;
+      background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
       color: #9333ea;
+      border: 1px solid #e9d5ff;
     }
 
     .stat-icon.blue {
-      background: #eff6ff;
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
       color: #2563eb;
+      border: 1px solid #bfdbfe;
     }
 
     .clickable-stat {
       cursor: pointer;
       position: relative;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       border: 1.5px solid transparent;
     }
 
     .clickable-stat:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.09);
       border-color: #38bdf8;
       background: #f8fafc;
     }
@@ -1352,15 +1426,14 @@
 
 <body>
 
-  <!-- Top Navigation Bar -->
+  <!-- Top Navigation Bar - Clean Executive Header -->
   <header class="admin-navbar">
     <div class="nav-left">
-      <a href="https://chittortech.in/" target="_blank" class="admin-ct-brand"
-        title="Official Developer: ChittorTech">
+      <a href="https://chittortech.in/" target="_blank" class="admin-ct-brand" title="ChittorTech Developer Portal">
         <img src="chittortech_logo_1775884354186.png" alt="ChittorTech Logo" class="ct-nav-logo">
         <div class="ct-nav-text">
           <span class="ct-nav-name">ChittorTech</span>
-          <span class="ct-nav-tag">Official Developer</span>
+          <span class="ct-nav-tag">Developer Support</span>
         </div>
       </a>
     </div>
@@ -1368,17 +1441,24 @@
     <div class="nav-center">
       <a href="index.html" class="admin-store-brand">
         <div class="store-nav-icon"><i class="fa-solid fa-store"></i></div>
-        <span class="store-nav-title">CHITTORGARH<span>HUB</span></span>
-        <span class="admin-nav-pill">ADMIN CONSOLE</span>
+        <div class="store-nav-title">CHITTORGARH <span>HUB</span></div>
+        <span class="admin-nav-pill">Admin Console</span>
       </a>
     </div>
 
     <div class="nav-right">
-      <div class="badge-live" id="live-indicator">LIVE DATABASE</div>
-      <a href="index.html" target="_blank" class="btn-nav">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i> View Store
+      <div id="admin-user-pill" class="admin-user-pill" style="display: none;">
+        <span class="user-status-dot"></span>
+        <i class="fa-solid fa-user-shield" style="color: #94a3b8; font-size: 0.8rem;"></i>
+        <span id="admin-user-email-text" style="font-weight: 600; color: #f1f5f9;">Super Admin</span>
+      </div>
+      <div class="badge-live" id="live-indicator">
+        <span class="user-status-dot" style="width: 6px; height: 6px;"></span> Live
+      </div>
+      <a href="index.html" target="_blank" class="btn-nav" title="View customer-facing online store">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Store
       </a>
-      <button id="logout-btn" class="btn-nav btn-logout">
+      <button id="logout-btn" class="btn-nav btn-logout" title="Sign out of Admin Dashboard">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
       </button>
     </div>
@@ -1397,6 +1477,11 @@
         </button>
         <button class="tab-btn" onclick="switchAdminTab('hampers')">
           <i class="fa-solid fa-gift"></i> Combos & Gift Hampers
+        </button>
+        <button class="tab-btn" onclick="switchAdminTab('approvals')" id="tab-btn-approvals">
+          <i class="fa-solid fa-clipboard-check" style="color: #0284c7;"></i> Product Approvals
+          <span id="badge-pending-count"
+            style="display: none; background: #ef4444; color: white; padding: 2px 7px; border-radius: 999px; font-size: 0.72rem; margin-left: 6px; font-weight: 800;">0</span>
         </button>
         <button class="tab-btn" onclick="switchAdminTab('help')">
           <i class="fa-solid fa-circle-question"></i> Help & Developer Support
@@ -1578,7 +1663,8 @@
             style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div
               style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;">
-              <i class="fa-solid fa-1" style="color: #f59e0b;"></i> Click Create Combo</div>
+              <i class="fa-solid fa-1" style="color: #f59e0b;"></i> Click Create Combo
+            </div>
             <p style="margin: 0; line-height: 1.45; color: #451a03;">Click the <b>"+ Create New Combo"</b> button on the
               right to open the hamper builder.</p>
           </div>
@@ -1586,7 +1672,8 @@
             style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div
               style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;">
-              <i class="fa-solid fa-2" style="color: #f59e0b;"></i> Name & Set Pricing</div>
+              <i class="fa-solid fa-2" style="color: #f59e0b;"></i> Name & Set Pricing
+            </div>
             <p style="margin: 0; line-height: 1.45; color: #451a03;">Set the <b>Combo Name</b>, discounted <b>Offer
                 Price</b> (what customer pays), and total <b>Original MRP</b>.</p>
           </div>
@@ -1594,7 +1681,8 @@
             style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div
               style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;">
-              <i class="fa-solid fa-3" style="color: #f59e0b;"></i> Pick Bundled Items</div>
+              <i class="fa-solid fa-3" style="color: #f59e0b;"></i> Pick Bundled Items
+            </div>
             <p style="margin: 0; line-height: 1.45; color: #451a03;">Check off the items from your inventory that are
               included in this combo package.</p>
           </div>
@@ -1602,7 +1690,8 @@
             style="background: white; padding: 14px 16px; border-radius: 12px; border: 1px solid #fef3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div
               style="font-weight: 800; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;">
-              <i class="fa-solid fa-4" style="color: #f59e0b;"></i> Publish to Store</div>
+              <i class="fa-solid fa-4" style="color: #f59e0b;"></i> Publish to Store
+            </div>
             <p style="margin: 0; line-height: 1.45; color: #451a03;">Click <b>"Create & Publish Combo"</b>. The bundle
               will display in your store catalog with savings badges!</p>
           </div>
@@ -1747,7 +1836,174 @@
       </div>
     </section>
 
+    <!-- TAB 5: PRODUCT ADMIN APPROVALS & STAGING -->
+    <section id="tab-approvals" class="tab-content">
+
+      <!-- Header Card -->
+      <div class="registry-header-card" style="border-left: 6px solid #0284c7; margin-bottom: 24px; box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06); background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 40%, #f8fafc 100%); border-radius: 20px;">
+        <div class="registry-title-row">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span style="background: linear-gradient(135deg, #e0f2fe, #bae6fd); color: #0284c7; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.6px; border: 1px solid #7dd3fc;">Governance Hub</span>
+              <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;"><i class="fa-solid fa-shield-halved" style="color: #0284c7;"></i> Staged Approval Workflow</span>
+            </div>
+            <h3 style="color: #0f172a; display: flex; align-items: center; gap: 10px; font-size: 1.4rem; margin: 0 0 6px 0; font-family: 'Outfit', sans-serif; font-weight: 900;">
+              <i class="fa-solid fa-clipboard-check" style="color: #0284c7;"></i> Product Admin Requests & Approval Hub
+            </h3>
+            <p style="margin: 0; color: var(--admin-muted); font-size: 0.88rem; max-width: 700px; line-height: 1.5;">Review incoming product submissions and proposed edits submitted by limited Product Admins. Approving commits them directly to the live store database.</p>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <select id="approval-status-filter" onchange="window.filterApprovalRequests()"
+              style="padding: 11px 18px; border-radius: 12px; border: 1.5px solid #cbd5e1; font-size: 0.85rem; font-weight: 700; background: white; cursor: pointer; color: #0f172a; outline: none; box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: 0.2s;">
+              <option value="ALL">All Statuses</option>
+              <option value="pending" selected>Pending Review Only</option>
+              <option value="approved">Approved & Live</option>
+              <option value="rejected">Rejected Requests</option>
+            </select>
+            <select id="approval-type-filter" onchange="window.filterApprovalRequests()"
+              style="padding: 11px 18px; border-radius: 12px; border: 1.5px solid #cbd5e1; font-size: 0.85rem; font-weight: 700; background: white; cursor: pointer; color: #0f172a; outline: none; box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: 0.2s;">
+              <option value="ALL">All Request Types</option>
+              <option value="add">New Products Only</option>
+              <option value="edit">Product Edits Only</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-grid" style="margin-bottom: 26px;">
+        <div class="stat-card" style="border-color: #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffdf5 100%);">
+          <div class="stat-info">
+            <h4 style="color: #b45309;">Pending Review</h4>
+            <div class="stat-num" id="stat-approvals-pending" style="color: #d97706;">0</div>
+          </div>
+          <div class="stat-icon amber" style="box-shadow: 0 4px 14px rgba(217, 119, 6, 0.15);"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        </div>
+
+        <div class="stat-card" style="border-color: #bbf7d0; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);">
+          <div class="stat-info">
+            <h4 style="color: #15803d;">Approved & Published</h4>
+            <div class="stat-num" id="stat-approvals-approved" style="color: #059669;">0</div>
+          </div>
+          <div class="stat-icon green" style="box-shadow: 0 4px 14px rgba(5, 150, 105, 0.15);"><i class="fa-solid fa-circle-check"></i></div>
+        </div>
+
+        <div class="stat-card" style="border-color: #fecaca; background: linear-gradient(180deg, #ffffff 0%, #fef2f2 100%);">
+          <div class="stat-info">
+            <h4 style="color: #b91c1c;">Rejected Requests</h4>
+            <div class="stat-num" id="stat-approvals-rejected" style="color: #e11d48;">0</div>
+          </div>
+          <div class="stat-icon red" style="box-shadow: 0 4px 14px rgba(225, 29, 72, 0.15);"><i class="fa-solid fa-circle-xmark"></i></div>
+        </div>
+      </div>
+
+      <!-- Bulk Approvals Action Bar (Sticky floating when items selected) -->
+      <div id="bulk-approvals-bar" class="bulk-selection-bar" style="display: none; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span id="bulk-approvals-count" style="font-weight: 800; font-size: 0.95rem; color: #ffffff;">0 requests selected</span>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button type="button" class="btn-action" onclick="window.bulkApproveRequests()" style="background: #10b981; color: white; padding: 8px 16px; font-size: 0.82rem; border-radius: 8px; border: none; cursor: pointer;">
+            <i class="fa-solid fa-check-double"></i> Accept Selected
+          </button>
+          <button type="button" class="btn-action" onclick="window.bulkRejectRequests()" style="background: #ef4444; color: white; padding: 8px 16px; font-size: 0.82rem; border-radius: 8px; border: none; cursor: pointer;">
+            <i class="fa-solid fa-xmark"></i> Reject Selected
+          </button>
+          <button type="button" class="btn-action" onclick="window.deselectAllApprovals()" style="background: rgba(255, 255, 255, 0.15); color: white; padding: 8px 14px; font-size: 0.82rem; border-radius: 8px; border: none; cursor: pointer;">
+            <i class="fa-solid fa-rotate-left"></i> Deselect
+          </button>
+        </div>
+      </div>
+
+      <!-- Requests Table -->
+      <div class="table-container" style="background: white; border: 1px solid var(--admin-border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 24px;">
+        <table class="registry-table">
+          <thead>
+            <tr>
+              <th style="width: 44px; text-align: center;">
+                <input type="checkbox" id="select-all-approvals" onchange="window.toggleSelectAllApprovals(this.checked)" title="Select All Pending Requests">
+              </th>
+              <th style="width: 140px;">Request Type</th>
+              <th>Product Details</th>
+              <th>Submitted By</th>
+              <th>Submitted Date</th>
+              <th>Status</th>
+              <th style="text-align: right; width: 230px;">Quick Actions</th>
+            </tr>
+          </thead>
+          <tbody id="approvals-table-body">
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 60px 24px;">
+                <div style="width: 76px; height: 76px; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 2.5px solid #a7f3d0; color: #059669; font-size: 2rem; box-shadow: 0 12px 28px -4px rgba(16, 185, 129, 0.28);">
+                  <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <h4 style="margin: 0 0 6px 0; font-size: 1.25rem; font-weight: 800; color: #0f172a; font-family: 'Outfit', sans-serif;">All Caught Up! No Pending Requests</h4>
+                <p style="margin: 0; font-size: 0.88rem; color: #64748b; max-width: 480px; margin: 0 auto; line-height: 1.55;">
+                  When a Product Admin submits a new product addition or proposes edits, they will appear here in real time for your review and approval.
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+
+    </section>
+
   </main>
+
+  <!-- MODAL: REVIEW PRODUCT REQUEST (DIFF & APPROVAL) -->
+  <div id="modal-review-request" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width: 880px;">
+      <div class="modal-header"
+        style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; border-bottom: none; border-radius: 20px 20px 0 0; padding: 18px 24px;">
+        <div>
+          <h3 style="color: white; margin: 0; display: flex; align-items: center; gap: 10px; font-size: 1.25rem;">
+            <i class="fa-solid fa-clipboard-check" style="color: #38bdf8;"></i> <span id="review-modal-title">Review
+              Product Submission</span>
+          </h3>
+          <p id="review-modal-subtitle" style="margin: 4px 0 0; font-size: 0.82rem; color: #94a3b8;">
+            Request ID: #req_... &bull; Submitted by: ...
+          </p>
+        </div>
+        <button class="modal-close-btn" style="color: #94a3b8;" onclick="closeModal('modal-review-request')"><i
+            class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body" style="padding: 24px; max-height: 70vh; overflow-y: auto;">
+        <!-- Container for Diff / Preview -->
+        <div id="review-diff-container"></div>
+
+        <!-- Remarks Section for Super Admin -->
+        <div style="margin-top: 20px; padding-top: 16px; border-top: 1.5px dashed var(--admin-border);">
+          <label style="font-size: 0.82rem; font-weight: 800; color: #334155; display: block; margin-bottom: 6px;">
+            Super Admin Feedback / Rejection Remarks (Optional for approval, recommended for rejection):
+          </label>
+          <textarea id="review-remarks-input" class="form-control"
+            placeholder="e.g. Approved with updated pricing, or Reason why this product/change was rejected..."
+            style="width: 100%; min-height: 70px;"></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer"
+        style="padding: 16px 24px; background: #f8fafc; border-top: 1px solid var(--admin-border); display: flex; align-items: center; justify-content: space-between; border-radius: 0 0 20px 20px;">
+        <div id="review-status-display"></div>
+        <div style="display: flex; gap: 12px;" id="review-actions-group">
+          <button type="button" class="btn-action"
+            style="background: #fee2e2; color: #dc2626; border: 1.5px solid #fca5a5;" id="btn-reject-request"
+            onclick="window.handleRejectRequest()">
+            <i class="fa-solid fa-ban"></i> Reject Request
+          </button>
+          <button type="button" class="btn-action"
+            style="background: #059669; color: white; border: none; font-weight: 800; padding: 10px 20px;"
+            id="btn-approve-request" onclick="window.handleApproveRequest()">
+            <i class="fa-solid fa-check"></i> Approve & Publish to Store
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL: CATEGORY & SUBCATEGORY DIRECTORY (CLEAN SIMPLE ENGLISH) -->
   <div id="modal-category-analytics" class="admin-modal-overlay">
@@ -2246,8 +2502,10 @@
           style="width: 64px; height: 64px; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 16px; border: 2px solid #fde68a;">
           <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
-        <h3 id="action-confirm-title" style="font-size: 1.35rem; color: #0f172a; margin-bottom: 8px; font-weight: 800;">Confirm Action</h3>
-        <p id="action-confirm-message" style="color: #64748b; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; font-weight: 500;">
+        <h3 id="action-confirm-title" style="font-size: 1.35rem; color: #0f172a; margin-bottom: 8px; font-weight: 800;">
+          Confirm Action</h3>
+        <p id="action-confirm-message"
+          style="color: #64748b; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; font-weight: 500;">
           Are you sure you want to proceed? This will change the database.
         </p>
         <div style="display: flex; gap: 12px; justify-content: center;">
@@ -2272,8 +2530,10 @@
           style="width: 72px; height: 72px; border-radius: 50%; background: #dcfce7; color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 18px; border: 3px solid #bbf7d0; box-shadow: 0 4px 10px rgba(22, 163, 74, 0.15);">
           <i class="fa-solid fa-check"></i>
         </div>
-        <h3 id="action-success-title" style="font-size: 1.4rem; color: #0f172a; margin-bottom: 10px; font-weight: 800;">Success!</h3>
-        <p id="action-success-message" style="color: #64748b; font-size: 0.95rem; line-height: 1.5; margin-bottom: 24px; font-weight: 500;">
+        <h3 id="action-success-title" style="font-size: 1.4rem; color: #0f172a; margin-bottom: 10px; font-weight: 800;">
+          Success!</h3>
+        <p id="action-success-message"
+          style="color: #64748b; font-size: 0.95rem; line-height: 1.5; margin-bottom: 24px; font-weight: 500;">
           The action was completed successfully.
         </p>
         <button type="button" class="btn-action" onclick="closeModal('modal-action-success')"
@@ -2311,32 +2571,32 @@
     };
 
     let currentActionCallback = null;
-    window.openActionConfirmModal = function(title, message, btnText, callback) {
-        document.getElementById('action-confirm-title').textContent = title;
-        document.getElementById('action-confirm-message').textContent = message;
-        document.getElementById('action-confirm-btn').innerHTML = btnText;
-        currentActionCallback = callback;
-        window.openModal('modal-action-confirm');
+    window.openActionConfirmModal = function (title, message, btnText, callback) {
+      document.getElementById('action-confirm-title').textContent = title;
+      document.getElementById('action-confirm-message').textContent = message;
+      document.getElementById('action-confirm-btn').innerHTML = btnText;
+      currentActionCallback = callback;
+      window.openModal('modal-action-confirm');
     };
 
-    window.executeActionConfirm = function() {
-        window.closeModal('modal-action-confirm');
-        if (currentActionCallback) {
-            currentActionCallback();
-            currentActionCallback = null;
-        }
+    window.executeActionConfirm = function () {
+      window.closeModal('modal-action-confirm');
+      if (currentActionCallback) {
+        currentActionCallback();
+        currentActionCallback = null;
+      }
     };
 
-    window.openActionSuccessModal = function(title, message) {
-        document.getElementById('action-success-title').textContent = title;
-        document.getElementById('action-success-message').textContent = message;
-        window.openModal('modal-action-success');
+    window.openActionSuccessModal = function (title, message) {
+      document.getElementById('action-success-title').textContent = title;
+      document.getElementById('action-success-message').textContent = message;
+      window.openModal('modal-action-success');
     };
   </script>
 
   <!-- Firebase & Admin Application Logic -->
   <script type="module">
-    import { auth, ensureFirebaseAuth, getProductsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, saveCategoryOrderToFirebase, listenForCategoryOrder, storage, ref, uploadBytes, getDownloadURL } from './firebase-config.js?v=1.3.5';
+    import { auth, ensureFirebaseAuth, getProductsFromFirebase, getProductRequestsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, saveCategoryOrderToFirebase, listenForCategoryOrder, storage, ref, uploadBytes, getDownloadURL, listenForProductRequests, approveProductRequest, rejectProductRequest, setAdminUserRole } from './firebase-config.js?v=1.4.1';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     let rawProducts = [];
@@ -2345,6 +2605,9 @@
     let categoryOrderList = [];
     let categoryImagesMap = {};
     let pendingDeleteId = null;
+    let productRequests = [];
+    let activeReviewRequest = null;
+    let currentAdminEmail = sessionStorage.getItem('admin_user_email') || 'Super Admin';
 
     // Beautiful Bottom-Right Toast System
     window.showToast = (message, type = 'success', duration = 3500) => {
@@ -2457,13 +2720,49 @@
         }
         syncAndRenderCategoryOrder();
       });
+
+      // 3. Instant direct fetch of product requests (<100ms)
+      try {
+        const directReqs = await getProductRequestsFromFirebase();
+        if (directReqs && directReqs.length > 0) {
+          productRequests = directReqs;
+          updateApprovalStats();
+          renderApprovalRequestsTable();
+        }
+      } catch (err) {
+        console.warn("Direct requests fetch notice:", err);
+      }
+
+      // 4. Real-time Product Requests listener (Product Admin Approvals)
+      listenForProductRequests((requests) => {
+        if (requests) {
+          productRequests = requests;
+          updateApprovalStats();
+          renderApprovalRequestsTable();
+        }
+      });
     }
 
     initDataListeners();
 
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      const userPill = document.getElementById('admin-user-pill');
+      if (user && user.email) {
+        if (userPill) {
+          userPill.style.display = 'inline-flex';
+          userPill.innerHTML = `
+            <span class="user-status-dot"></span>
+            <i class="fa-solid fa-user-shield" style="color: #94a3b8; font-size: 0.8rem;"></i>
+            <span style="color: #f1f5f9; font-weight: 600;">${user.email}</span>
+          `;
+        }
         sessionStorage.setItem('admin_authenticated', 'true');
+        sessionStorage.setItem('admin_user_email', user.email);
+      } else {
+        if (userPill) {
+          userPill.style.display = 'inline-flex';
+          userPill.innerHTML = `<a href="login.html" style="color: #fca5a5; text-decoration: none; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-triangle-exclamation"></i> Sign In</a>`;
+        }
       }
     });
 
@@ -2717,61 +3016,61 @@
       }
     }
 
-      // Modal Manager
-      window.openModal = (id) => {
-        const modal = document.getElementById(id);
-        if (modal) modal.classList.add('active');
-      };
+    // Modal Manager
+    window.openModal = (id) => {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('active');
+    };
 
-      window.closeModal = (id) => {
-        const modal = document.getElementById(id);
-        if (modal) modal.classList.remove('active');
-      };
+    window.closeModal = (id) => {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('active');
+    };
 
-      // Populate Category Filter
-      function populateCategoryFilter() {
-        const sel = document.getElementById('filter-category');
-        const currentVal = sel.value;
-        const cats = Array.from(new Set(rawProducts.map(p => p.category).filter(Boolean))).sort();
+    // Populate Category Filter
+    function populateCategoryFilter() {
+      const sel = document.getElementById('filter-category');
+      const currentVal = sel.value;
+      const cats = Array.from(new Set(rawProducts.map(p => p.category).filter(Boolean))).sort();
 
-        let html = '<option value="ALL">All Categories</option>';
-        cats.forEach(c => {
-          html += `<option value="${c}" ${c === currentVal ? 'selected' : ''}>${c}</option>`;
-        });
-        sel.innerHTML = html;
-      }
+      let html = '<option value="ALL">All Categories</option>';
+      cats.forEach(c => {
+        html += `<option value="${c}" ${c === currentVal ? 'selected' : ''}>${c}</option>`;
+      });
+      sel.innerHTML = html;
+    }
 
-      // Filter Listeners
-      document.getElementById('registry-search').oninput = renderRegistryTable;
-      document.getElementById('filter-category').onchange = renderRegistryTable;
-      document.getElementById('filter-stock').onchange = renderRegistryTable;
+    // Filter Listeners
+    document.getElementById('registry-search').oninput = renderRegistryTable;
+    document.getElementById('filter-category').onchange = renderRegistryTable;
+    document.getElementById('filter-stock').onchange = renderRegistryTable;
 
-      // Render Table
-      function renderRegistryTable() {
-        const search = (document.getElementById('registry-search').value || '').toLowerCase().trim();
-        const catFilter = document.getElementById('filter-category').value;
-        const stockFilter = document.getElementById('filter-stock').value;
+    // Render Table
+    function renderRegistryTable() {
+      const search = (document.getElementById('registry-search').value || '').toLowerCase().trim();
+      const catFilter = document.getElementById('filter-category').value;
+      const stockFilter = document.getElementById('filter-stock').value;
 
-        displayedProducts = rawProducts.filter(p => {
-          const matchesSearch = !search ||
-            (p.name && p.name.toLowerCase().includes(search)) ||
-            (p.category && p.category.toLowerCase().includes(search)) ||
-            (p.subCategory && p.subCategory.toLowerCase().includes(search)) ||
-            (p.id && p.id.toString().includes(search));
+      displayedProducts = rawProducts.filter(p => {
+        const matchesSearch = !search ||
+          (p.name && p.name.toLowerCase().includes(search)) ||
+          (p.category && p.category.toLowerCase().includes(search)) ||
+          (p.subCategory && p.subCategory.toLowerCase().includes(search)) ||
+          (p.id && p.id.toString().includes(search));
 
-          const matchesCat = catFilter === 'ALL' || p.category === catFilter;
-          const isInStock = p.inStock !== false;
-          const matchesStock = stockFilter === 'ALL' || (stockFilter === 'IN' && isInStock) || (stockFilter === 'OUT' && !isInStock);
+        const matchesCat = catFilter === 'ALL' || p.category === catFilter;
+        const isInStock = p.inStock !== false;
+        const matchesStock = stockFilter === 'ALL' || (stockFilter === 'IN' && isInStock) || (stockFilter === 'OUT' && !isInStock);
 
-          return matchesSearch && matchesCat && matchesStock;
-        });
+        return matchesSearch && matchesCat && matchesStock;
+      });
 
-        // Sort newest / highest ID first
-        displayedProducts.sort((a, b) => Number(b.id) - Number(a.id));
+      // Sort newest / highest ID first
+      displayedProducts.sort((a, b) => Number(b.id) - Number(a.id));
 
-        const tbody = document.getElementById('registry-table-body');
-        if (displayedProducts.length === 0) {
-          tbody.innerHTML = `
+      const tbody = document.getElementById('registry-table-body');
+      if (displayedProducts.length === 0) {
+        tbody.innerHTML = `
           <tr>
             <td colspan="10" style="text-align: center; padding: 50px; color: #94a3b8;">
               <i class="fa-solid fa-box-archive" style="font-size: 2.5rem; margin-bottom: 12px; opacity: 0.4;"></i>
@@ -2779,17 +3078,17 @@
             </td>
           </tr>
         `;
-          return;
-        }
+        return;
+      }
 
-        let html = '';
-        displayedProducts.forEach(p => {
-          const isChecked = selectedProductIds.has(p.id.toString());
-          const isInStock = p.inStock !== false;
-          const imgUrl = resolveDirectImageUrl(p.image) || 'assets/images/placeholder.jpg';
-          const flags = p.offer ? `<span class="flag-badge">${p.offer}</span>` : '';
+      let html = '';
+      displayedProducts.forEach(p => {
+        const isChecked = selectedProductIds.has(p.id.toString());
+        const isInStock = p.inStock !== false;
+        const imgUrl = resolveDirectImageUrl(p.image) || 'assets/images/placeholder.jpg';
+        const flags = p.offer ? `<span class="flag-badge">${p.offer}</span>` : '';
 
-          html += `
+        html += `
           <tr>
             <td style="text-align: center;">
               <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleSelectProduct('${p.id}', this.checked)">
@@ -2833,260 +3132,260 @@
             </td>
           </tr>
         `;
-        });
+      });
 
-        tbody.innerHTML = html;
-        updateBulkBar();
-      }
+      tbody.innerHTML = html;
+      updateBulkBar();
+    }
 
-      // Single Add Flow
-      window.openSingleAddModal = () => {
-        openActionConfirmModal(
-          "Add New Product",
-          "You are about to add a new product to the live inventory. Please ensure all details like Price, Category, and Stock are correct.",
-          "Understood, Proceed",
-          () => {
-            document.getElementById('single-add-form').reset();
-            const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
-            document.getElementById('add-sku').value = `#${nextId}`;
-            openModal('modal-single-add');
-          }
-        );
-      };
+    // Single Add Flow
+    window.openSingleAddModal = () => {
+      openActionConfirmModal(
+        "Add New Product",
+        "You are about to add a new product to the live inventory. Please ensure all details like Price, Category, and Stock are correct.",
+        "Understood, Proceed",
+        () => {
+          document.getElementById('single-add-form').reset();
+          const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
+          document.getElementById('add-sku').value = `#${nextId}`;
+          openModal('modal-single-add');
+        }
+      );
+    };
 
-      window.handleSingleAddSubmit = (e) => {
-        e.preventDefault();
-        openActionConfirmModal("Add New Product", "Are you sure you want to add this product to the live database?", "<i class='fa-solid fa-check'></i> Yes, Add Product", async () => {
-          const btn = document.getElementById('add-submit-btn');
-          btn.disabled = true;
-          btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+    window.handleSingleAddSubmit = (e) => {
+      e.preventDefault();
+      openActionConfirmModal("Add New Product", "Are you sure you want to add this product to the live database?", "<i class='fa-solid fa-check'></i> Yes, Add Product", async () => {
+        const btn = document.getElementById('add-submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
 
-          try {
-            await ensureFirebaseAuth();
-            const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
-            const newProduct = {
-              id: nextId,
-              name: document.getElementById('add-name').value.trim(),
-              department: document.getElementById('add-dept').value.trim() || 'General',
-              category: document.getElementById('add-cat').value.trim(),
-              subCategory: document.getElementById('add-subcat').value.trim() || '',
-              price: parseFloat(document.getElementById('add-price').value) || 0,
-              oldPrice: parseFloat(document.getElementById('add-mrp').value) || null,
-              unit: document.getElementById('add-unit').value.trim(),
-              offer: document.getElementById('add-offer').value.trim(),
-              inStock: document.getElementById('add-stock').value === 'true',
-              image: resolveDirectImageUrl(document.getElementById('add-img').value.trim()),
-              videoLink: document.getElementById('add-video').value.trim(),
-              desc: document.getElementById('add-desc').value.trim(),
-              isDeleted: false
-            };
-
-            await saveProductToFirebase(newProduct);
-            closeModal('modal-single-add');
-            showToast(`Product "${newProduct.name}" added successfully!`, 'success');
-            openActionSuccessModal("Product Added", `"${newProduct.name}" has been successfully added to the database.`);
-          } catch (err) {
-            console.error(err);
-            showToast(`Save failed: ${err.message}`, 'error');
-          } finally {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-plus"></i> Save to Registry';
-          }
-        });
-      };
-
-      // Edit Product Flow
-      window.openEditProductModal = (id) => {
-        const p = rawProducts.find(item => item.id.toString() === id.toString());
-        if (!p) return;
-
-        document.getElementById('edit-id').value = p.id;
-        document.getElementById('edit-sku').value = `#${p.id}`;
-        document.getElementById('edit-name').value = p.name || '';
-        document.getElementById('edit-dept').value = p.department || p.category || '';
-        document.getElementById('edit-cat').value = p.category || '';
-        document.getElementById('edit-subcat').value = p.subCategory || p.sub_category || p.subCat || '';
-        document.getElementById('edit-price').value = p.price || '';
-        document.getElementById('edit-mrp').value = p.oldPrice || '';
-        document.getElementById('edit-unit').value = p.unit || '';
-        document.getElementById('edit-offer').value = p.offer || '';
-        document.getElementById('edit-stock').value = (p.inStock !== false).toString();
-        document.getElementById('edit-img').value = p.image || '';
-        document.getElementById('edit-video').value = p.videoLink || p.youtube_url || '';
-        document.getElementById('edit-desc').value = p.desc || '';
-
-        openModal('modal-edit-product');
-      };
-
-      window.handleEditSubmit = (e) => {
-        e.preventDefault();
-        const id = document.getElementById('edit-id').value;
-        const p = rawProducts.find(item => item.id.toString() === id.toString());
-        if (!p) return;
-
-        openActionConfirmModal("Save Changes", `Are you sure you want to save changes for "${p.name}"?`, "<i class='fa-solid fa-save'></i> Yes, Save Changes", async () => {
-          const btn = document.getElementById('edit-submit-btn');
-          btn.disabled = true;
-          btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-
-          try {
-            await ensureFirebaseAuth();
-            p.name = document.getElementById('edit-name').value.trim();
-            p.department = document.getElementById('edit-dept').value.trim() || 'General';
-            p.category = document.getElementById('edit-cat').value.trim();
-            p.subCategory = document.getElementById('edit-subcat').value.trim() || '';
-            p.price = parseFloat(document.getElementById('edit-price').value) || 0;
-            p.oldPrice = parseFloat(document.getElementById('edit-mrp').value) || null;
-            p.unit = document.getElementById('edit-unit').value.trim();
-            p.offer = document.getElementById('edit-offer').value.trim();
-            p.inStock = document.getElementById('edit-stock').value === 'true';
-            p.image = resolveDirectImageUrl(document.getElementById('edit-img').value.trim());
-            p.videoLink = document.getElementById('edit-video').value.trim();
-            p.desc = document.getElementById('edit-desc').value.trim();
-
-            await saveProductToFirebase(p);
-            closeModal('modal-edit-product');
-            showToast(`Changes saved for "${p.name}"!`, 'success');
-            openActionSuccessModal("Product Updated", `Changes for "${p.name}" have been saved to the database.`);
-          } catch (err) {
-            console.error(err);
-            showToast(`Update failed: ${err.message}`, 'error');
-          } finally {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-save"></i> Save Changes';
-          }
-        });
-      };
-
-      // Quick Stock Toggle
-      window.quickToggleStock = async (id, status) => {
         try {
           await ensureFirebaseAuth();
-          await updateProductStock(id, status);
-          showToast(`Stock updated to ${status ? 'IN STOCK' : 'OUT OF STOCK'}`, 'info');
+          const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
+          const newProduct = {
+            id: nextId,
+            name: document.getElementById('add-name').value.trim(),
+            department: document.getElementById('add-dept').value.trim() || 'General',
+            category: document.getElementById('add-cat').value.trim(),
+            subCategory: document.getElementById('add-subcat').value.trim() || '',
+            price: parseFloat(document.getElementById('add-price').value) || 0,
+            oldPrice: parseFloat(document.getElementById('add-mrp').value) || null,
+            unit: document.getElementById('add-unit').value.trim(),
+            offer: document.getElementById('add-offer').value.trim(),
+            inStock: document.getElementById('add-stock').value === 'true',
+            image: resolveDirectImageUrl(document.getElementById('add-img').value.trim()),
+            videoLink: document.getElementById('add-video').value.trim(),
+            desc: document.getElementById('add-desc').value.trim(),
+            isDeleted: false
+          };
+
+          await saveProductToFirebase(newProduct);
+          closeModal('modal-single-add');
+          showToast(`Product "${newProduct.name}" added successfully!`, 'success');
+          openActionSuccessModal("Product Added", `"${newProduct.name}" has been successfully added to the database.`);
         } catch (err) {
           console.error(err);
-          showToast(`Stock update failed: ${err.message}`, 'error');
-        }
-      };
-
-      // Delete Single Product via Custom Modal
-      window.confirmDeleteProduct = (id, name) => {
-        pendingDeleteId = id;
-        const nameEl = document.getElementById('delete-modal-product-name');
-        if (nameEl) nameEl.textContent = `"${name}"`;
-        openModal('modal-confirm-delete');
-      };
-
-      document.getElementById('confirm-delete-action-btn').onclick = async () => {
-        if (!pendingDeleteId) return;
-        const btn = document.getElementById('confirm-delete-action-btn');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Removing...';
-        try {
-          await ensureFirebaseAuth();
-          await deleteProductFromFirebase(pendingDeleteId);
-          closeModal('modal-confirm-delete');
-          showToast('Product removed from inventory.', 'success');
-          openActionSuccessModal("Product Deleted", "The product was successfully removed from the database.");
-        } catch (err) {
-          console.error('Delete failed:', err);
-          closeModal('modal-confirm-delete');
-          showToast(`Delete failed: ${err.message || 'Insufficient permissions'}`, 'error');
+          showToast(`Save failed: ${err.message}`, 'error');
         } finally {
           btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-trash-can"></i> Yes, Remove';
-          pendingDeleteId = null;
+          btn.innerHTML = '<i class="fa-solid fa-plus"></i> Save to Registry';
         }
-      };
+      });
+    };
 
-      // Multi-Select & Bulk Operations
-      window.toggleSelectAll = (checked) => {
-        if (checked) {
-          displayedProducts.forEach(p => selectedProductIds.add(p.id.toString()));
-        } else {
-          selectedProductIds.clear();
-        }
-        renderRegistryTable();
-      };
+    // Edit Product Flow
+    window.openEditProductModal = (id) => {
+      const p = rawProducts.find(item => item.id.toString() === id.toString());
+      if (!p) return;
 
-      window.toggleSelectProduct = (id, checked) => {
-        if (checked) {
-          selectedProductIds.add(id.toString());
-        } else {
-          selectedProductIds.delete(id.toString());
-        }
-        updateBulkBar();
-      };
+      document.getElementById('edit-id').value = p.id;
+      document.getElementById('edit-sku').value = `#${p.id}`;
+      document.getElementById('edit-name').value = p.name || '';
+      document.getElementById('edit-dept').value = p.department || p.category || '';
+      document.getElementById('edit-cat').value = p.category || '';
+      document.getElementById('edit-subcat').value = p.subCategory || p.sub_category || p.subCat || '';
+      document.getElementById('edit-price').value = p.price || '';
+      document.getElementById('edit-mrp').value = p.oldPrice || '';
+      document.getElementById('edit-unit').value = p.unit || '';
+      document.getElementById('edit-offer').value = p.offer || '';
+      document.getElementById('edit-stock').value = (p.inStock !== false).toString();
+      document.getElementById('edit-img').value = p.image || '';
+      document.getElementById('edit-video').value = p.videoLink || p.youtube_url || '';
+      document.getElementById('edit-desc').value = p.desc || '';
 
-      function updateBulkBar() {
-        const bar = document.getElementById('bulk-bar');
-        const count = selectedProductIds.size;
-        if (count > 0) {
-          bar.classList.add('active');
-          document.getElementById('bulk-count-text').textContent = `${count} product${count > 1 ? 's' : ''} selected`;
-        } else {
-          bar.classList.remove('active');
+      openModal('modal-edit-product');
+    };
+
+    window.handleEditSubmit = (e) => {
+      e.preventDefault();
+      const id = document.getElementById('edit-id').value;
+      const p = rawProducts.find(item => item.id.toString() === id.toString());
+      if (!p) return;
+
+      openActionConfirmModal("Save Changes", `Are you sure you want to save changes for "${p.name}"?`, "<i class='fa-solid fa-save'></i> Yes, Save Changes", async () => {
+        const btn = document.getElementById('edit-submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+        try {
+          await ensureFirebaseAuth();
+          p.name = document.getElementById('edit-name').value.trim();
+          p.department = document.getElementById('edit-dept').value.trim() || 'General';
+          p.category = document.getElementById('edit-cat').value.trim();
+          p.subCategory = document.getElementById('edit-subcat').value.trim() || '';
+          p.price = parseFloat(document.getElementById('edit-price').value) || 0;
+          p.oldPrice = parseFloat(document.getElementById('edit-mrp').value) || null;
+          p.unit = document.getElementById('edit-unit').value.trim();
+          p.offer = document.getElementById('edit-offer').value.trim();
+          p.inStock = document.getElementById('edit-stock').value === 'true';
+          p.image = resolveDirectImageUrl(document.getElementById('edit-img').value.trim());
+          p.videoLink = document.getElementById('edit-video').value.trim();
+          p.desc = document.getElementById('edit-desc').value.trim();
+
+          await saveProductToFirebase(p);
+          closeModal('modal-edit-product');
+          showToast(`Changes saved for "${p.name}"!`, 'success');
+          openActionSuccessModal("Product Updated", `Changes for "${p.name}" have been saved to the database.`);
+        } catch (err) {
+          console.error(err);
+          showToast(`Update failed: ${err.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-save"></i> Save Changes';
         }
+      });
+    };
+
+    // Quick Stock Toggle
+    window.quickToggleStock = async (id, status) => {
+      try {
+        await ensureFirebaseAuth();
+        await updateProductStock(id, status);
+        showToast(`Stock updated to ${status ? 'IN STOCK' : 'OUT OF STOCK'}`, 'info');
+      } catch (err) {
+        console.error(err);
+        showToast(`Stock update failed: ${err.message}`, 'error');
       }
+    };
 
-      window.bulkSetStock = (status) => {
-        if (selectedProductIds.size === 0) return;
-        const count = selectedProductIds.size;
-        const actionStr = status ? 'IN STOCK' : 'OUT OF STOCK';
-        
-        openActionConfirmModal("Bulk Update Stock", `Are you sure you want to mark ${count} products as ${actionStr}?`, "<i class='fa-solid fa-check'></i> Yes, Update", async () => {
-          try {
-            await ensureFirebaseAuth();
-            for (let id of selectedProductIds) {
-              await updateProductStock(id, status);
-            }
-            selectedProductIds.clear();
-            showToast(`Updated stock status for ${count} products!`, 'success');
-            openActionSuccessModal("Stock Updated", `Successfully updated stock status for ${count} products to ${actionStr}.`);
-          } catch (e) {
-            showToast(`Bulk stock update failed: ${e.message}`, 'error');
+    // Delete Single Product via Custom Modal
+    window.confirmDeleteProduct = (id, name) => {
+      pendingDeleteId = id;
+      const nameEl = document.getElementById('delete-modal-product-name');
+      if (nameEl) nameEl.textContent = `"${name}"`;
+      openModal('modal-confirm-delete');
+    };
+
+    document.getElementById('confirm-delete-action-btn').onclick = async () => {
+      if (!pendingDeleteId) return;
+      const btn = document.getElementById('confirm-delete-action-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Removing...';
+      try {
+        await ensureFirebaseAuth();
+        await deleteProductFromFirebase(pendingDeleteId);
+        closeModal('modal-confirm-delete');
+        showToast('Product removed from inventory.', 'success');
+        openActionSuccessModal("Product Deleted", "The product was successfully removed from the database.");
+      } catch (err) {
+        console.error('Delete failed:', err);
+        closeModal('modal-confirm-delete');
+        showToast(`Delete failed: ${err.message || 'Insufficient permissions'}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-trash-can"></i> Yes, Remove';
+        pendingDeleteId = null;
+      }
+    };
+
+    // Multi-Select & Bulk Operations
+    window.toggleSelectAll = (checked) => {
+      if (checked) {
+        displayedProducts.forEach(p => selectedProductIds.add(p.id.toString()));
+      } else {
+        selectedProductIds.clear();
+      }
+      renderRegistryTable();
+    };
+
+    window.toggleSelectProduct = (id, checked) => {
+      if (checked) {
+        selectedProductIds.add(id.toString());
+      } else {
+        selectedProductIds.delete(id.toString());
+      }
+      updateBulkBar();
+    };
+
+    function updateBulkBar() {
+      const bar = document.getElementById('bulk-bar');
+      const count = selectedProductIds.size;
+      if (count > 0) {
+        bar.classList.add('active');
+        document.getElementById('bulk-count-text').textContent = `${count} product${count > 1 ? 's' : ''} selected`;
+      } else {
+        bar.classList.remove('active');
+      }
+    }
+
+    window.bulkSetStock = (status) => {
+      if (selectedProductIds.size === 0) return;
+      const count = selectedProductIds.size;
+      const actionStr = status ? 'IN STOCK' : 'OUT OF STOCK';
+
+      openActionConfirmModal("Bulk Update Stock", `Are you sure you want to mark ${count} products as ${actionStr}?`, "<i class='fa-solid fa-check'></i> Yes, Update", async () => {
+        try {
+          await ensureFirebaseAuth();
+          for (let id of selectedProductIds) {
+            await updateProductStock(id, status);
           }
-        });
-      };
+          selectedProductIds.clear();
+          showToast(`Updated stock status for ${count} products!`, 'success');
+          openActionSuccessModal("Stock Updated", `Successfully updated stock status for ${count} products to ${actionStr}.`);
+        } catch (e) {
+          showToast(`Bulk stock update failed: ${e.message}`, 'error');
+        }
+      });
+    };
 
-      window.bulkDeleteSelected = () => {
-        const count = selectedProductIds.size;
-        if (count === 0) return;
-        
-        openActionConfirmModal("Bulk Delete Products", `Are you sure you want to permanently delete all ${count} selected products?`, "<i class='fa-solid fa-trash-can'></i> Yes, Delete All", async () => {
-          try {
-            await ensureFirebaseAuth();
-            for (let id of selectedProductIds) {
-              await deleteProductFromFirebase(id);
-            }
-            selectedProductIds.clear();
-            showToast(`Deleted ${count} products.`, 'success');
-            openActionSuccessModal("Products Deleted", `Successfully deleted ${count} products from the database.`);
-          } catch (e) {
-            showToast(`Bulk delete failed: ${e.message}`, 'error');
+    window.bulkDeleteSelected = () => {
+      const count = selectedProductIds.size;
+      if (count === 0) return;
+
+      openActionConfirmModal("Bulk Delete Products", `Are you sure you want to permanently delete all ${count} selected products?`, "<i class='fa-solid fa-trash-can'></i> Yes, Delete All", async () => {
+        try {
+          await ensureFirebaseAuth();
+          for (let id of selectedProductIds) {
+            await deleteProductFromFirebase(id);
           }
-        });
-      };
+          selectedProductIds.clear();
+          showToast(`Deleted ${count} products.`, 'success');
+          openActionSuccessModal("Products Deleted", `Successfully deleted ${count} products from the database.`);
+        } catch (e) {
+          showToast(`Bulk delete failed: ${e.message}`, 'error');
+        }
+      });
+    };
 
-      // Bulk Import Logic (Pure JSON)
-      let parsedBulkItems = [];
+    // Bulk Import Logic (Pure JSON)
+    let parsedBulkItems = [];
 
-      window.openBulkImportModal = () => {
-        openActionConfirmModal(
-          "Bulk Import Warning",
-          "Bulk importing will add multiple products at once. Ensure your JSON format is strictly correct to avoid corrupting the database.",
-          "Understood, Proceed",
-          () => {
-            parsedBulkItems = [];
-            document.getElementById('bulk-preview-container').style.display = 'none';
-            openModal('modal-bulk-import');
-          }
-        );
-      };
+    window.openBulkImportModal = () => {
+      openActionConfirmModal(
+        "Bulk Import Warning",
+        "Bulk importing will add multiple products at once. Ensure your JSON format is strictly correct to avoid corrupting the database.",
+        "Understood, Proceed",
+        () => {
+          parsedBulkItems = [];
+          document.getElementById('bulk-preview-container').style.display = 'none';
+          openModal('modal-bulk-import');
+        }
+      );
+    };
 
-      window.copySampleTemplate = () => {
-        const sampleJSON = `[
+    window.copySampleTemplate = () => {
+      const sampleJSON = `[
   {
     "name": "Fortune Sunlite Sunflower Oil",
     "department": "Grocery & Staples",
@@ -3112,51 +3411,51 @@
     "inStock": true
   }
 ]`;
-        navigator.clipboard.writeText(sampleJSON);
-        showToast('Sample JSON template copied to clipboard!', 'info');
-      };
+      navigator.clipboard.writeText(sampleJSON);
+      showToast('Sample JSON template copied to clipboard!', 'info');
+    };
 
-      window.previewBulkData = () => {
-        parsedBulkItems = [];
-        const jsonText = document.getElementById('bulk-json-text').value.trim();
+    window.previewBulkData = () => {
+      parsedBulkItems = [];
+      const jsonText = document.getElementById('bulk-json-text').value.trim();
 
-        if (!jsonText) {
-          showToast('Please paste a valid JSON array of products.', 'warning');
+      if (!jsonText) {
+        showToast('Please paste a valid JSON array of products.', 'warning');
+        return;
+      }
+
+      try {
+        const arr = JSON.parse(jsonText);
+        if (!Array.isArray(arr)) {
+          showToast('JSON data must be an array of objects [ { ... }, { ... } ].', 'error');
           return;
         }
+        parsedBulkItems = arr.map(item => ({
+          ...item,
+          price: parseFloat(item.price) || 0,
+          oldPrice: parseFloat(item.oldPrice || item.mrp) || null,
+          image: resolveDirectImageUrl(item.image || ''),
+          inStock: item.inStock !== false,
+          isDeleted: false
+        }));
+      } catch (e) {
+        showToast('Invalid JSON syntax: ' + e.message, 'error');
+        return;
+      }
 
-        try {
-          const arr = JSON.parse(jsonText);
-          if (!Array.isArray(arr)) {
-            showToast('JSON data must be an array of objects [ { ... }, { ... } ].', 'error');
-            return;
-          }
-          parsedBulkItems = arr.map(item => ({
-            ...item,
-            price: parseFloat(item.price) || 0,
-            oldPrice: parseFloat(item.oldPrice || item.mrp) || null,
-            image: resolveDirectImageUrl(item.image || ''),
-            inStock: item.inStock !== false,
-            isDeleted: false
-          }));
-        } catch (e) {
-          showToast('Invalid JSON syntax: ' + e.message, 'error');
-          return;
-        }
+      if (parsedBulkItems.length === 0) {
+        showToast('No valid products found. Please check your JSON format.', 'warning');
+        return;
+      }
 
-        if (parsedBulkItems.length === 0) {
-          showToast('No valid products found. Please check your JSON format.', 'warning');
-          return;
-        }
+      // Show preview
+      const previewContainer = document.getElementById('bulk-preview-container');
+      const previewBody = document.getElementById('bulk-preview-body');
+      document.getElementById('bulk-preview-count').textContent = parsedBulkItems.length;
 
-        // Show preview
-        const previewContainer = document.getElementById('bulk-preview-container');
-        const previewBody = document.getElementById('bulk-preview-body');
-        document.getElementById('bulk-preview-count').textContent = parsedBulkItems.length;
-
-        let html = '';
-        parsedBulkItems.slice(0, 10).forEach(item => {
-          html += `
+      let html = '';
+      parsedBulkItems.slice(0, 10).forEach(item => {
+        html += `
           <tr>
             <td><b>${item.name}</b></td>
             <td>${item.category}</td>
@@ -3165,160 +3464,160 @@
             <td><img src="${item.image || 'assets/images/placeholder.jpg'}" style="width: 28px; height: 28px; object-fit: cover; border-radius: 4px;"></td>
           </tr>
         `;
-        });
-        if (parsedBulkItems.length > 10) {
-          html += `<tr><td colspan="5" style="text-align: center; color: #64748b;">+ ${parsedBulkItems.length - 10} more items ready for import...</td></tr>`;
-        }
-        previewBody.innerHTML = html;
-        previewContainer.style.display = 'block';
-        showToast(`${parsedBulkItems.length} products validated and ready for import!`, 'info');
-      };
+      });
+      if (parsedBulkItems.length > 10) {
+        html += `<tr><td colspan="5" style="text-align: center; color: #64748b;">+ ${parsedBulkItems.length - 10} more items ready for import...</td></tr>`;
+      }
+      previewBody.innerHTML = html;
+      previewContainer.style.display = 'block';
+      showToast(`${parsedBulkItems.length} products validated and ready for import!`, 'info');
+    };
 
-      window.executeBulkImport = async () => {
-        if (parsedBulkItems.length === 0) {
-          previewBulkData();
-          if (parsedBulkItems.length === 0) return;
-        }
+    window.executeBulkImport = async () => {
+      if (parsedBulkItems.length === 0) {
+        previewBulkData();
+        if (parsedBulkItems.length === 0) return;
+      }
 
-        const btn = document.getElementById('bulk-upload-btn');
-        btn.disabled = true;
-        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading 0 / ${parsedBulkItems.length}...`;
+      const btn = document.getElementById('bulk-upload-btn');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading 0 / ${parsedBulkItems.length}...`;
 
-        try {
-          await ensureFirebaseAuth();
-          let currentMaxId = rawProducts.length > 0 ? Math.max(...rawProducts.map(p => Number(p.id) || 0)) : 100;
+      try {
+        await ensureFirebaseAuth();
+        let currentMaxId = rawProducts.length > 0 ? Math.max(...rawProducts.map(p => Number(p.id) || 0)) : 100;
 
-          let uploaded = 0;
-          for (const item of parsedBulkItems) {
-            currentMaxId++;
-            item.id = currentMaxId;
-            await saveProductToFirebase(item);
-            uploaded++;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading ${uploaded} / ${parsedBulkItems.length}...`;
-          }
-
-          closeModal('modal-bulk-import');
-          showToast(`Successfully imported ${uploaded} products to Firebase!`, 'success');
-        } catch (err) {
-          console.error(err);
-          showToast(`Bulk upload stopped: ${err.message}`, 'error');
-        } finally {
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Import JSON to Firebase';
-        }
-      };
-
-      // Gift Hamper / Combo Selector
-      function populateHamperProductSelector() {
-        const container = document.getElementById('hamper-items-select');
-        if (!container) return;
-
-        if (rawProducts.length === 0) {
-          container.innerHTML = `<p style="color: #94a3b8; font-size: 0.85rem;">No products available.</p>`;
-          return;
+        let uploaded = 0;
+        for (const item of parsedBulkItems) {
+          currentMaxId++;
+          item.id = currentMaxId;
+          await saveProductToFirebase(item);
+          uploaded++;
+          btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading ${uploaded} / ${parsedBulkItems.length}...`;
         }
 
-        let html = '';
-        rawProducts.forEach(p => {
-          html += `
+        closeModal('modal-bulk-import');
+        showToast(`Successfully imported ${uploaded} products to Firebase!`, 'success');
+      } catch (err) {
+        console.error(err);
+        showToast(`Bulk upload stopped: ${err.message}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Import JSON to Firebase';
+      }
+    };
+
+    // Gift Hamper / Combo Selector
+    function populateHamperProductSelector() {
+      const container = document.getElementById('hamper-items-select');
+      if (!container) return;
+
+      if (rawProducts.length === 0) {
+        container.innerHTML = `<p style="color: #94a3b8; font-size: 0.85rem;">No products available.</p>`;
+        return;
+      }
+
+      let html = '';
+      rawProducts.forEach(p => {
+        html += `
           <label style="display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #e2e8f0; font-size: 0.85rem; cursor: pointer;">
             <input type="checkbox" name="hamper_item" value="${p.id}" data-name="${p.name.replace(/"/g, '&quot;')}" data-price="${p.price}">
             <span><b>${p.name}</b> (${p.category}) - ₹${p.price}</span>
           </label>
         `;
-        });
-        container.innerHTML = html;
+      });
+      container.innerHTML = html;
+    }
+
+    window.openCreateHamperModal = () => {
+      document.getElementById('create-hamper-form').reset();
+      openModal('modal-create-hamper');
+    };
+
+    window.handleCreateHamperSubmit = (e) => {
+      e.preventDefault();
+      const checkedBoxes = Array.from(document.querySelectorAll('input[name="hamper_item"]:checked'));
+      if (checkedBoxes.length === 0) {
+        showToast('Please select at least 1 product to include in this combo/hamper.', 'warning');
+        return;
       }
 
-      window.openCreateHamperModal = () => {
-        document.getElementById('create-hamper-form').reset();
-        openModal('modal-create-hamper');
-      };
+      const hamperName = document.getElementById('hamper-name').value.trim();
 
-      window.handleCreateHamperSubmit = (e) => {
-        e.preventDefault();
-        const checkedBoxes = Array.from(document.querySelectorAll('input[name="hamper_item"]:checked'));
-        if (checkedBoxes.length === 0) {
-          showToast('Please select at least 1 product to include in this combo/hamper.', 'warning');
-          return;
+      openActionConfirmModal("Create Combo", `Are you sure you want to create the combo "${hamperName}" with ${checkedBoxes.length} items?`, "<i class='fa-solid fa-gift'></i> Yes, Create", async () => {
+        const btn = document.getElementById('hamper-submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Combo...';
+
+        try {
+          await ensureFirebaseAuth();
+          const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
+          const selectedNames = checkedBoxes.map(b => b.getAttribute('data-name')).join(', ');
+
+          const comboProduct = {
+            id: nextId,
+            name: hamperName,
+            department: 'Gift Hampers & Combos',
+            category: 'Combos & Hampers',
+            price: parseFloat(document.getElementById('hamper-price').value) || 0,
+            oldPrice: parseFloat(document.getElementById('hamper-mrp').value) || null,
+            offer: document.getElementById('hamper-tag').value.trim() || 'SPECIAL COMBO',
+            unit: `${checkedBoxes.length} Items Pack`,
+            image: resolveDirectImageUrl(document.getElementById('hamper-img').value.trim()) || 'assets/images/placeholder.jpg',
+            desc: document.getElementById('hamper-desc').value.trim() + `\n\nIncludes: ${selectedNames}`,
+            inStock: true,
+            isCombo: true,
+            comboItemIds: checkedBoxes.map(b => b.value),
+            isDeleted: false
+          };
+
+          await saveProductToFirebase(comboProduct);
+          closeModal('modal-create-hamper');
+          showToast(`Combo Hamper "${comboProduct.name}" created successfully!`, 'success');
+          openActionSuccessModal("Combo Created", `"${comboProduct.name}" has been added to your store.`);
+        } catch (err) {
+          showToast(`Failed to create combo: ${err.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-gift"></i> Create & Publish Combo';
+        }
+      });
+    };
+
+    // Category Order & Photos Sync
+    function syncAndRenderCategoryOrder() {
+      const container = document.getElementById('category-order-list');
+      if (!container) return;
+
+      const catCounts = {};
+      rawProducts.forEach(p => {
+        if (p.category) catCounts[p.category] = (catCounts[p.category] || 0) + 1;
+      });
+      const activeCategories = Object.keys(catCounts);
+
+      let mergedOrder = categoryOrderList.filter(c => activeCategories.includes(c));
+      activeCategories.forEach(c => {
+        if (!mergedOrder.includes(c)) mergedOrder.push(c);
+      });
+      categoryOrderList = mergedOrder;
+
+      if (categoryOrderList.length === 0) {
+        container.innerHTML = `<p style="color: #94a3b8; grid-column: 1 / -1;">No active categories.</p>`;
+        return;
+      }
+
+      let html = '';
+      const total = categoryOrderList.length;
+      categoryOrderList.forEach((cat, index) => {
+        const count = catCounts[cat] || 0;
+        const currentImg = resolveDirectImageUrl(categoryImagesMap[cat] || '');
+
+        let optionsHTML = '';
+        for (let i = 1; i <= total; i++) {
+          optionsHTML += `<option value="${i}" ${i === index + 1 ? 'selected' : ''}>Position ${i}</option>`;
         }
 
-        const hamperName = document.getElementById('hamper-name').value.trim();
-
-        openActionConfirmModal("Create Combo", `Are you sure you want to create the combo "${hamperName}" with ${checkedBoxes.length} items?`, "<i class='fa-solid fa-gift'></i> Yes, Create", async () => {
-          const btn = document.getElementById('hamper-submit-btn');
-          btn.disabled = true;
-          btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Combo...';
-
-          try {
-            await ensureFirebaseAuth();
-            const nextId = rawProducts.length > 0 ? (Math.max(...rawProducts.map(p => Number(p.id) || 0)) + 1) : 101;
-            const selectedNames = checkedBoxes.map(b => b.getAttribute('data-name')).join(', ');
-
-            const comboProduct = {
-              id: nextId,
-              name: hamperName,
-              department: 'Gift Hampers & Combos',
-              category: 'Combos & Hampers',
-              price: parseFloat(document.getElementById('hamper-price').value) || 0,
-              oldPrice: parseFloat(document.getElementById('hamper-mrp').value) || null,
-              offer: document.getElementById('hamper-tag').value.trim() || 'SPECIAL COMBO',
-              unit: `${checkedBoxes.length} Items Pack`,
-              image: resolveDirectImageUrl(document.getElementById('hamper-img').value.trim()) || 'assets/images/placeholder.jpg',
-              desc: document.getElementById('hamper-desc').value.trim() + `\n\nIncludes: ${selectedNames}`,
-              inStock: true,
-              isCombo: true,
-              comboItemIds: checkedBoxes.map(b => b.value),
-              isDeleted: false
-            };
-
-            await saveProductToFirebase(comboProduct);
-            closeModal('modal-create-hamper');
-            showToast(`Combo Hamper "${comboProduct.name}" created successfully!`, 'success');
-            openActionSuccessModal("Combo Created", `"${comboProduct.name}" has been added to your store.`);
-          } catch (err) {
-            showToast(`Failed to create combo: ${err.message}`, 'error');
-          } finally {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-gift"></i> Create & Publish Combo';
-          }
-        });
-      };
-
-      // Category Order & Photos Sync
-      function syncAndRenderCategoryOrder() {
-        const container = document.getElementById('category-order-list');
-        if (!container) return;
-
-        const catCounts = {};
-        rawProducts.forEach(p => {
-          if (p.category) catCounts[p.category] = (catCounts[p.category] || 0) + 1;
-        });
-        const activeCategories = Object.keys(catCounts);
-
-        let mergedOrder = categoryOrderList.filter(c => activeCategories.includes(c));
-        activeCategories.forEach(c => {
-          if (!mergedOrder.includes(c)) mergedOrder.push(c);
-        });
-        categoryOrderList = mergedOrder;
-
-        if (categoryOrderList.length === 0) {
-          container.innerHTML = `<p style="color: #94a3b8; grid-column: 1 / -1;">No active categories.</p>`;
-          return;
-        }
-
-        let html = '';
-        const total = categoryOrderList.length;
-        categoryOrderList.forEach((cat, index) => {
-          const count = catCounts[cat] || 0;
-          const currentImg = resolveDirectImageUrl(categoryImagesMap[cat] || '');
-
-          let optionsHTML = '';
-          for (let i = 1; i <= total; i++) {
-            optionsHTML += `<option value="${i}" ${i === index + 1 ? 'selected' : ''}>Position ${i}</option>`;
-          }
-
-          html += `
+        html += `
           <div style="background: white; border: 1.5px solid #e9d5ff; padding: 14px 18px; border-radius: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-sm);">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
               <div style="display: flex; align-items: center; gap: 12px;">
@@ -3341,52 +3640,574 @@
             </div>
           </div>
         `;
+      });
+      container.innerHTML = html;
+    }
+
+    window.updateCatImgURL = (catName, url) => {
+      categoryImagesMap[catName] = resolveDirectImageUrl(url);
+    };
+
+    window.changeCategoryRank = (oldIndex, targetPosition) => {
+      const targetIndex = targetPosition - 1;
+      if (targetIndex < 0 || targetIndex >= categoryOrderList.length || oldIndex === targetIndex) return;
+      const item = categoryOrderList.splice(oldIndex, 1)[0];
+      categoryOrderList.splice(targetIndex, 0, item);
+      syncAndRenderCategoryOrder();
+    };
+
+    document.getElementById('save-category-order-btn').onclick = async () => {
+      const btn = document.getElementById('save-category-order-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+      try {
+        await ensureFirebaseAuth();
+        await saveCategoryOrderToFirebase({
+          order: categoryOrderList,
+          images: categoryImagesMap
         });
-        container.innerHTML = html;
+        showToast('Category sequence & images saved successfully!', 'success');
+      } catch (e) {
+        showToast(`Failed to save category order: ${e.message}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Category Sequence';
+      }
+    };
+
+    // ==========================================
+    // PRODUCT ADMIN APPROVALS & STAGING SYSTEM
+    // ==========================================
+    let selectedApprovalIds = new Set();
+
+    function updateApprovalStats() {
+      const pending = productRequests.filter(r => r.status === 'pending');
+      const approved = productRequests.filter(r => r.status === 'approved');
+      const rejected = productRequests.filter(r => r.status === 'rejected');
+
+      const statPending = document.getElementById('stat-approvals-pending');
+      const statApproved = document.getElementById('stat-approvals-approved');
+      const statRejected = document.getElementById('stat-approvals-rejected');
+      const badge = document.getElementById('badge-pending-count');
+
+      if (statPending) statPending.textContent = pending.length;
+      if (statApproved) statApproved.textContent = approved.length;
+      if (statRejected) statRejected.textContent = rejected.length;
+
+      if (badge) {
+        if (pending.length > 0) {
+          badge.style.display = 'inline-block';
+          badge.textContent = pending.length;
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+    }
+
+    function renderApprovalRequestsTable() {
+      const tbody = document.getElementById('approvals-table-body');
+      if (!tbody) return;
+
+      const statusFilter = document.getElementById('approval-status-filter')?.value || 'ALL';
+      const typeFilter = document.getElementById('approval-type-filter')?.value || 'ALL';
+
+      const filtered = productRequests.filter(r => {
+        const matchStatus = statusFilter === 'ALL' || r.status === statusFilter;
+        const matchType = typeFilter === 'ALL' || r.requestType === typeFilter;
+        return matchStatus && matchType;
+      });
+
+      if (!filtered || filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 60px 24px;">
+              <div style="width: 76px; height: 76px; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 2.5px solid #a7f3d0; color: #059669; font-size: 2rem; box-shadow: 0 12px 28px -4px rgba(16, 185, 129, 0.28);">
+                <i class="fa-solid fa-clipboard-check"></i>
+              </div>
+              <h4 style="margin: 0 0 6px 0; font-size: 1.25rem; font-weight: 800; color: #0f172a; font-family: 'Outfit', sans-serif;">All Caught Up! No ${statusFilter === 'ALL' ? 'Pending' : statusFilter.toUpperCase()} Requests</h4>
+              <p style="margin: 0; font-size: 0.88rem; color: #64748b; max-width: 480px; margin: 0 auto; line-height: 1.55;">
+                When Product Admins submit new product additions or propose edits, they will appear here in real time for your review and approval.
+              </p>
+            </td>
+          </tr>
+        `;
+        const bar = document.getElementById('bulk-approvals-bar');
+        if (bar) bar.style.display = 'none';
+        return;
       }
 
-      window.updateCatImgURL = (catName, url) => {
-        categoryImagesMap[catName] = resolveDirectImageUrl(url);
-      };
+      tbody.innerHTML = filtered.map(r => {
+        const prod = r.proposedData || {};
+        const isEdit = r.requestType === 'edit';
+        const isPending = r.status === 'pending';
+        const dateStr = r.submittedAt
+          ? new Date(r.submittedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+          : 'Recently';
 
-      window.changeCategoryRank = (oldIndex, targetPosition) => {
-        const targetIndex = targetPosition - 1;
-        if (targetIndex < 0 || targetIndex >= categoryOrderList.length || oldIndex === targetIndex) return;
-        const item = categoryOrderList.splice(oldIndex, 1)[0];
-        categoryOrderList.splice(targetIndex, 0, item);
-        syncAndRenderCategoryOrder();
-      };
-
-      document.getElementById('save-category-order-btn').onclick = async () => {
-        const btn = document.getElementById('save-category-order-btn');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-        try {
-          await ensureFirebaseAuth();
-          await saveCategoryOrderToFirebase({
-            order: categoryOrderList,
-            images: categoryImagesMap
-          });
-          showToast('Category sequence & images saved successfully!', 'success');
-        } catch (e) {
-          showToast(`Failed to save category order: ${e.message}`, 'error');
-        } finally {
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Category Sequence';
+        let statusBadge = `<span style="background: #fef3c7; color: #b45309; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; display: inline-flex; align-items: center; gap: 5px;"><i class="fa-solid fa-clock"></i> Pending Review</span>`;
+        if (r.status === 'approved') {
+          statusBadge = `<span style="background: #dcfce7; color: #15803d; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; display: inline-flex; align-items: center; gap: 5px;"><i class="fa-solid fa-circle-check"></i> Approved</span>`;
+        } else if (r.status === 'rejected') {
+          statusBadge = `<span style="background: #fee2e2; color: #b91c1c; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; display: inline-flex; align-items: center; gap: 5px;"><i class="fa-solid fa-circle-xmark"></i> Rejected</span>`;
         }
+
+        const checkboxHtml = isPending
+          ? `<input type="checkbox" class="approval-row-check" value="${r.id}" ${selectedApprovalIds.has(r.id) ? 'checked' : ''} onchange="window.handleApprovalCheck('${r.id}', this.checked)">`
+          : `<span style="color: #cbd5e1; font-size: 0.75rem;">&bull;</span>`;
+
+        let actionBtns = '';
+        if (isPending) {
+          actionBtns = `
+            <div style="display: flex; gap: 6px; justify-content: flex-end; align-items: center;">
+              <button type="button" class="btn-quick-action accept" onclick="window.quickApproveRequest('${r.id}')" title="Quick Accept & Publish">
+                <i class="fa-solid fa-check"></i> Accept
+              </button>
+              <button type="button" class="btn-quick-action reject" onclick="window.quickRejectRequest('${r.id}')" title="Quick Reject">
+                <i class="fa-solid fa-xmark"></i> Reject
+              </button>
+              <button type="button" class="btn-quick-action edit" onclick="window.openReviewModal('${r.id}')" title="Edit All Details & Review">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </button>
+            </div>
+          `;
+        } else {
+          actionBtns = `
+            <div style="display: flex; gap: 6px; justify-content: flex-end; align-items: center;">
+              <button type="button" class="btn-quick-action edit" onclick="window.openReviewModal('${r.id}')" title="View Submission Details">
+                <i class="fa-solid fa-eye"></i> View
+              </button>
+            </div>
+          `;
+        }
+
+        return `
+            <tr>
+              <td style="text-align: center; vertical-align: middle;">
+                ${checkboxHtml}
+              </td>
+              <td>
+                ${isEdit
+            ? `<span style="background: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 6px; font-weight: 800; font-size: 0.75rem;"><i class="fa-solid fa-pen"></i> EDIT (#${r.targetProductId})</span>`
+            : `<span style="background: #dcfce7; color: #15803d; padding: 4px 8px; border-radius: 6px; font-weight: 800; font-size: 0.75rem;"><i class="fa-solid fa-plus"></i> NEW PRODUCT</span>`}
+              </td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <img src="${prod.image || 'assets/placeholder.png'}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: #f1f5f9; border: 1px solid var(--admin-border);" onerror="this.src='https://placehold.co/80x80?text=No+Img'">
+                  <div>
+                    <div style="font-weight: 800; color: var(--admin-primary); font-size: 0.9rem;">${prod.name || 'Untitled'}</div>
+                    <div style="font-size: 0.75rem; color: var(--admin-muted);">${prod.category || 'General'} &bull; ₹${prod.price || 0} (${prod.unit || ''})</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span style="font-size: 0.8rem; font-weight: 600; color: #334155;"><i class="fa-regular fa-user" style="color: #64748b; margin-right: 4px;"></i> ${r.submittedByEmail || 'Product Admin'}</span>
+              </td>
+              <td>
+                <span style="font-size: 0.8rem; color: #64748b;">${dateStr}</span>
+              </td>
+              <td>${statusBadge}</td>
+              <td style="text-align: right;">
+                ${actionBtns}
+              </td>
+            </tr>
+          `;
+      }).join('');
+
+      updateApprovalBulkBar();
+    }
+
+    // Checkbox and Bulk Bar Helpers
+    window.handleApprovalCheck = (id, checked) => {
+      if (checked) selectedApprovalIds.add(id);
+      else selectedApprovalIds.delete(id);
+      updateApprovalBulkBar();
+    };
+
+    window.toggleSelectAllApprovals = (checked) => {
+      const pendingReqs = productRequests.filter(r => r.status === 'pending');
+      if (checked) {
+        pendingReqs.forEach(r => selectedApprovalIds.add(r.id));
+      } else {
+        selectedApprovalIds.clear();
+      }
+      renderApprovalRequestsTable();
+    };
+
+    window.deselectAllApprovals = () => {
+      selectedApprovalIds.clear();
+      const selectAll = document.getElementById('select-all-approvals');
+      if (selectAll) selectAll.checked = false;
+      renderApprovalRequestsTable();
+    };
+
+    function updateApprovalBulkBar() {
+      const bar = document.getElementById('bulk-approvals-bar');
+      const countText = document.getElementById('bulk-approvals-count');
+      const count = selectedApprovalIds.size;
+      if (bar) {
+        if (count > 0) {
+          bar.style.display = 'flex';
+          if (countText) countText.textContent = `${count} request${count > 1 ? 's' : ''} selected`;
+        } else {
+          bar.style.display = 'none';
+        }
+      }
+    }
+
+    // Quick One-Click Actions from Outside Table Row
+    window.quickApproveRequest = async (reqId) => {
+      if (!auth.currentUser || !auth.currentUser.email) {
+        openActionConfirmModal(
+          "Super Admin Sign-In Required",
+          "Firebase security rules require an active Super Admin login to modify live products or approve requests. Please sign in with your Super Admin account (lavsharma.it25@gmail.com).",
+          "<i class='fa-solid fa-right-to-bracket'></i> Sign In Now",
+          () => { window.location.href = 'login.html'; }
+        );
+        return;
+      }
+
+      const req = productRequests.find(r => r.id === reqId);
+      if (!req) return;
+
+      try {
+        await ensureFirebaseAuth();
+        showToast(`Approving "${req.proposedData?.name || 'Product'}"...`, 'info');
+        await approveProductRequest(req.id, currentAdminEmail, rawProducts);
+        selectedApprovalIds.delete(reqId);
+        updateApprovalBulkBar();
+        showToast('Product successfully approved and published to live store!', 'success');
+      } catch (err) {
+        showToast(`Approval failed: ${err.message}`, 'error');
+      }
+    };
+
+    window.quickRejectRequest = async (reqId) => {
+      if (!auth.currentUser || !auth.currentUser.email) {
+        openActionConfirmModal(
+          "Super Admin Sign-In Required",
+          "Please sign in with your Super Admin account.",
+          "<i class='fa-solid fa-right-to-bracket'></i> Sign In",
+          () => { window.location.href = 'login.html'; }
+        );
+        return;
+      }
+
+      const remarks = prompt("Enter rejection remarks (optional):", "Rejected by Super Admin");
+      if (remarks === null) return; // User clicked Cancel
+
+      try {
+        await ensureFirebaseAuth();
+        await rejectProductRequest(reqId, remarks, currentAdminEmail);
+        selectedApprovalIds.delete(reqId);
+        updateApprovalBulkBar();
+        showToast('Request rejected successfully.', 'info');
+      } catch (err) {
+        showToast(`Rejection failed: ${err.message}`, 'error');
+      }
+    };
+
+    // Bulk Approve All Selected
+    window.bulkApproveRequests = async () => {
+      if (selectedApprovalIds.size === 0) return;
+      if (!auth.currentUser || !auth.currentUser.email) {
+        openActionConfirmModal(
+          "Super Admin Sign-In Required",
+          "Please sign in with your Super Admin account.",
+          "<i class='fa-solid fa-right-to-bracket'></i> Sign In",
+          () => { window.location.href = 'login.html'; }
+        );
+        return;
+      }
+
+      const ids = Array.from(selectedApprovalIds);
+      openActionConfirmModal(
+        `Approve ${ids.length} Selected Request${ids.length > 1 ? 's' : ''}?`,
+        `This will immediately publish all ${ids.length} selected products to the live store database.`,
+        `<i class="fa-solid fa-check-double"></i> Confirm Bulk Approval`,
+        async () => {
+          try {
+            await ensureFirebaseAuth();
+            showToast(`Publishing ${ids.length} products to store...`, 'info');
+            let successCount = 0;
+            for (const id of ids) {
+              try {
+                await approveProductRequest(id, currentAdminEmail, rawProducts);
+                successCount++;
+              } catch (e) {
+                console.error(`Error approving ${id}:`, e);
+              }
+            }
+            selectedApprovalIds.clear();
+            updateApprovalBulkBar();
+            showToast(`Successfully published ${successCount} items to live store!`, 'success');
+          } catch (err) {
+            showToast(`Bulk approval error: ${err.message}`, 'error');
+          }
+        }
+      );
+    };
+
+    // Bulk Reject All Selected
+    window.bulkRejectRequests = async () => {
+      if (selectedApprovalIds.size === 0) return;
+      if (!auth.currentUser || !auth.currentUser.email) {
+        openActionConfirmModal(
+          "Super Admin Sign-In Required",
+          "Please sign in with your Super Admin account.",
+          "<i class='fa-solid fa-right-to-bracket'></i> Sign In",
+          () => { window.location.href = 'login.html'; }
+        );
+        return;
+      }
+
+      const ids = Array.from(selectedApprovalIds);
+      const remarks = prompt(`Enter rejection remarks for ${ids.length} selected requests:`, "Rejected in batch review by Super Admin");
+      if (remarks === null) return;
+
+      try {
+        await ensureFirebaseAuth();
+        let count = 0;
+        for (const id of ids) {
+          try {
+            await rejectProductRequest(id, remarks, currentAdminEmail);
+            count++;
+          } catch (e) {
+            console.error(`Error rejecting ${id}:`, e);
+          }
+        }
+        selectedApprovalIds.clear();
+        updateApprovalBulkBar();
+        showToast(`Rejected ${count} requests.`, 'info');
+      } catch (err) {
+        showToast(`Bulk reject error: ${err.message}`, 'error');
+      }
+    };
+
+    window.filterApprovalRequests = () => {
+      renderApprovalRequestsTable();
+    };
+
+    // Initial render of approvals UI
+    updateApprovalStats();
+    renderApprovalRequestsTable();
+
+    // Modal with FULL EDITING capabilities for Super Admin
+    window.openReviewModal = (reqId) => {
+      const req = productRequests.find(item => item.id === reqId);
+      if (!req) return;
+
+      activeReviewRequest = req;
+      const isEdit = req.requestType === 'edit';
+      const proposed = req.proposedData || {};
+      const current = req.currentData || rawProducts.find(p => p.id?.toString() === req.targetProductId?.toString()) || {};
+
+      document.getElementById('review-modal-title').innerHTML = isEdit
+        ? `<i class="fa-solid fa-pen-to-square" style="color: #38bdf8;"></i> Review & Edit Product (SKU #${req.targetProductId})`
+        : `<i class="fa-solid fa-plus-circle" style="color: #34d399;"></i> Review & Edit New Product`;
+
+      document.getElementById('review-modal-subtitle').innerHTML = `Request ID: <strong>${req.id}</strong> &bull; Submitted by: <strong>${req.submittedByEmail || 'Product Admin'}</strong>`;
+      document.getElementById('review-remarks-input').value = req.rejectionRemarks || '';
+
+      const container = document.getElementById('review-diff-container');
+      const actionsGroup = document.getElementById('review-actions-group');
+      const statusDisplay = document.getElementById('review-status-display');
+
+      if (req.status === 'pending') {
+        statusDisplay.innerHTML = `<span style="background: #fef3c7; color: #b45309; padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 0.8rem;"><i class="fa-solid fa-clock"></i> Pending Super Admin Decision</span>`;
+        actionsGroup.style.display = 'flex';
+      } else if (req.status === 'approved') {
+        statusDisplay.innerHTML = `<span style="background: #dcfce7; color: #15803d; padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 0.8rem;"><i class="fa-solid fa-check-circle"></i> Approved by ${req.reviewedBy || 'Admin'}</span>`;
+        actionsGroup.style.display = 'none';
+      } else if (req.status === 'rejected') {
+        statusDisplay.innerHTML = `<span style="background: #fee2e2; color: #b91c1c; padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 0.8rem;"><i class="fa-solid fa-times-circle"></i> Rejected by ${req.reviewedBy || 'Admin'}</span>`;
+        actionsGroup.style.display = 'none';
+      }
+
+      // Render Editable Form where Admin can modify every single field before approving
+      container.innerHTML = `
+        ${isEdit ? `
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 12px 16px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+            <span style="font-size: 0.85rem; color: #166534; font-weight: 700;">
+              <i class="fa-solid fa-circle-info"></i> Modifying Live SKU #${req.targetProductId}. You can edit any field below before publishing.
+            </span>
+            <span style="font-size: 0.78rem; background: white; padding: 4px 10px; border-radius: 6px; border: 1px solid #bbf7d0; color: #15803d; font-weight: 800;">Live Name: ${current.name || 'N/A'}</span>
+          </div>
+        ` : `
+          <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 12px 16px; margin-bottom: 18px; font-size: 0.85rem; color: #1e40af; font-weight: 700;">
+            <i class="fa-solid fa-sparkles"></i> New Product Proposal. Modify any field below before publishing to the live store catalog.
+          </div>
+        `}
+
+        <div style="display: grid; grid-template-columns: 220px 1fr; gap: 20px; margin-bottom: 20px;">
+          <div>
+            <label style="font-size: 0.78rem; font-weight: 800; color: #475569; text-transform: uppercase; display: block; margin-bottom: 6px;">Image Preview</label>
+            <div style="width: 100%; height: 180px; background: #f8fafc; border: 1.5px solid var(--admin-border); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 6px;">
+              <img id="review-img-preview" src="${proposed.image || 'assets/placeholder.png'}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px;" onerror="this.src='https://placehold.co/180x180?text=No+Image'">
+            </div>
+            ${isEdit && current.image && current.image !== proposed.image ? `
+              <div style="margin-top: 8px; font-size: 0.72rem; color: #64748b;">
+                <span>Live Image:</span>
+                <img src="${current.image}" style="width: 36px; height: 36px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; vertical-align: middle; margin-left: 6px;">
+              </div>
+            ` : ''}
+          </div>
+
+          <div>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label style="font-size: 0.78rem; font-weight: 800; color: #475569; text-transform: uppercase;">Image URL (Direct / CDN)</label>
+              <input type="url" id="review-edit-image" class="form-control" value="${proposed.image || ''}" placeholder="https://..." oninput="document.getElementById('review-img-preview').src = this.value">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label style="font-size: 0.78rem; font-weight: 800; color: #475569; text-transform: uppercase;">Product Title / Name *</label>
+              <input type="text" id="review-edit-name" class="form-control" value="${proposed.name || ''}" placeholder="e.g. Basmati Rice" style="font-weight: 700; font-size: 1rem;">
+              ${isEdit && current.name && current.name !== proposed.name ? `<small style="color: #64748b; font-size: 0.72rem;">Live was: <em>${current.name}</em></small>` : ''}
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 0.78rem; font-weight: 800; color: #475569; text-transform: uppercase;">Category</label>
+                <input type="text" id="review-edit-category" class="form-control" value="${proposed.category || ''}" placeholder="e.g. Grocery">
+                ${isEdit && current.category && current.category !== proposed.category ? `<small style="color: #64748b; font-size: 0.72rem;">Live was: <em>${current.category}</em></small>` : ''}
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 0.78rem; font-weight: 800; color: #475569; text-transform: uppercase;">Subcategory</label>
+                <input type="text" id="review-edit-subcat" class="form-control" value="${proposed.subCategory || ''}" placeholder="e.g. Grains">
+                ${isEdit && current.subCategory && current.subCategory !== proposed.subCategory ? `<small style="color: #64748b; font-size: 0.72rem;">Live was: <em>${current.subCategory}</em></small>` : ''}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; background: #f8fafc; padding: 16px; border-radius: 12px; border: 1px solid var(--admin-border); margin-bottom: 16px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label style="font-size: 0.78rem; font-weight: 800; color: #059669; text-transform: uppercase;">Selling Price (₹) *</label>
+            <input type="number" step="any" id="review-edit-price" class="form-control" value="${proposed.price || 0}" style="font-weight: 800; color: #059669; font-size: 1.1rem;">
+            ${isEdit && current.price !== undefined && current.price !== proposed.price ? `<small style="color: #64748b; font-size: 0.72rem;">Live: ₹${current.price}</small>` : ''}
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label style="font-size: 0.78rem; font-weight: 800; color: #475569; text-transform: uppercase;">MRP / Old Price (₹)</label>
+            <input type="number" step="any" id="review-edit-oldprice" class="form-control" value="${proposed.oldPrice || ''}" placeholder="Optional">
+            ${isEdit && current.oldPrice !== undefined && current.oldPrice !== proposed.oldPrice ? `<small style="color: #64748b; font-size: 0.72rem;">Live: ₹${current.oldPrice || 'None'}</small>` : ''}
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label style="font-size: 0.78rem; font-weight: 800; color: #475569; text-transform: uppercase;">Unit / Quantity</label>
+            <input type="text" id="review-edit-unit" class="form-control" value="${proposed.unit || '1 pc'}" placeholder="e.g. 250gm, 1kg">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label style="font-size: 0.78rem; font-weight: 800; color: #475569; text-transform: uppercase;">Stock Status</label>
+            <select id="review-edit-stock" class="form-control" style="font-weight: 700;">
+              <option value="true" ${proposed.inStock !== false ? 'selected' : ''}>In Stock</option>
+              <option value="false" ${proposed.inStock === false ? 'selected' : ''}>Out of Stock</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label style="font-size: 0.78rem; font-weight: 800; color: #475569; text-transform: uppercase;">Offer Tag</label>
+            <input type="text" id="review-edit-offer" class="form-control" value="${proposed.offer || ''}" placeholder="e.g. 10% OFF">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label style="font-size: 0.78rem; font-weight: 800; color: #475569; text-transform: uppercase;">Product Description</label>
+          <textarea id="review-edit-desc" class="form-control" rows="3" placeholder="Enter product details, specifications...">${proposed.desc || ''}</textarea>
+        </div>
+      `;
+
+      openModal('modal-review-request');
+    };
+
+    window.handleApproveRequest = async () => {
+      if (!activeReviewRequest) return;
+
+      if (!auth.currentUser || !auth.currentUser.email) {
+        openActionConfirmModal(
+          "Super Admin Sign-In Required",
+          "Firebase security rules require an active Super Admin login to modify live products or approve requests. Please sign in with your Super Admin account (lavsharma.it25@gmail.com).",
+          "<i class='fa-solid fa-right-to-bracket'></i> Sign In Now",
+          () => { window.location.href = 'login.html'; }
+        );
+        return;
+      }
+
+      // Collect any edits made by Super Admin in the review modal
+      const nameInput = document.getElementById('review-edit-name');
+      const editedData = {
+        name: nameInput ? nameInput.value.trim() : (activeReviewRequest.proposedData?.name || ''),
+        category: document.getElementById('review-edit-category') ? document.getElementById('review-edit-category').value.trim() : (activeReviewRequest.proposedData?.category || ''),
+        subCategory: document.getElementById('review-edit-subcat') ? document.getElementById('review-edit-subcat').value.trim() : (activeReviewRequest.proposedData?.subCategory || ''),
+        price: document.getElementById('review-edit-price') ? (parseFloat(document.getElementById('review-edit-price').value) || 0) : (activeReviewRequest.proposedData?.price || 0),
+        oldPrice: document.getElementById('review-edit-oldprice') ? (parseFloat(document.getElementById('review-edit-oldprice').value) || 0) : (activeReviewRequest.proposedData?.oldPrice || 0),
+        unit: document.getElementById('review-edit-unit') ? document.getElementById('review-edit-unit').value.trim() : (activeReviewRequest.proposedData?.unit || ''),
+        inStock: document.getElementById('review-edit-stock') ? (document.getElementById('review-edit-stock').value === 'true') : (activeReviewRequest.proposedData?.inStock !== false),
+        offer: document.getElementById('review-edit-offer') ? document.getElementById('review-edit-offer').value.trim() : (activeReviewRequest.proposedData?.offer || ''),
+        image: document.getElementById('review-edit-image') ? document.getElementById('review-edit-image').value.trim() : (activeReviewRequest.proposedData?.image || ''),
+        desc: document.getElementById('review-edit-desc') ? document.getElementById('review-edit-desc').value.trim() : (activeReviewRequest.proposedData?.desc || '')
       };
 
-      // Logout
-      document.getElementById('logout-btn').onclick = async () => {
-        sessionStorage.removeItem('admin_authenticated');
-        sessionStorage.removeItem('admin_user_email');
-        try {
-          await signOut(auth);
-        } catch (e) {
-          console.warn('SignOut note:', e);
+      const btn = document.getElementById('btn-approve-request');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Approving...';
+
+      try {
+        await ensureFirebaseAuth();
+        await approveProductRequest(activeReviewRequest.id, currentAdminEmail, rawProducts, editedData);
+        closeModal('modal-review-request');
+        selectedApprovalIds.delete(activeReviewRequest.id);
+        updateApprovalBulkBar();
+        showToast('Product successfully approved and published to live store!', 'success');
+        openActionSuccessModal("Request Approved", "The product information has been safely committed to the live products registry with your modifications.");
+      } catch (err) {
+        showToast(`Approval failed: ${err.message}`, 'error');
+        if (err.message && err.message.toLowerCase().includes('permission')) {
+          openActionConfirmModal(
+            "Insufficient Permissions",
+            "Firebase rejected the write operation. Please ensure you are logged into Firebase with an authorized Super Admin account (lavsharma.it25@gmail.com).",
+            "<i class='fa-solid fa-right-to-bracket'></i> Go to Login",
+            () => { window.location.href = 'login.html'; }
+          );
         }
-        window.location.href = 'login.html';
-      };
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Approve & Publish to Store';
+      }
+    };
+
+    window.handleRejectRequest = async () => {
+      if (!activeReviewRequest) return;
+      const remarks = document.getElementById('review-remarks-input').value.trim();
+      const btn = document.getElementById('btn-reject-request');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Rejecting...';
+
+      try {
+        await ensureFirebaseAuth();
+        await rejectProductRequest(activeReviewRequest.id, remarks, currentAdminEmail);
+        closeModal('modal-review-request');
+        showToast('Request has been marked as Rejected.', 'warning');
+      } catch (err) {
+        showToast(`Rejection failed: ${err.message}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-ban"></i> Reject Request';
+      }
+    };
+
+    // Logout
+    document.getElementById('logout-btn').onclick = async () => {
+      sessionStorage.removeItem('admin_authenticated');
+      sessionStorage.removeItem('admin_user_email');
+      try {
+        await signOut(auth);
+      } catch (e) {
+        console.warn('SignOut note:', e);
+      }
+      window.location.href = 'login.html';
+    };
   </script>
 </body>
 

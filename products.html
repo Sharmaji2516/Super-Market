@@ -292,6 +292,53 @@
     </div>
   </div>
 
+  <!-- Luxury Sticky Bottom Quick Action Bar (Visitchittorgarh App Dock Style) -->
+  <aside class="store-bottom-action-bar" id="storeBottomBar" aria-label="Quick Actions">
+    <div class="bottom-action-container">
+      <a href="tel:+917014974762" class="bottom-action-btn btn-call" title="Call Store">
+        <i class="fa-solid fa-phone"></i>
+        <span>Call Store</span>
+      </a>
+      <a href="https://www.google.com/maps/search/?api=1&query=29+Rajive+Colony+Meera+Market+Chittorgarh" target="_blank" class="bottom-action-btn btn-call" title="Get Directions">
+        <i class="fa-solid fa-diamond-turn-right" style="color: #ef4444;"></i>
+        <span>Directions</span>
+      </a>
+      <button type="button" class="bottom-action-btn btn-catalog" onclick="window.toggleShoppingListDrawer()" title="View In-Store Shopping List">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <span>My List (<strong id="barParchiCount">0</strong>)</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Smart In-Store Shopping List (Digital Parchi) Drawer -->
+  <div id="shoppingListDrawer" class="shopping-list-drawer">
+    <div class="drawer-header-parchi">
+      <h3><i class="fa-solid fa-basket-shopping"></i> In-Store Shopping List</h3>
+      <button type="button" class="btn-drawer-close" onclick="window.toggleShoppingListDrawer()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="parchi-hint-bar">
+      <i class="fa-solid fa-circle-check"></i>
+      <span>Tick items while picking inside store or share via WhatsApp!</span>
+    </div>
+    <div id="parchiItemsContainer" class="parchi-items-list">
+      <!-- Injected by app.js -->
+    </div>
+    <div class="drawer-footer-parchi">
+      <div class="parchi-total-bar">
+        <span class="parchi-total-label">Estimated Bill (<span id="parchiTotalCount">0</span> items):</span>
+        <span class="parchi-total-val" id="parchiEstimatedTotal">₹0</span>
+      </div>
+      <div class="parchi-actions-grid">
+        <button type="button" class="btn-parchi-whatsapp" onclick="window.sendListToWhatsApp()">
+          <i class="fa-brands fa-whatsapp"></i> Send on WhatsApp
+        </button>
+        <button type="button" class="btn-parchi-clear" onclick="window.clearShoppingList()" title="Clear List">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="app.js?v=1.3.4"></script>
 </body>
 </html>

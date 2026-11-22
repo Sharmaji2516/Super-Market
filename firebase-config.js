@@ -191,3 +191,227 @@ export function listenForCategoryOrder(callback) {
 
 export { auth, db, storage, ref, uploadBytes, getDownloadURL };
 
+// --- ROLE-BASED ACCESS & APPROVAL WORKFLOW HELPERS ---
+
+const SUPER_ADMIN_WHITELIST = [
+  'lavsharma.it25@gmail.com',
+  'business@chittortech.in',
+  'admin@orient.com',
+  'contact@chittortech.in'
+];
+
+const PRODUCT_ADMIN_WHITELIST = [
+  'sonisupermarket@chittortech.in'
+];
+
+export async function getUserRole(uid, email) {
+  const normEmail = (email || '').trim().toLowerCase();
+  if (SUPER_ADMIN_WHITELIST.includes(normEmail)) {
+    return 'super_admin';
+  }
+  if (PRODUCT_ADMIN_WHITELIST.includes(normEmail)) {
+    return 'product_admin';
+  }
+
+  try {
+    // 1. Check by UID
+    if (uid) {
+      const uidRef = doc(db, "admin_roles", uid);
+      const uidSnap = await getDoc(uidRef);
+      if (uidSnap.exists() && uidSnap.data().role) {
+        return uidSnap.data().role;
+      }
+    }
+
+    // 2. Check by sanitized email key
+    if (normEmail) {
+      const emailKey = normEmail.replace(/[@.]/g, '_');
+      const emailRef = doc(db, "admin_roles", emailKey);
+      const emailSnap = await getDoc(emailRef);
+      if (emailSnap.exists() && emailSnap.data().role) {
+        return emailSnap.data().role;
+      }
+    }
+  } catch (err) {
+    console.warn("Could not fetch user role from Firestore:", err);
+  }
+
+  return null;
+}
+
+export async function setAdminUserRole(key, roleData) {
+  try {
+    const docRef = doc(db, "admin_roles", key);
+    await setDoc(docRef, {
+      ...roleData,
+      updatedAt: Date.now()
+    }, { merge: true });
+    return true;
+  } catch (err) {
+    console.error("Failed to set user role:", err);
+    throw err;
+  }
+}
+
+export async function submitProductRequest(requestData) {
+  try {
+    const reqId = 'req_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+    const docRef = doc(db, "product_requests", reqId);
+    const payload = {
+      id: reqId,
+      status: 'pending',
+      submittedAt: Date.now(),
+      reviewedBy: null,
+      reviewedAt: null,
+      rejectionRemarks: '',
+      ...requestData
+    };
+    await setDoc(docRef, payload);
+    return reqId;
+  } catch (err) {
+    console.error("Failed to submit product request:", err);
+    throw err;
+  }
+}
+
+export async function getProductRequestsFromFirebase() {
+  try {
+    const res = await fetch("https://firestore.googleapis.com/v1/projects/sonisonsproject/databases/(default)/documents/product_requests?pageSize=100");
+    const data = await res.json();
+    if (data && data.documents && Array.isArray(data.documents)) {
+      const parseField = (valObj) => {
+        if (!valObj) return undefined;
+        if (valObj.stringValue !== undefined) return valObj.stringValue;
+        if (valObj.integerValue !== undefined) return Number(valObj.integerValue);
+        if (valObj.doubleValue !== undefined) return Number(valObj.doubleValue);
+        if (valObj.booleanValue !== undefined) return valObj.booleanValue;
+        if (valObj.arrayValue !== undefined) return (valObj.arrayValue.values || []).map(v => parseField(v));
+        if (valObj.mapValue !== undefined) {
+          const m = {};
+          const sub = valObj.mapValue.fields || {};
+          Object.keys(sub).forEach(k => { m[k] = parseField(sub[k]); });
+          return m;
+        }
+        return undefined;
+      };
+
+      const reqs = data.documents.map(doc => {
+        const id = doc.name.split('/').pop();
+        const fields = doc.fields || {};
+        const parsed = { id };
+        Object.keys(fields).forEach(k => { parsed[k] = parseField(fields[k]); });
+        return parsed;
+      });
+
+      reqs.sort((a, b) => (b.submittedAt || 0) - (a.submittedAt || 0));
+      return reqs;
+    }
+  } catch (err) {
+    console.warn("REST requests fetch notice:", err);
+  }
+  return [];
+}
+
+export function listenForProductRequests(callback) {
+  // 1. Immediate REST fetch for instant (<150ms) loading
+  getProductRequestsFromFirebase().then(reqs => {
+    if (reqs && reqs.length > 0) {
+      callback(reqs);
+    }
+  }).catch(console.warn);
+
+  // 2. Real-time snapshot listener
+  try {
+    const reqsRef = collection(db, "product_requests");
+    return onSnapshot(reqsRef, (snapshot) => {
+      const requests = [];
+      snapshot.forEach(docSnap => {
+        requests.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      // Sort newest first
+      requests.sort((a, b) => (b.submittedAt || 0) - (a.submittedAt || 0));
+      callback(requests);
+    }, async (error) => {
+      console.warn("Product requests snapshot listener fallback:", error);
+      const fallbackReqs = await getProductRequestsFromFirebase();
+      if (fallbackReqs && fallbackReqs.length > 0) {
+        callback(fallbackReqs);
+      }
+    });
+  } catch (err) {
+    console.error("Failed to attach requests listener:", err);
+  }
+}
+
+export async function approveProductRequest(requestId, reviewerEmail, allExistingProducts = [], overrideProposedData = null) {
+  try {
+    const reqRef = doc(db, "product_requests", requestId);
+    const reqSnap = await getDoc(reqRef);
+    if (!reqSnap.exists()) {
+      throw new Error("Request not found");
+    }
+
+    const reqData = reqSnap.data();
+    if (reqData.status === 'approved') {
+      throw new Error("This request is already approved.");
+    }
+
+    const proposed = overrideProposedData || reqData.proposedData || {};
+    let productToSave = {};
+
+    if (reqData.requestType === 'add') {
+      let nextId = proposed.id;
+      if (!nextId) {
+        nextId = allExistingProducts.length > 0 
+          ? (Math.max(...allExistingProducts.map(p => Number(p.id) || 0)) + 1) 
+          : 101;
+      }
+      productToSave = {
+        ...proposed,
+        id: nextId,
+        isDeleted: false
+      };
+      await saveProductToFirebase(productToSave);
+    } else if (reqData.requestType === 'edit') {
+      const targetId = reqData.targetProductId;
+      if (!targetId) throw new Error("Target product ID missing in edit request");
+      productToSave = {
+        ...proposed,
+        id: isNaN(targetId) ? targetId : Number(targetId),
+        isDeleted: false
+      };
+      await saveProductToFirebase(productToSave);
+    }
+
+    // Mark request as approved with final reviewed data
+    await updateDoc(reqRef, {
+      status: 'approved',
+      proposedData: productToSave,
+      reviewedBy: reviewerEmail || 'Super Admin',
+      reviewedAt: Date.now()
+    });
+
+    return true;
+  } catch (err) {
+    console.error("Approval error:", err);
+    throw err;
+  }
+}
+
+export async function rejectProductRequest(requestId, remarks, reviewerEmail) {
+  try {
+    const reqRef = doc(db, "product_requests", requestId);
+    await updateDoc(reqRef, {
+      status: 'rejected',
+      rejectionRemarks: remarks || 'Rejected by Super Admin',
+      reviewedBy: reviewerEmail || 'Super Admin',
+      reviewedAt: Date.now()
+    });
+    return true;
+  } catch (err) {
+    console.error("Rejection error:", err);
+    throw err;
+  }
+}
+
+
