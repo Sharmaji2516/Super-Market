@@ -26,12 +26,13 @@ service cloud.firestore {
       );
     }
 
-    // Product Admin check (Includes SoniSuperMarket@chittortech.in)
+    // Product Admin check (Includes SoniSuperMarket@chittortech.in & active staff from approval_admins)
     function isProductAdmin() {
       return isAuthenticated() && (
         getRole() == 'product_admin' ||
         getRole() == 'super_admin' ||
         isSuperAdmin() ||
+        isApprovalAdmin() ||
         request.auth.token.email in [
           'sonisupermarket@chittortech.in',
           'SoniSuperMarket@chittortech.in'

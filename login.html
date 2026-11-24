@@ -763,9 +763,7 @@
         sessionStorage.setItem('admin_user_uid', user.uid);
         sessionStorage.setItem('admin_user_role', role || 'super_admin');
 
-        if (role === 'approval_admin') {
-          window.location.href = 'approval-portal.html';
-        } else if (role === 'product_admin') {
+        if (role === 'approval_admin' || role === 'product_admin') {
           window.location.href = 'product-admin.html';
         } else {
           window.location.href = 'admin.html';

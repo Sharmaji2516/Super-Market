@@ -1885,15 +1885,15 @@
               </span>
             </div>
             <h3 style="margin: 0; font-size: 1.25rem; font-weight: 900; color: #0f172a; font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 10px;">
-              <i class="fa-solid fa-users-gear" style="color: #0284c7;"></i> Product Approval Team (Email-Based Access)
+              <i class="fa-solid fa-users-gear" style="color: #0284c7;"></i> Product Entry Team (Email-Based Access)
             </h3>
             <p style="margin: 4px 0 0; color: #64748b; font-size: 0.85rem;">
-              Manage up to 5 email credentials for Product Approval. Toggle <strong>ON / OFF</strong> to grant or revoke their access instantly with 1-click.
+              Manage up to 5 email credentials for Product Entry Staff. Toggle <strong>ON / OFF</strong> to grant or revoke their access instantly with 1-click.
             </p>
           </div>
           <div>
             <button type="button" class="btn btn-primary" onclick="window.openAddApprovalAdminModal()" style="padding: 10px 18px; font-size: 0.85rem; font-weight: 800; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0284c7, #0369a1); border: none; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); color: white; cursor: pointer;">
-              <i class="fa-solid fa-user-plus"></i> Add Reviewer Account
+              <i class="fa-solid fa-user-plus"></i> Add Product Staff
             </button>
           </div>
         </div>
@@ -2049,9 +2049,9 @@
             <i class="fa-solid fa-user-shield"></i>
           </div>
           <div>
-            <h3 style="color: white; margin: 0; font-size: 1.08rem; font-weight: 800; font-family: 'Outfit', sans-serif;" id="approval-admin-modal-title">Add Reviewer Account</h3>
+            <h3 style="color: white; margin: 0; font-size: 1.08rem; font-weight: 800; font-family: 'Outfit', sans-serif;" id="approval-admin-modal-title">Add Product Staff Account</h3>
             <p style="margin: 2px 0 0; font-size: 0.74rem; color: #94a3b8;">
-              Configure email credentials for Product Approval
+              Configure email credentials for staff to Add & Propose Products
             </p>
           </div>
         </div>
@@ -2114,7 +2114,7 @@
           <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 9px 12px; display: flex; align-items: center; gap: 10px;">
             <i class="fa-solid fa-shield-halved" style="color: #059669; font-size: 0.95rem; flex-shrink: 0;"></i>
             <span style="font-size: 0.75rem; color: #166534; line-height: 1.4;">
-              <strong>Restricted Access:</strong> User can only review, approve, or reject product requests. Main admin features stay locked.
+              <strong>Restricted Access:</strong> Staff can add products and propose price/stock edits. Super Admin approves all changes before they go live on the store.
             </span>
           </div>
 
@@ -2126,7 +2126,7 @@
             Cancel
           </button>
           <button type="submit" id="btn-save-approval-admin" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; border: none; padding: 8px 22px; border-radius: 10px; font-size: 0.84rem; font-weight: 800; cursor: pointer; transition: 0.15s; height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35); white-space: nowrap;">
-            <i class="fa-solid fa-check"></i> Save Reviewer
+            <i class="fa-solid fa-check"></i> Save Account
           </button>
         </div>
       </form>
@@ -2724,7 +2724,7 @@
 
   <!-- Firebase & Admin Application Logic -->
   <script type="module">
-    import { auth, ensureFirebaseAuth, getProductsFromFirebase, getProductRequestsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, saveCategoryOrderToFirebase, listenForCategoryOrder, storage, ref, uploadBytes, getDownloadURL, listenForProductRequests, approveProductRequest, rejectProductRequest, setAdminUserRole, listenForApprovalAdmins, saveApprovalAdmin, toggleApprovalAdminStatus, deleteApprovalAdmin, sendAdminPasswordReset, getUserRole } from './firebase-config.js?v=1.4.1';
+    import { auth, ensureFirebaseAuth, getProductsFromFirebase, getProductRequestsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, saveCategoryOrderToFirebase, listenForCategoryOrder, storage, ref, uploadBytes, getDownloadURL, listenForProductRequests, approveProductRequest, rejectProductRequest, setAdminUserRole, listenForApprovalAdmins, saveApprovalAdmin, toggleApprovalAdminStatus, deleteApprovalAdmin, sendAdminPasswordReset, getUserRole, createApprovalAdminAuthUser } from './firebase-config.js?v=1.4.1';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     let rawProducts = [];
@@ -4366,12 +4366,12 @@
             <div style="width: 52px; height: 52px; background: #e0f2fe; color: #0284c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 12px;">
               <i class="fa-solid fa-user-plus"></i>
             </div>
-            <h4 style="margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 800; color: #0f172a;">No Reviewer Accounts Added Yet</h4>
+            <h4 style="margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 800; color: #0f172a;">No Staff Accounts Added Yet</h4>
             <p style="margin: 0 0 16px 0; font-size: 0.85rem; color: #64748b; max-width: 440px; margin: 0 auto 16px;">
-              You can create up to 5 email credentials for team members who will handle Product Approval without accessing the rest of Super Admin.
+              You can create up to 5 email credentials for team members who will add and update products without accessing the rest of Super Admin.
             </p>
             <button type="button" class="btn btn-primary" onclick="window.openAddApprovalAdminModal()" style="font-size: 0.82rem; padding: 8px 16px; border-radius: 8px; background: #0284c7; border: none; color: white; cursor: pointer;">
-              <i class="fa-solid fa-plus"></i> Add First Reviewer
+              <i class="fa-solid fa-plus"></i> Add First Staff Account
             </button>
           </div>
         `;
@@ -4397,7 +4397,7 @@
                 </div>
                 <div>
                   <h4 style="margin: 0; font-size: 0.98rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 6px;">
-                    ${adm.name || 'Reviewer'}
+                    ${adm.name || 'Product Staff'}
                     <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${isActive ? '#10b981' : '#ef4444'};"></span>
                   </h4>
                   <div style="font-size: 0.76rem; color: #64748b; word-break: break-all;">${adm.email}</div>
@@ -4405,7 +4405,7 @@
               </div>
 
               <span style="font-size: 0.65rem; font-weight: 800; padding: 3px 8px; border-radius: 12px; background: #eff6ff; color: #0284c7; text-transform: uppercase;">
-                Reviewer #${idx + 1}
+                Staff #${idx + 1}
               </span>
             </div>
 
@@ -4416,7 +4416,7 @@
                   ${isActive ? '🟢 ACCESS ENABLED (ON)' : '🔴 ACCESS DISABLED (OFF)'}
                 </span>
                 <span style="font-size: 0.68rem; color: ${isActive ? '#166534' : '#991b1b'};">
-                  ${isActive ? 'User can log in & approve products' : 'Immediate login & session lock'}
+                  ${isActive ? 'User can log in & add/edit products' : 'Immediate login & session lock'}
                 </span>
               </div>
               <label class="switch-toggle" title="Click to toggle access ON / OFF">
@@ -4548,8 +4548,22 @@
           passwordHint: hint,
           isActive: isActive
         });
+
+        // If password hint is provided (min 6 chars), attempt creating Firebase Auth login credentials in background
+        let noteMsg = '';
+        if (hint && hint.length >= 6) {
+          try {
+            const authRes = await createApprovalAdminAuthUser(email, hint);
+            if (authRes.alreadyExists) {
+              noteMsg = ' (Note: Email already exists in Firebase Auth)';
+            }
+          } catch (authErr) {
+            console.warn("Could not auto-create auth user:", authErr);
+          }
+        }
+
         closeModal('modal-approval-admin');
-        showToast(`Reviewer account "${email}" saved successfully!`, 'success');
+        showToast(`Reviewer account "${email}" saved!${noteMsg}`, 'success');
       } catch (err) {
         showToast(`Failed to save reviewer: ${err.message}`, 'error');
       } finally {

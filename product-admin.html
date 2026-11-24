@@ -951,8 +951,8 @@
           <p>Search active catalog items, propose edits, or submit new products for Super Admin review.</p>
         </div>
         <div class="registry-actions">
-          <button class="btn-action-primary" onclick="openAddRequestModal()">
-            <i class="fa-solid fa-plus-circle"></i> Propose New Product
+          <button class="btn-action-primary" onclick="openAddRequestModal()" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 0.95rem; padding: 12px 22px; border-radius: 12px; background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);">
+            <i class="fa-solid fa-plus-circle"></i> + Add New Product
           </button>
         </div>
       </div>
@@ -1214,7 +1214,7 @@
 
   <!-- Application Logic -->
   <script type="module">
-    import { auth, ensureFirebaseAuth, getProductsFromFirebase, listenForProducts, submitProductRequest, listenForProductRequests, getUserRole } from './firebase-config.js?v=1.4.1';
+    import { auth, ensureFirebaseAuth, getProductsFromFirebase, listenForProducts, submitProductRequest, listenForProductRequests, getUserRole, listenToUserStatus } from './firebase-config.js?v=1.4.1';
     import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     let rawProducts = [];
@@ -1288,9 +1288,15 @@
           window.location.href = 'login.html';
           return;
         }
+
+        // Live real-time listener: If Super Admin turns access OFF, log out immediately
         if (role === 'approval_admin') {
-          window.location.href = 'approval-portal.html';
-          return;
+          listenToUserStatus(currentUserEmail, async (reason) => {
+            alert(reason || 'Your access has been turned OFF by the Super Admin.');
+            try { await signOut(auth); } catch (e) {}
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+          });
         }
       } else {
         const isAuth = sessionStorage.getItem('admin_authenticated');
