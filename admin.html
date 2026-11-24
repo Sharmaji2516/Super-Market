@@ -2796,9 +2796,6 @@
     };
 
     // Auto-init and listeners
-    sessionStorage.setItem('admin_authenticated', 'true');
-    localStorage.setItem('admin_authenticated', 'true');
-
     async function initDataListeners() {
       try {
         await ensureFirebaseAuth();
@@ -2909,6 +2906,12 @@
           userPill.style.display = 'inline-flex';
           userPill.innerHTML = `<a href="login.html" style="color: #fca5a5; text-decoration: none; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-triangle-exclamation"></i> Sign In</a>`;
         }
+        // Redirect to login if user is not authenticated on this domain
+        setTimeout(() => {
+          if (!auth.currentUser || !auth.currentUser.email) {
+            window.location.href = 'login.html';
+          }
+        }, 1200);
       }
     });
 
