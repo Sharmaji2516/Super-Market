@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Product Approval Portal | CHITTORGARH HUB</title>
+  <link rel="stylesheet" href="style.css?v=1.4.1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --admin-bg: #f8fafc;
+      --admin-card: #ffffff;
+      --admin-border: #e2e8f0;
+      --admin-primary: #0f172a;
+      --admin-accent: #0284c7;
+      --admin-text: #1e293b;
+      --admin-muted: #64748b;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+    }
+
+    body {
+      background-color: var(--admin-bg);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      color: var(--admin-text);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .portal-navbar {
+      background: #0f172a;
+      color: white;
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+      border-bottom: 2px solid #0284c7;
+    }
+
+    .portal-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .portal-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.3), rgba(3, 105, 161, 0.8));
+      border: 1.5px solid #38bdf8;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #38bdf8;
+      font-size: 1.25rem;
+    }
+
+    .portal-brand-text h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+
+    .portal-brand-text span {
+      color: #38bdf8;
+    }
+
+    .portal-badge {
+      background: #0369a1;
+      color: #e0f2fe;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: 10px;
+    }
+
+    .portal-user-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .user-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 30px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+    }
+
+    .live-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .btn-logout {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-logout:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
+
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .governance-header {
+      background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 50%, #f8fafc 100%);
+      border: 1.5px solid var(--admin-border);
+      border-left: 6px solid #0284c7;
+      border-radius: 20px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1.5px solid var(--admin-border);
+      border-radius: 18px;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-card.amber { border-color: #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffdf5 100%); }
+    .stat-card.green { border-color: #bbf7d0; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%); }
+    .stat-card.red { border-color: #fecaca; background: linear-gradient(180deg, #ffffff 0%, #fef2f2 100%); }
+
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 900;
+      font-family: 'Outfit', sans-serif;
+      line-height: 1;
+      margin-top: 6px;
+    }
+
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .requests-table-container {
+      background: white;
+      border: 1.5px solid var(--admin-border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .requests-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .requests-table th {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 14px 18px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 800;
+    }
+
+    .requests-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--admin-border);
+      font-size: 0.88rem;
+      vertical-align: middle;
+    }
+
+    .requests-table tr:hover {
+      background: #f8fafc;
+    }
+
+    .badge-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .badge-pending { background: #fef3c7; color: #b45309; }
+    .badge-approved { background: #dcfce7; color: #15803d; }
+    .badge-rejected { background: #fee2e2; color: #b91c1c; }
+
+    .btn-action {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      transition: 0.2s;
+    }
+
+    .btn-approve { background: #10b981; color: white; }
+    .btn-approve:hover { background: #059669; }
+
+    .btn-reject { background: #ef4444; color: white; }
+    .btn-reject:hover { background: #dc2626; }
+
+    .btn-review { background: #0284c7; color: white; }
+    .btn-review:hover { background: #0369a1; }
+
+    /* Modal Styles */
+    .admin-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 20px;
+    }
+
+    .admin-modal-overlay.active {
+      display: flex;
+    }
+
+    .admin-modal {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast-card {
+      background: #0f172a;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      border-left: 4px solid #10b981;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Navbar -->
+  <header class="portal-navbar">
+    <a href="#" class="portal-brand">
+      <div class="portal-logo-icon">
+        <i class="fa-solid fa-clipboard-check"></i>
+      </div>
+      <div class="portal-brand-text">
+        <h2>CHITTORGARH<span>HUB</span></h2>
+      </div>
+      <span class="portal-badge"><i class="fa-solid fa-shield-halved"></i> Product Governance Portal</span>
+    </a>
+
+    <div class="portal-user-info">
+      <div class="user-pill">
+        <span class="live-status-dot"></span>
+        <span id="user-display-email">Reviewer</span>
+      </div>
+      <button type="button" class="btn-logout" id="portal-logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container">
+
+    <!-- Header Card -->
+    <div class="governance-header">
+      <div>
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="background: #e0f2fe; color: #0284c7; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase;">
+            Quality Assurance & Staging Hub
+          </span>
+          <span style="font-size: 0.75rem; color: #64748b; font-weight: 700;">
+            <i class="fa-solid fa-lock"></i> Restricted Approval Access Only
+          </span>
+        </div>
+        <h1 style="margin: 0 0 6px; font-size: 1.5rem; font-weight: 900; color: #0f172a; font-family: 'Outfit', sans-serif;">
+          Product Requests Review Hub
+        </h1>
+        <p style="margin: 0; color: #64748b; font-size: 0.88rem;">
+          Inspect incoming product additions and proposed price/stock updates. Approving publishes them directly to the live store catalogue.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <select id="portal-status-filter" onchange="window.filterRequests()" style="padding: 10px 16px; border-radius: 12px; border: 1.5px solid #cbd5e1; font-weight: 700; font-size: 0.85rem; background: white; outline: none;">
+          <option value="ALL">All Statuses</option>
+          <option value="pending" selected>Pending Review Only</option>
+          <option value="approved">Approved & Published</option>
+          <option value="rejected">Rejected Requests</option>
+        </select>
+        <select id="portal-type-filter" onchange="window.filterRequests()" style="padding: 10px 16px; border-radius: 12px; border: 1.5px solid #cbd5e1; font-weight: 700; font-size: 0.85rem; background: white; outline: none;">
+          <option value="ALL">All Request Types</option>
+          <option value="add">New Products Only</option>
+          <option value="edit">Product Edits Only</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-row">
+      <div class="stat-card amber">
+        <div>
+          <span style="font-size: 0.82rem; font-weight: 800; color: #b45309; text-transform: uppercase;">Pending Decisions</span>
+          <div class="stat-num" id="stat-pending" style="color: #d97706;">0</div>
+        </div>
+        <div class="stat-icon" style="background: #fffbeb; color: #d97706; border: 1px solid #fde68a;">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </div>
+      </div>
+
+      <div class="stat-card green">
+        <div>
+          <span style="font-size: 0.82rem; font-weight: 800; color: #15803d; text-transform: uppercase;">Approved & Live</span>
+          <div class="stat-num" id="stat-approved" style="color: #059669;">0</div>
+        </div>
+        <div class="stat-icon" style="background: #f0fdf4; color: #059669; border: 1px solid #bbf7d0;">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+      </div>
+
+      <div class="stat-card red">
+        <div>
+          <span style="font-size: 0.82rem; font-weight: 800; color: #b91c1c; text-transform: uppercase;">Rejected Submissions</span>
+          <div class="stat-num" id="stat-rejected" style="color: #e11d48;">0</div>
+        </div>
+        <div class="stat-icon" style="background: #fef2f2; color: #e11d48; border: 1px solid #fecaca;">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Requests Table -->
+    <div class="requests-table-container">
+      <table class="requests-table">
+        <thead>
+          <tr>
+            <th style="width: 140px;">Type</th>
+            <th>Product Details</th>
+            <th>Proposed Pricing / Stock</th>
+            <th>Submitted By</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th style="text-align: right; width: 230px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="portal-requests-table-body">
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 50px 20px; color: #64748b;">
+              <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.8rem; color: #0284c7; margin-bottom: 12px; display: block;"></i>
+              Loading Product Requests...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- Review & Diff Modal -->
+  <div id="portal-review-modal" class="admin-modal-overlay">
+    <div class="admin-modal">
+      <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800;" id="modal-req-title">Review Product</h3>
+          <p id="modal-req-subtitle" style="margin: 4px 0 0; font-size: 0.78rem; color: #94a3b8;"></p>
+        </div>
+        <button type="button" onclick="window.closeReviewModal()" style="background: none; border: none; color: #94a3b8; font-size: 1.2rem; cursor: pointer;">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div style="padding: 24px; overflow-y: auto; max-height: 65vh;" id="modal-diff-body"></div>
+
+      <div style="padding: 16px 24px; background: #f8fafc; border-top: 1px solid var(--admin-border); display: flex; justify-content: space-between; align-items: center;">
+        <span id="modal-status-badge"></span>
+        <div style="display: flex; gap: 10px;" id="modal-actions-bar">
+          <button type="button" class="btn-action btn-reject" onclick="window.handleModalReject()">
+            <i class="fa-solid fa-xmark"></i> Reject Request
+          </button>
+          <button type="button" class="btn-action btn-approve" onclick="window.handleModalApprove()">
+            <i class="fa-solid fa-check"></i> Approve & Publish to Store
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="portal-toast-container"></div>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { 
+      auth, 
+      ensureFirebaseAuth, 
+      listenForProductRequests, 
+      approveProductRequest, 
+      rejectProductRequest, 
+      getProductsFromFirebase, 
+      listenToUserStatus,
+      getUserRole 
+    } from './firebase-config.js?v=1.4.1';
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    let requestsList = [];
+    let liveProducts = [];
+    let currentReviewReq = null;
+    let currentUserEmail = sessionStorage.getItem('admin_user_email') || '';
+
+    // Toast helper
+    window.showToast = (msg, type = 'success') => {
+      const c = document.getElementById('portal-toast-container');
+      if (!c) return;
+      const t = document.createElement('div');
+      t.className = 'toast-card';
+      if (type === 'error') t.style.borderLeftColor = '#ef4444';
+      if (type === 'warning') t.style.borderLeftColor = '#f59e0b';
+      t.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-circle-xmark' : type === 'warning' ? 'fa-triangle-exclamation' : 'fa-circle-check'}"></i> <span>${msg}</span>`;
+      c.appendChild(t);
+      setTimeout(() => t.remove(), 3500);
+    };
+
+    // Session Security Guard & Auth Check
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      currentUserEmail = user.email || sessionStorage.getItem('admin_user_email') || '';
+      document.getElementById('user-display-email').textContent = currentUserEmail;
+
+      // Verify Role & Status
+      const role = await getUserRole(user.uid, currentUserEmail);
+      if (role === 'disabled') {
+        alert("Your approval access has been turned OFF by the Super Admin.");
+        await signOut(auth);
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+        return;
+      }
+
+      if (role !== 'approval_admin' && role !== 'super_admin') {
+        alert("Unauthorized access. You do not have permissions for this portal.");
+        await signOut(auth);
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Attach Live Kill-Switch Listener
+      listenToUserStatus(currentUserEmail, async (reason) => {
+        alert(reason);
+        await signOut(auth);
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+      });
+
+      // Load Live Products for SKU mapping
+      getProductsFromFirebase().then(prods => {
+        liveProducts = prods || [];
+      }).catch(console.warn);
+
+      // Start Real-time Requests Listener
+      listenForProductRequests((reqs) => {
+        requestsList = reqs || [];
+        updateStats();
+        renderTable();
+      });
+    });
+
+    function updateStats() {
+      const pending = requestsList.filter(r => r.status === 'pending').length;
+      const approved = requestsList.filter(r => r.status === 'approved').length;
+      const rejected = requestsList.filter(r => r.status === 'rejected').length;
+
+      document.getElementById('stat-pending').textContent = pending;
+      document.getElementById('stat-approved').textContent = approved;
+      document.getElementById('stat-rejected').textContent = rejected;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('portal-requests-table-body');
+      const statusFilter = document.getElementById('portal-status-filter').value;
+      const typeFilter = document.getElementById('portal-type-filter').value;
+
+      const filtered = requestsList.filter(r => {
+        if (statusFilter !== 'ALL' && r.status !== statusFilter) return false;
+        if (typeFilter !== 'ALL' && r.requestType !== typeFilter) return false;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 48px 20px; color: #64748b;">
+              <div style="font-size: 2rem; color: #cbd5e1; margin-bottom: 8px;"><i class="fa-solid fa-box-open"></i></div>
+              <strong style="color: #334155;">No Requests Found</strong>
+              <p style="margin: 4px 0 0; font-size: 0.82rem;">No submissions match the current filter selection.</p>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      let html = '';
+      filtered.forEach(req => {
+        const p = req.proposedData || {};
+        const isEdit = req.requestType === 'edit';
+        const dateStr = req.submittedAt ? new Date(req.submittedAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'N/A';
+
+        let statusBadge = '<span class="badge-pill badge-pending"><i class="fa-solid fa-clock"></i> Pending</span>';
+        if (req.status === 'approved') statusBadge = '<span class="badge-pill badge-approved"><i class="fa-solid fa-circle-check"></i> Approved</span>';
+        if (req.status === 'rejected') statusBadge = '<span class="badge-pill badge-rejected"><i class="fa-solid fa-circle-xmark"></i> Rejected</span>';
+
+        html += `
+          <tr>
+            <td>
+              <span class="badge-pill" style="background: ${isEdit ? '#e0f2fe' : '#ecfdf5'}; color: ${isEdit ? '#0284c7' : '#059669'};">
+                <i class="fa-solid ${isEdit ? 'fa-pen-to-square' : 'fa-plus-circle'}"></i> ${isEdit ? 'Edit Request' : 'New Product'}
+              </span>
+            </td>
+            <td>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="${p.image || 'assets/placeholder.png'}" style="width: 40px; height: 40px; object-fit: contain; border-radius: 8px; border: 1px solid #cbd5e1;" onerror="this.src='https://placehold.co/40x40?text=No+Img'">
+                <div>
+                  <strong style="color: #0f172a; display: block;">${p.name || 'Unnamed Product'}</strong>
+                  <span style="font-size: 0.74rem; color: #64748b;">${p.category || 'General'} &bull; ${p.unit || '1 pc'}</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <strong style="color: #059669; font-size: 0.95rem;">₹${p.price || 0}</strong>
+              ${p.oldPrice ? `<del style="color: #94a3b8; font-size: 0.78rem; margin-left: 4px;">₹${p.oldPrice}</del>` : ''}
+              <div style="font-size: 0.72rem; color: ${p.inStock !== false ? '#15803d' : '#b91c1c'}; font-weight: 700;">
+                ${p.inStock !== false ? '● In Stock' : '○ Out of Stock'}
+              </div>
+            </td>
+            <td>
+              <span style="font-size: 0.78rem; color: #475569;">${req.submittedByEmail || 'Product Admin'}</span>
+            </td>
+            <td>
+              <span style="font-size: 0.78rem; color: #64748b;">${dateStr}</span>
+            </td>
+            <td>${statusBadge}</td>
+            <td style="text-align: right;">
+              <div style="display: inline-flex; gap: 6px;">
+                <button type="button" class="btn-action btn-review" onclick="window.openReviewModal('${req.id}')" title="Inspect & Review Details">
+                  <i class="fa-solid fa-eye"></i> Review
+                </button>
+                ${req.status === 'pending' ? `
+                  <button type="button" class="btn-action btn-approve" onclick="window.quickApprove('${req.id}')" title="Quick Approve">
+                    <i class="fa-solid fa-check"></i>
+                  </button>
+                  <button type="button" class="btn-action btn-reject" onclick="window.quickReject('${req.id}')" title="Quick Reject">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    window.filterRequests = () => {
+      renderTable();
+    };
+
+    window.quickApprove = async (id) => {
+      const req = requestsList.find(r => r.id === id);
+      if (!req) return;
+      if (!confirm(`Approve product "${req.proposedData?.name}" and publish to live website?`)) return;
+
+      try {
+        await ensureFirebaseAuth();
+        await approveProductRequest(id, currentUserEmail, liveProducts);
+        showToast(`Product approved & published live!`, 'success');
+      } catch (e) {
+        showToast(`Approval failed: ${e.message}`, 'error');
+      }
+    };
+
+    window.quickReject = async (id) => {
+      const reason = prompt("Enter rejection reason (optional):", "Rejected by QA Reviewer");
+      if (reason === null) return;
+
+      try {
+        await ensureFirebaseAuth();
+        await rejectProductRequest(id, reason, currentUserEmail);
+        showToast(`Request marked as rejected.`, 'warning');
+      } catch (e) {
+        showToast(`Rejection failed: ${e.message}`, 'error');
+      }
+    };
+
+    window.openReviewModal = (id) => {
+      const req = requestsList.find(r => r.id === id);
+      if (!req) return;
+      currentReviewReq = req;
+
+      const p = req.proposedData || {};
+      const isEdit = req.requestType === 'edit';
+
+      document.getElementById('modal-req-title').textContent = isEdit ? `Review Product Edit (#${req.targetProductId})` : `Review New Product Submission`;
+      document.getElementById('modal-req-subtitle').textContent = `Submitted by: ${req.submittedByEmail || 'Product Admin'} on ${new Date(req.submittedAt).toLocaleString()}`;
+
+      const actionsBar = document.getElementById('modal-actions-bar');
+      const statusBadge = document.getElementById('modal-status-badge');
+
+      if (req.status === 'pending') {
+        statusBadge.innerHTML = '<span class="badge-pill badge-pending"><i class="fa-solid fa-clock"></i> Pending Review</span>';
+        actionsBar.style.display = 'flex';
+      } else if (req.status === 'approved') {
+        statusBadge.innerHTML = `<span class="badge-pill badge-approved"><i class="fa-solid fa-circle-check"></i> Approved by ${req.reviewedBy || 'Admin'}</span>`;
+        actionsBar.style.display = 'none';
+      } else {
+        statusBadge.innerHTML = `<span class="badge-pill badge-rejected"><i class="fa-solid fa-circle-xmark"></i> Rejected: ${req.rejectionRemarks || 'N/A'}</span>`;
+        actionsBar.style.display = 'none';
+      }
+
+      document.getElementById('modal-diff-body').innerHTML = `
+        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 20px;">
+          <div>
+            <div style="width: 100%; height: 180px; background: #f8fafc; border: 1.5px solid var(--admin-border); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 6px;">
+              <img src="${p.image || 'assets/placeholder.png'}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.src='https://placehold.co/180x180?text=No+Img'">
+            </div>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 10px; color: #0f172a; font-size: 1.25rem;">${p.name || 'Unnamed'}</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; background: #f8fafc; padding: 14px; border-radius: 12px;">
+              <div>
+                <span style="font-size: 0.72rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Category:</span>
+                <div style="font-weight: 700; color: #0f172a;">${p.category || 'N/A'} ${p.subCategory ? `&bull; ${p.subCategory}` : ''}</div>
+              </div>
+              <div>
+                <span style="font-size: 0.72rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Unit:</span>
+                <div style="font-weight: 700; color: #0f172a;">${p.unit || '1 pc'}</div>
+              </div>
+              <div>
+                <span style="font-size: 0.72rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Selling Price:</span>
+                <div style="font-weight: 800; color: #059669; font-size: 1.1rem;">₹${p.price || 0}</div>
+              </div>
+              <div>
+                <span style="font-size: 0.72rem; color: #64748b; font-weight: 800; text-transform: uppercase;">MRP / Old Price:</span>
+                <div style="font-weight: 700; color: #64748b;">${p.oldPrice ? `₹${p.oldPrice}` : 'None'}</div>
+              </div>
+            </div>
+            ${p.desc ? `<p style="margin: 0; font-size: 0.85rem; color: #475569; line-height: 1.5;">${p.desc}</p>` : ''}
+          </div>
+        </div>
+      `;
+
+      document.getElementById('portal-review-modal').classList.add('active');
+    };
+
+    window.closeReviewModal = () => {
+      document.getElementById('portal-review-modal').classList.remove('active');
+    };
+
+    window.handleModalApprove = async () => {
+      if (!currentReviewReq) return;
+      try {
+        await ensureFirebaseAuth();
+        await approveProductRequest(currentReviewReq.id, currentUserEmail, liveProducts);
+        window.closeReviewModal();
+        showToast('Product successfully approved & published!', 'success');
+      } catch (e) {
+        showToast(`Approval failed: ${e.message}`, 'error');
+      }
+    };
+
+    window.handleModalReject = async () => {
+      if (!currentReviewReq) return;
+      const reason = prompt("Enter reason for rejection:", "Does not meet store catalogue standards");
+      if (reason === null) return;
+      try {
+        await ensureFirebaseAuth();
+        await rejectProductRequest(currentReviewReq.id, reason, currentUserEmail);
+        window.closeReviewModal();
+        showToast('Request rejected.', 'warning');
+      } catch (e) {
+        showToast(`Rejection failed: ${e.message}`, 'error');
+      }
+    };
+
+    // Logout
+    document.getElementById('portal-logout-btn').onclick = async () => {
+      sessionStorage.clear();
+      await signOut(auth);
+      window.location.href = 'login.html';
+    };
+  </script>
+</body>
+
+</html>
+

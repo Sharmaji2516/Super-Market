@@ -1870,6 +1870,40 @@
         </div>
       </div>
 
+      <!-- ========================================================== -->
+      <!-- SUPER ADMIN ACCESS MANAGEMENT: MANAGED APPROVAL ACCOUNTS -->
+      <!-- ========================================================== -->
+      <div class="approval-team-container" style="background: white; border: 1.5px solid #e2e8f0; border-radius: 20px; padding: 22px 26px; margin-bottom: 26px; box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #f1f5f9;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <span style="background: #eff6ff; color: #1d4ed8; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid #bfdbfe;">
+                <i class="fa-solid fa-user-shield"></i> Sub-Admin Access Control
+              </span>
+              <span id="approval-accounts-count-badge" style="background: #f1f5f9; color: #475569; font-size: 0.74rem; font-weight: 700; padding: 4px 10px; border-radius: 20px;">
+                0 / 5 Accounts Active
+              </span>
+            </div>
+            <h3 style="margin: 0; font-size: 1.25rem; font-weight: 900; color: #0f172a; font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 10px;">
+              <i class="fa-solid fa-users-gear" style="color: #0284c7;"></i> Product Approval Team (Email-Based Access)
+            </h3>
+            <p style="margin: 4px 0 0; color: #64748b; font-size: 0.85rem;">
+              Manage up to 5 email credentials for Product Approval. Toggle <strong>ON / OFF</strong> to grant or revoke their access instantly with 1-click.
+            </p>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary" onclick="window.openAddApprovalAdminModal()" style="padding: 10px 18px; font-size: 0.85rem; font-weight: 800; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0284c7, #0369a1); border: none; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); color: white; cursor: pointer;">
+              <i class="fa-solid fa-user-plus"></i> Add Reviewer Account
+            </button>
+          </div>
+        </div>
+
+        <!-- Reviewer Accounts Grid -->
+        <div id="approval-admins-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px;">
+          <!-- Dynamically populated by JS -->
+        </div>
+      </div>
+
       <!-- Stats Row -->
       <div class="stats-grid" style="margin-bottom: 26px;">
         <div class="stat-card" style="border-color: #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffdf5 100%);">
@@ -2002,6 +2036,100 @@
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT APPROVAL ADMIN ACCOUNT -->
+  <div id="modal-approval-admin" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width: 480px; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25); border: 1px solid rgba(255, 255, 255, 0.1);">
+      <!-- Header -->
+      <div class="modal-header" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 16px 20px; border-bottom: 2px solid #0284c7; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2, 132, 199, 0.2); border: 1.5px solid #38bdf8; display: flex; align-items: center; justify-content: center; color: #38bdf8; font-size: 1rem;">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div>
+            <h3 style="color: white; margin: 0; font-size: 1.08rem; font-weight: 800; font-family: 'Outfit', sans-serif;" id="approval-admin-modal-title">Add Reviewer Account</h3>
+            <p style="margin: 2px 0 0; font-size: 0.74rem; color: #94a3b8;">
+              Configure email credentials for Product Approval
+            </p>
+          </div>
+        </div>
+        <button type="button" class="modal-close-btn" style="color: #94a3b8; width: 30px; height: 30px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;" onclick="closeModal('modal-approval-admin')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="approval-admin-form" onsubmit="window.handleSaveApprovalAdmin(event)">
+        <input type="hidden" id="approval-admin-id">
+        <div class="modal-body" style="padding: 18px 20px; max-height: none; overflow: visible;">
+          
+          <!-- Name Field -->
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label style="font-size: 0.74rem; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 5px;">
+              Team Member Name *
+            </label>
+            <div style="position: relative;">
+              <i class="fa-solid fa-user" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.85rem; color: #94a3b8;"></i>
+              <input type="text" id="approval-admin-name" class="form-control" placeholder="e.g. Store Manager - Ramesh" required style="padding-left: 36px; height: 40px; font-size: 0.88rem; font-weight: 600; border-radius: 10px; border: 1.5px solid #cbd5e1; box-sizing: border-box; width: 100%;">
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label style="font-size: 0.74rem; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 5px;">
+              Login Email Address *
+            </label>
+            <div style="position: relative;">
+              <i class="fa-solid fa-envelope" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.85rem; color: #94a3b8;"></i>
+              <input type="email" id="approval-admin-email" class="form-control" placeholder="reviewer1@sonisupermarket.com" required style="padding-left: 36px; height: 40px; font-size: 0.88rem; font-weight: 600; border-radius: 10px; border: 1.5px solid #cbd5e1; box-sizing: border-box; width: 100%;">
+            </div>
+            <span style="color: #64748b; font-size: 0.7rem; margin-top: 3px; display: block;">Used by user to log in at the admin login screen.</span>
+          </div>
+
+          <!-- 2-Column Grid: Password Hint & Initial Status -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label style="font-size: 0.74rem; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 5px;">
+                Password Hint (Optional)
+              </label>
+              <div style="position: relative;">
+                <i class="fa-solid fa-key" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.85rem; color: #94a3b8;"></i>
+                <input type="text" id="approval-admin-password-hint" class="form-control" placeholder="Store@2026" style="padding-left: 34px; height: 40px; font-size: 0.85rem; border-radius: 10px; border: 1.5px solid #cbd5e1; box-sizing: border-box; width: 100%;">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label style="font-size: 0.74rem; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 5px;">
+                Initial Status
+              </label>
+              <select id="approval-admin-status" class="form-control" style="height: 40px; font-size: 0.85rem; font-weight: 700; border-radius: 10px; border: 1.5px solid #cbd5e1; padding: 0 10px; background: white; box-sizing: border-box; width: 100%;">
+                <option value="true" selected>Active (ON)</option>
+                <option value="false">Disabled (OFF)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Restricted Scope Notice -->
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 9px 12px; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-shield-halved" style="color: #059669; font-size: 0.95rem; flex-shrink: 0;"></i>
+            <span style="font-size: 0.75rem; color: #166534; line-height: 1.4;">
+              <strong>Restricted Access:</strong> User can only review, approve, or reject product requests. Main admin features stay locked.
+            </span>
+          </div>
+
+        </div>
+
+        <!-- Footer with Compact Elegant Buttons -->
+        <div class="modal-footer" style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+          <button type="button" onclick="closeModal('modal-approval-admin')" style="background: #ffffff; color: #475569; border: 1.5px solid #cbd5e1; padding: 8px 18px; border-radius: 10px; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: 0.15s; height: 38px; display: inline-flex; align-items: center; justify-content: center;">
+            Cancel
+          </button>
+          <button type="submit" id="btn-save-approval-admin" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; border: none; padding: 8px 22px; border-radius: 10px; font-size: 0.84rem; font-weight: 800; cursor: pointer; transition: 0.15s; height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35); white-space: nowrap;">
+            <i class="fa-solid fa-check"></i> Save Reviewer
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -2596,7 +2724,7 @@
 
   <!-- Firebase & Admin Application Logic -->
   <script type="module">
-    import { auth, ensureFirebaseAuth, getProductsFromFirebase, getProductRequestsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, saveCategoryOrderToFirebase, listenForCategoryOrder, storage, ref, uploadBytes, getDownloadURL, listenForProductRequests, approveProductRequest, rejectProductRequest, setAdminUserRole } from './firebase-config.js?v=1.4.1';
+    import { auth, ensureFirebaseAuth, getProductsFromFirebase, getProductRequestsFromFirebase, saveProductToFirebase, deleteProductFromFirebase, updateProductStock, listenForProducts, saveCategoryOrderToFirebase, listenForCategoryOrder, storage, ref, uploadBytes, getDownloadURL, listenForProductRequests, approveProductRequest, rejectProductRequest, setAdminUserRole, listenForApprovalAdmins, saveApprovalAdmin, toggleApprovalAdminStatus, deleteApprovalAdmin, sendAdminPasswordReset, getUserRole } from './firebase-config.js?v=1.4.1';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     let rawProducts = [];
@@ -2745,9 +2873,27 @@
 
     initDataListeners();
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       const userPill = document.getElementById('admin-user-pill');
       if (user && user.email) {
+        // Enforce Role Separation: Approval Admins & Disabled accounts cannot access Super Admin
+        const role = await getUserRole(user.uid, user.email);
+        if (role === 'disabled') {
+          alert('Your access has been turned OFF by the Super Admin.');
+          try { await signOut(auth); } catch (e) {}
+          sessionStorage.clear();
+          window.location.href = 'login.html';
+          return;
+        }
+        if (role === 'approval_admin') {
+          window.location.href = 'approval-portal.html';
+          return;
+        }
+        if (role === 'product_admin') {
+          window.location.href = 'product-admin.html';
+          return;
+        }
+
         if (userPill) {
           userPill.style.display = 'inline-flex';
           userPill.innerHTML = `
@@ -4196,6 +4342,268 @@
         btn.innerHTML = '<i class="fa-solid fa-ban"></i> Reject Request';
       }
     };
+
+    // ==========================================================================
+    // MANAGED APPROVAL ADMINS (UP TO 5 ACCOUNTS) CONTROLLER
+    // ==========================================================================
+    let approvalAdminsList = [];
+
+    function renderApprovalAdminsGrid() {
+      const grid = document.getElementById('approval-admins-grid');
+      const badge = document.getElementById('approval-accounts-count-badge');
+      if (!grid) return;
+
+      const activeCount = approvalAdminsList.filter(a => a.isActive !== false && a.status !== 'disabled').length;
+      if (badge) {
+        badge.innerHTML = `<strong>${activeCount}</strong> / <strong>${approvalAdminsList.length}</strong> Accounts (Max 5)`;
+        badge.style.background = activeCount > 0 ? '#ecfdf5' : '#fef2f2';
+        badge.style.color = activeCount > 0 ? '#065f46' : '#991b1b';
+      }
+
+      if (approvalAdminsList.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 36px 20px; background: #f8fafc; border: 1.5px dashed #cbd5e1; border-radius: 16px;">
+            <div style="width: 52px; height: 52px; background: #e0f2fe; color: #0284c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 12px;">
+              <i class="fa-solid fa-user-plus"></i>
+            </div>
+            <h4 style="margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 800; color: #0f172a;">No Reviewer Accounts Added Yet</h4>
+            <p style="margin: 0 0 16px 0; font-size: 0.85rem; color: #64748b; max-width: 440px; margin: 0 auto 16px;">
+              You can create up to 5 email credentials for team members who will handle Product Approval without accessing the rest of Super Admin.
+            </p>
+            <button type="button" class="btn btn-primary" onclick="window.openAddApprovalAdminModal()" style="font-size: 0.82rem; padding: 8px 16px; border-radius: 8px; background: #0284c7; border: none; color: white; cursor: pointer;">
+              <i class="fa-solid fa-plus"></i> Add First Reviewer
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      approvalAdminsList.forEach((adm, idx) => {
+        const isActive = adm.isActive !== false && adm.status !== 'disabled';
+        const safeName = (adm.name || adm.email || '').replace(/'/g, "\\'");
+        const safeEmail = (adm.email || '').replace(/'/g, "\\'");
+        const safeHint = (adm.passwordHint || '').replace(/'/g, "\\'");
+        const safeNotes = (adm.notes || '').replace(/'/g, "\\'");
+
+        html += `
+          <div class="approval-admin-card" style="background: #ffffff; border: 1.5px solid ${isActive ? '#bbf7d0' : '#fecaca'}; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); transition: all 0.2s ease; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: ${isActive ? 'linear-gradient(90deg, #10b981, #059669)' : 'linear-gradient(90deg, #ef4444, #dc2626)'};"></div>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 42px; height: 42px; border-radius: 12px; background: ${isActive ? '#ecfdf5' : '#fef2f2'}; color: ${isActive ? '#059669' : '#dc2626'}; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; border: 1px solid ${isActive ? '#a7f3d0' : '#fecaca'};">
+                  ${(adm.name || adm.email || 'U')[0].toUpperCase()}
+                </div>
+                <div>
+                  <h4 style="margin: 0; font-size: 0.98rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 6px;">
+                    ${adm.name || 'Reviewer'}
+                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${isActive ? '#10b981' : '#ef4444'};"></span>
+                  </h4>
+                  <div style="font-size: 0.76rem; color: #64748b; word-break: break-all;">${adm.email}</div>
+                </div>
+              </div>
+
+              <span style="font-size: 0.65rem; font-weight: 800; padding: 3px 8px; border-radius: 12px; background: #eff6ff; color: #0284c7; text-transform: uppercase;">
+                Reviewer #${idx + 1}
+              </span>
+            </div>
+
+            <!-- ONE-CLICK ON/OFF SWITCH -->
+            <div style="background: ${isActive ? '#f0fdf4' : '#fff1f2'}; border: 1px solid ${isActive ? '#dcfce7' : '#ffe4e6'}; border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.78rem; font-weight: 900; color: ${isActive ? '#15803d' : '#b91c1c'}; display: block;">
+                  ${isActive ? '🟢 ACCESS ENABLED (ON)' : '🔴 ACCESS DISABLED (OFF)'}
+                </span>
+                <span style="font-size: 0.68rem; color: ${isActive ? '#166534' : '#991b1b'};">
+                  ${isActive ? 'User can log in & approve products' : 'Immediate login & session lock'}
+                </span>
+              </div>
+              <label class="switch-toggle" title="Click to toggle access ON / OFF">
+                <input type="checkbox" ${isActive ? 'checked' : ''} onchange="window.handleToggleAdminStatus('${adm.id}', this.checked)">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <!-- Password reference & info -->
+            <div style="font-size: 0.74rem; color: #475569; margin-bottom: 14px; background: #f8fafc; padding: 8px 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <span><i class="fa-solid fa-key" style="color: #64748b; margin-right: 4px;"></i> Password Hint:</span>
+              <strong style="color: #0f172a;">${adm.passwordHint || 'None set'}</strong>
+            </div>
+
+            <!-- Action buttons -->
+            <div style="display: flex; gap: 8px; align-items: center; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 12px;">
+              <button type="button" class="btn btn-sm" onclick="window.handleSendResetEmail('${safeEmail}')" style="font-size: 0.72rem; padding: 5px 10px; border-radius: 6px; background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; font-weight: 700; cursor: pointer;" title="Send password reset link to user email">
+                <i class="fa-solid fa-paper-plane" style="color: #0284c7;"></i> Reset Link
+              </button>
+              <div style="display: flex; gap: 6px;">
+                <button type="button" class="btn btn-sm" onclick="window.openEditApprovalAdminModal('${adm.id}')" style="font-size: 0.72rem; padding: 5px 10px; border-radius: 6px; background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; font-weight: 700; cursor: pointer;" title="Edit details">
+                  <i class="fa-solid fa-pen"></i> Edit
+                </button>
+                <button type="button" class="btn btn-sm" onclick="window.handleDeleteApprovalAdmin('${adm.id}', '${safeName}')" style="font-size: 0.72rem; padding: 5px 8px; border-radius: 6px; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; font-weight: 700; cursor: pointer;" title="Remove account">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+    }
+
+    // Toggle 1-Click Status (ON/OFF)
+    window.handleToggleAdminStatus = async (docId, isChecked) => {
+      if (!auth.currentUser || !auth.currentUser.email) {
+        openActionConfirmModal(
+          "Super Admin Sign-In Required",
+          "Firebase security rules require an active Super Admin login to toggle reviewer permissions. Please sign in with your Super Admin account.",
+          "<i class='fa-solid fa-right-to-bracket'></i> Sign In Now",
+          () => { window.location.href = 'login.html'; }
+        );
+        renderApprovalAdminsGrid();
+        return;
+      }
+
+      try {
+        await toggleApprovalAdminStatus(docId, isChecked);
+        showToast(
+          isChecked ? `Access turned ON for ${docId}` : `Access turned OFF for ${docId}. Login & session locked.`,
+          isChecked ? 'success' : 'warning'
+        );
+      } catch (err) {
+        showToast(`Failed to update status: ${err.message}`, 'error');
+        renderApprovalAdminsGrid();
+      }
+    };
+
+    // Open Modal for Add
+    window.openAddApprovalAdminModal = () => {
+      if (approvalAdminsList.length >= 5) {
+        showToast('Maximum 5 reviewer accounts allowed. Remove or edit an existing account first.', 'warning');
+        return;
+      }
+      document.getElementById('approval-admin-id').value = '';
+      document.getElementById('approval-admin-name').value = '';
+      document.getElementById('approval-admin-email').value = '';
+      document.getElementById('approval-admin-email').readOnly = false;
+      document.getElementById('approval-admin-password-hint').value = '';
+      document.getElementById('approval-admin-status').value = 'true';
+      document.getElementById('approval-admin-modal-title').textContent = 'Add Reviewer Account';
+      openModal('modal-approval-admin');
+    };
+
+    // Open Modal for Edit
+    window.openEditApprovalAdminModal = (docId) => {
+      const adm = approvalAdminsList.find(a => a.id === docId);
+      if (!adm) return;
+      document.getElementById('approval-admin-id').value = adm.id;
+      document.getElementById('approval-admin-name').value = adm.name || '';
+      document.getElementById('approval-admin-email').value = adm.email || '';
+      document.getElementById('approval-admin-email').readOnly = true;
+      document.getElementById('approval-admin-password-hint').value = adm.passwordHint || '';
+      document.getElementById('approval-admin-status').value = (adm.isActive !== false && adm.status !== 'disabled') ? 'true' : 'false';
+      document.getElementById('approval-admin-modal-title').textContent = 'Edit Reviewer Details';
+      openModal('modal-approval-admin');
+    };
+
+    // Save Form Handler
+    window.handleSaveApprovalAdmin = async (e) => {
+      e.preventDefault();
+      const docId = document.getElementById('approval-admin-id').value;
+      const name = document.getElementById('approval-admin-name').value.trim();
+      const email = document.getElementById('approval-admin-email').value.trim().toLowerCase();
+      const hint = document.getElementById('approval-admin-password-hint').value.trim();
+      const isActive = document.getElementById('approval-admin-status').value === 'true';
+
+      if (!email) {
+        showToast('Please enter a valid email address.', 'error');
+        return;
+      }
+
+      if (!docId && approvalAdminsList.length >= 5) {
+        showToast('Maximum 5 reviewer accounts limit reached.', 'warning');
+        return;
+      }
+
+      if (!auth.currentUser || !auth.currentUser.email) {
+        closeModal('modal-approval-admin');
+        openActionConfirmModal(
+          "Super Admin Sign-In Required",
+          "Firebase security rules require an active Super Admin sign-in to create or manage reviewer accounts. Please sign in with your Super Admin account (lavsharma.it25@gmail.com / chittortech@gmail.com).",
+          "<i class='fa-solid fa-right-to-bracket'></i> Sign In Now",
+          () => { window.location.href = 'login.html'; }
+        );
+        return;
+      }
+
+      const saveBtn = document.getElementById('btn-save-approval-admin');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+      try {
+        await saveApprovalAdmin({
+          email: email,
+          name: name,
+          passwordHint: hint,
+          isActive: isActive
+        });
+        closeModal('modal-approval-admin');
+        showToast(`Reviewer account "${email}" saved successfully!`, 'success');
+      } catch (err) {
+        showToast(`Failed to save reviewer: ${err.message}`, 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> Save Reviewer';
+      }
+    };
+
+    // Delete Account
+    window.handleDeleteApprovalAdmin = (docId, name) => {
+      if (!auth.currentUser || !auth.currentUser.email) {
+        openActionConfirmModal(
+          "Super Admin Sign-In Required",
+          "Please sign in with your Super Admin account to remove reviewer accounts.",
+          "<i class='fa-solid fa-right-to-bracket'></i> Sign In Now",
+          () => { window.location.href = 'login.html'; }
+        );
+        return;
+      }
+
+      openActionConfirmModal(
+        `Remove Reviewer Account?`,
+        `Are you sure you want to remove ${name} (${docId})? They will immediately lose all access to Product Approval.`,
+        `<i class="fa-solid fa-trash-can"></i> Remove Account`,
+        async () => {
+          try {
+            await deleteApprovalAdmin(docId);
+            showToast(`Reviewer account removed.`, 'info');
+          } catch (err) {
+            showToast(`Failed to remove: ${err.message}`, 'error');
+          }
+        }
+      );
+    };
+
+    // Send Password Reset Link
+    window.handleSendResetEmail = async (email) => {
+      try {
+        await sendAdminPasswordReset(email);
+        showToast(`Password reset link sent to ${email}!`, 'success');
+      } catch (err) {
+        showToast(`Could not send reset link: ${err.message}`, 'error');
+      }
+    };
+
+    // Real-time listener for Approval Admins
+    try {
+      listenForApprovalAdmins((admins) => {
+        approvalAdminsList = admins || [];
+        renderApprovalAdminsGrid();
+      });
+    } catch (e) {
+      console.warn("Could not attach approval admins listener:", e);
+    }
 
     // Logout
     document.getElementById('logout-btn').onclick = async () => {

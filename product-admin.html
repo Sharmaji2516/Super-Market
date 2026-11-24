@@ -1214,7 +1214,7 @@
 
   <!-- Application Logic -->
   <script type="module">
-    import { auth, ensureFirebaseAuth, getProductsFromFirebase, listenForProducts, submitProductRequest, listenForProductRequests } from './firebase-config.js?v=1.4.0';
+    import { auth, ensureFirebaseAuth, getProductsFromFirebase, listenForProducts, submitProductRequest, listenForProductRequests, getUserRole } from './firebase-config.js?v=1.4.1';
     import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     let rawProducts = [];
@@ -1275,10 +1275,23 @@
     };
 
     // Auth verification
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         currentUserEmail = user.email || currentUserEmail;
         document.getElementById('user-display-email').textContent = currentUserEmail;
+
+        const role = await getUserRole(user.uid, currentUserEmail);
+        if (role === 'disabled') {
+          alert('Your access has been turned OFF by the Super Admin.');
+          try { await signOut(auth); } catch (e) {}
+          sessionStorage.clear();
+          window.location.href = 'login.html';
+          return;
+        }
+        if (role === 'approval_admin') {
+          window.location.href = 'approval-portal.html';
+          return;
+        }
       } else {
         const isAuth = sessionStorage.getItem('admin_authenticated');
         if (!isAuth) {

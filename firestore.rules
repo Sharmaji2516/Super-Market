@@ -12,12 +12,13 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/admin_roles/$(request.auth.uid)).data.role;
     }
 
-    // Super Admin check (lavsharma.it25@gmail.com, business, contact, orient)
+    // Super Admin check (lavsharma.it25@gmail.com, chittortech@gmail.com, business, contact, orient)
     function isSuperAdmin() {
       return isAuthenticated() && (
         getRole() == 'super_admin' || 
         request.auth.token.email in [
-          'lavsharma.it25@gmail.com', 
+          'lavsharma.it25@gmail.com',
+          'chittortech@gmail.com',
           'business@chittortech.in', 
           'contact@chittortech.in', 
           'admin@orient.com'
@@ -38,14 +39,26 @@ service cloud.firestore {
       );
     }
 
-    // Live Store Products:
-    // Anyone can read products; only Super Admin can write/delete directly
-    match /products/{productId} {
-      allow read: if true;
-      allow write: if isSuperAdmin();
+    // Approval Admin check: User whose email is registered in approval_admins with isActive == true
+    function isApprovalAdmin() {
+      return isAuthenticated() && (
+        isSuperAdmin() ||
+        (
+          request.auth.token.email != null &&
+          exists(/databases/$(database)/documents/approval_admins/$(request.auth.token.email)) &&
+          get(/databases/$(database)/documents/approval_admins/$(request.auth.token.email)).data.isActive == true
+        )
+      );
     }
 
-    // Store Settings & Category Sequence
+    // Live Store Products:
+    // Anyone can read products; Super Admin and Active Approval Admins can write
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isSuperAdmin() || isApprovalAdmin();
+    }
+
+    // Store Settings & Category Sequence: Super Admin Only
     match /settings/{settingId} {
       allow read: if true;
       allow write: if isSuperAdmin();
@@ -54,15 +67,23 @@ service cloud.firestore {
     // Product Requests (Staging Area for Product Admin)
     // - Authenticated users can view requests
     // - Product Admins can create pending requests
-    // - Only Super Admin can approve, reject, or delete requests
+    // - Super Admin and Active Approval Admins can approve or reject requests
     match /product_requests/{requestId} {
       allow read: if isAuthenticated();
       allow create: if isProductAdmin() && request.resource.data.status == 'pending';
-      allow update, delete: if isSuperAdmin();
+      allow update, delete: if isSuperAdmin() || isApprovalAdmin();
     }
 
     // Admin Roles collection
     match /admin_roles/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
+    }
+
+    // Managed Approval Admins collection (Up to 5 accounts managed by Super Admin)
+    // - Authenticated users can read their own status
+    // - ONLY Super Admin can create, toggle ON/OFF, edit, or delete
+    match /approval_admins/{adminEmail} {
       allow read: if isAuthenticated();
       allow write: if isSuperAdmin();
     }

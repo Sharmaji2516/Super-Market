@@ -682,8 +682,8 @@
   </div>
 
   <script type="module">
-    import { auth, getUserRole } from './firebase-config.js?v=1.4.0';
-    import { signInWithEmailAndPassword, sendPasswordResetEmail, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { auth, getUserRole } from './firebase-config.js?v=1.4.1';
+    import { signInWithEmailAndPassword, sendPasswordResetEmail, setPersistence, browserLocalPersistence, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     const loginForm = document.getElementById('login-form');
     const messageBox = document.getElementById('message-box');
@@ -695,6 +695,7 @@
     // Authorized Super Admin Whitelist
     const AUTHORIZED_ADMIN_EMAILS = [
       'lavsharma.it25@gmail.com',
+      'chittortech@gmail.com',
       'business@chittortech.in',
       'admin@orient.com',
       'contact@chittortech.in'
@@ -743,6 +744,15 @@
         // Fetch role from Firestore
         let role = await getUserRole(user.uid, email);
 
+        if (role === 'disabled') {
+          try { await signOut(auth); } catch (e) {}
+          sessionStorage.clear();
+          showMessage("Your account access has been turned OFF by the Super Admin. Please contact store management.", "error");
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Sign In to Dashboard</span>';
+          return;
+        }
+
         if (!role) {
           if (isProductAdminEmail) role = 'product_admin';
           else if (isSuperAdminEmail) role = 'super_admin';
@@ -753,7 +763,9 @@
         sessionStorage.setItem('admin_user_uid', user.uid);
         sessionStorage.setItem('admin_user_role', role || 'super_admin');
 
-        if (role === 'product_admin') {
+        if (role === 'approval_admin') {
+          window.location.href = 'approval-portal.html';
+        } else if (role === 'product_admin') {
           window.location.href = 'product-admin.html';
         } else {
           window.location.href = 'admin.html';

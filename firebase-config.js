@@ -13,7 +13,7 @@ const firebaseConfig = {
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 import { getFirestore, doc, getDoc, setDoc, collection, getDocs, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, signInAnonymously, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 // Initialize Firebase
@@ -195,6 +195,7 @@ export { auth, db, storage, ref, uploadBytes, getDownloadURL };
 
 const SUPER_ADMIN_WHITELIST = [
   'lavsharma.it25@gmail.com',
+  'chittortech@gmail.com',
   'business@chittortech.in',
   'admin@orient.com',
   'contact@chittortech.in'
@@ -209,12 +210,33 @@ export async function getUserRole(uid, email) {
   if (SUPER_ADMIN_WHITELIST.includes(normEmail)) {
     return 'super_admin';
   }
+
+  // 1. Check in Managed Approval Admins Collection
+  try {
+    let appDocRef = doc(db, "approval_admins", normEmail);
+    let appSnap = await getDoc(appDocRef);
+    if (!appSnap.exists()) {
+      const emailKey = normEmail.replace(/[@.]/g, '_');
+      appDocRef = doc(db, "approval_admins", emailKey);
+      appSnap = await getDoc(appDocRef);
+    }
+    if (appSnap.exists()) {
+      const data = appSnap.data();
+      if (data.isActive === false || data.status === 'disabled') {
+        return 'disabled';
+      }
+      return 'approval_admin';
+    }
+  } catch (err) {
+    console.warn("Could not check approval_admins:", err);
+  }
+
   if (PRODUCT_ADMIN_WHITELIST.includes(normEmail)) {
     return 'product_admin';
   }
 
   try {
-    // 1. Check by UID
+    // 2. Check by UID in admin_roles
     if (uid) {
       const uidRef = doc(db, "admin_roles", uid);
       const uidSnap = await getDoc(uidRef);
@@ -223,7 +245,7 @@ export async function getUserRole(uid, email) {
       }
     }
 
-    // 2. Check by sanitized email key
+    // 3. Check by sanitized email key in admin_roles
     if (normEmail) {
       const emailKey = normEmail.replace(/[@.]/g, '_');
       const emailRef = doc(db, "admin_roles", emailKey);
@@ -413,5 +435,133 @@ export async function rejectProductRequest(requestId, remarks, reviewerEmail) {
     throw err;
   }
 }
+
+// ==========================================================================
+// EMAIL-BASED ACCESS MANAGEMENT FOR PRODUCT APPROVAL
+// ==========================================================================
+
+export function sanitizeEmailKey(email) {
+  return (email || '').trim().toLowerCase();
+}
+
+export async function getApprovalAdmins() {
+  try {
+    const qSnap = await getDocs(collection(db, "approval_admins"));
+    const admins = [];
+    qSnap.forEach(d => {
+      admins.push({ id: d.id, ...d.data() });
+    });
+    admins.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+    return admins;
+  } catch (e) {
+    console.error("Failed to fetch approval admins:", e);
+    return [];
+  }
+}
+
+export function listenForApprovalAdmins(callback) {
+  try {
+    const colRef = collection(db, "approval_admins");
+    return onSnapshot(colRef, (snapshot) => {
+      const admins = [];
+      snapshot.forEach(docSnap => {
+        admins.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      admins.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+      callback(admins);
+    }, (error) => {
+      console.warn("approval_admins listener notice:", error);
+    });
+  } catch (err) {
+    console.error("Failed to attach approval admins listener:", err);
+  }
+}
+
+export async function saveApprovalAdmin(data) {
+  try {
+    const email = (data.email || '').trim().toLowerCase();
+    if (!email) throw new Error("Email is required");
+    const docKey = sanitizeEmailKey(email);
+    const docRef = doc(db, "approval_admins", docKey);
+    
+    const payload = {
+      email: email,
+      name: data.name || email.split('@')[0],
+      role: 'approval_admin',
+      isActive: data.isActive !== undefined ? Boolean(data.isActive) : true,
+      updatedAt: Date.now(),
+      notes: data.notes || '',
+      passwordHint: data.passwordHint || '' // Optional label or hint for Super Admin reference
+    };
+
+    // If new, set createdAt
+    const existing = await getDoc(docRef);
+    if (!existing.exists()) {
+      payload.createdAt = Date.now();
+    }
+
+    await setDoc(docRef, payload, { merge: true });
+    return { success: true, docKey };
+  } catch (err) {
+    console.error("Failed to save approval admin:", err);
+    throw err;
+  }
+}
+
+export async function toggleApprovalAdminStatus(docKey, isActive) {
+  try {
+    const docRef = doc(db, "approval_admins", docKey);
+    await updateDoc(docRef, {
+      isActive: Boolean(isActive),
+      status: isActive ? 'active' : 'disabled',
+      updatedAt: Date.now()
+    });
+    return true;
+  } catch (err) {
+    console.error("Failed to toggle admin status:", err);
+    throw err;
+  }
+}
+
+export async function deleteApprovalAdmin(docKey) {
+  try {
+    const docRef = doc(db, "approval_admins", docKey);
+    await deleteDoc(docRef);
+    return true;
+  } catch (err) {
+    console.error("Failed to delete approval admin:", err);
+    throw err;
+  }
+}
+
+// Live Session Guard: Listens to the current user's document in approval_admins.
+// If the Super Admin turns them OFF, immediately triggers callback to log them out!
+export function listenToUserStatus(email, onDisabledCallback) {
+  if (!email) return null;
+  const docKey = sanitizeEmailKey(email);
+  const docRef = doc(db, "approval_admins", docKey);
+  
+  return onSnapshot(docRef, (docSnap) => {
+    if (!docSnap.exists()) {
+      // Document was removed by Super Admin -> kill session
+      onDisabledCallback("Your approval access account has been removed by the Super Admin.");
+      return;
+    }
+    const data = docSnap.data();
+    if (data.isActive === false || data.status === 'disabled') {
+      // Account disabled by Super Admin -> kill session immediately
+      onDisabledCallback("Your approval access has been turned OFF by the Super Admin.");
+    }
+  }, (err) => {
+    console.warn("User status guard warning:", err);
+  });
+}
+
+export async function sendAdminPasswordReset(email) {
+  if (!email) throw new Error("Email is required");
+  return sendPasswordResetEmail(auth, email.trim().toLowerCase());
+}
+
+
 
 
