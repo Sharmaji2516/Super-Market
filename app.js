@@ -1,4 +1,4 @@
-import { listenForProducts, listenForCategoryOrder } from './firebase-config.js?v=1.3.5';
+import { listenForProducts, listenForCategoryOrder } from './firebase-config.js?v=1.4.2';
 
 let allProducts = []; // To store products for filtering
 let activeCategory = localStorage.getItem('redirectCategory') || 'all';
