@@ -7,9 +7,11 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    // Helper: check user role from admin_roles collection
+    // Helper: check user role from admin_roles collection safely
     function getRole() {
-      return get(/databases/$(database)/documents/admin_roles/$(request.auth.uid)).data.role;
+      return exists(/databases/$(database)/documents/admin_roles/$(request.auth.uid))
+        ? get(/databases/$(database)/documents/admin_roles/$(request.auth.uid)).data.role
+        : 'none';
     }
 
     // Super Admin check (lavsharma.it25@gmail.com, chittortech@gmail.com, business, contact, orient)
@@ -22,20 +24,6 @@ service cloud.firestore {
           'business@chittortech.in', 
           'contact@chittortech.in', 
           'admin@orient.com'
-        ]
-      );
-    }
-
-    // Product Admin check (Includes SoniSuperMarket@chittortech.in & active staff from approval_admins)
-    function isProductAdmin() {
-      return isAuthenticated() && (
-        getRole() == 'product_admin' ||
-        getRole() == 'super_admin' ||
-        isSuperAdmin() ||
-        isApprovalAdmin() ||
-        request.auth.token.email in [
-          'sonisupermarket@chittortech.in',
-          'SoniSuperMarket@chittortech.in'
         ]
       );
     }
@@ -67,11 +55,11 @@ service cloud.firestore {
 
     // Product Requests (Staging Area for Product Admin)
     // - Authenticated users can view requests
-    // - Product Admins can create pending requests
+    // - Authenticated staff/admins can create pending requests
     // - Super Admin and Active Approval Admins can approve or reject requests
     match /product_requests/{requestId} {
       allow read: if isAuthenticated();
-      allow create: if isProductAdmin() && request.resource.data.status == 'pending';
+      allow create: if isAuthenticated() && request.resource.data.status == 'pending';
       allow update, delete: if isSuperAdmin() || isApprovalAdmin();
     }
 
