@@ -840,6 +840,123 @@
         grid-template-columns: 1fr;
       }
     }
+    /* Staff User Manual & Bilingual Guide Card */
+    .staff-guide-card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 18px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
+      transition: all 0.3s ease;
+    }
+    .guide-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 14px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .guide-lang-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      color: #e2e8f0;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .guide-lang-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .guide-lang-btn.active {
+      background: #10b981 !important;
+      color: #ffffff !important;
+      border-color: #34d399 !important;
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.45);
+    }
+    .guide-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      padding: 20px 22px;
+      background: #ffffff;
+    }
+    .guide-step-box {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .guide-step-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-color: #cbd5e1;
+    }
+    .step-pill {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .step-pill.green { background: #dcfce7; color: #15803d; }
+    .step-pill.blue { background: #e0f2fe; color: #0284c7; }
+    .step-pill.amber { background: #fef3c7; color: #b45309; }
+    .step-pill.purple { background: #f3e8ff; color: #7e22ce; }
+
+    .step-box-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 2px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .step-box-desc {
+      font-size: 0.82rem;
+      color: #475569;
+      line-height: 1.55;
+      margin: 0;
+    }
+    .step-box-tip {
+      font-size: 0.76rem;
+      color: #0284c7;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin-top: 4px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .form-group label small {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-left: 4px;
+    }
   </style>
 </head>
 
@@ -892,6 +1009,247 @@
         Logged In
       </div>
     </div>
+
+    <!-- BILINGUAL USER GUIDE & WORKFLOW MANUAL (HINDI & ENGLISH) -->
+    <div class="staff-guide-card" id="staff-guide-card">
+      <div class="guide-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(16, 185, 129, 0.2); border: 1.5px solid #34d399; display: flex; align-items: center; justify-content: center; color: #34d399; font-size: 1.15rem;">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.08rem; font-weight: 800; font-family: 'Outfit', sans-serif;" id="guide-card-title">
+              स्टाफ यूजर गाइड / Product Management Guide
+            </h3>
+            <p style="margin: 2px 0 0; font-size: 0.74rem; color: #94a3b8;" id="guide-card-sub">
+              नए प्रोडक्ट जोड़ने, भाव बदलने और फोटो अपलोड करने की पूरी जानकारी (Step-by-Step)
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="guide-lang-btn active" id="btn-guide-hi" onclick="switchGuideLang('hi')">
+            <i class="fa-solid fa-language"></i> 🇮🇳 हिंदी (Hindi)
+          </button>
+          <button type="button" class="guide-lang-btn" id="btn-guide-en" onclick="switchGuideLang('en')">
+            <i class="fa-solid fa-globe"></i> 🇬🇧 English
+          </button>
+          <button type="button" class="guide-lang-btn" id="btn-guide-both" onclick="switchGuideLang('both')">
+            <i class="fa-solid fa-layer-group"></i> 🌐 Both (दोनों)
+          </button>
+          <button type="button" onclick="toggleStaffGuide()" style="background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.25); color: white; width: 34px; height: 34px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="Hide / Show Guide" id="btn-guide-toggle">
+            <i class="fa-solid fa-chevron-up" id="btn-guide-toggle-icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="guide-content-wrapper">
+        <!-- 1. HINDI VIEW (DEFAULT) -->
+        <div class="guide-steps-grid" id="guide-view-hi">
+          <div class="guide-step-box">
+            <span class="step-pill green"><i class="fa-solid fa-circle-plus"></i> STEP 1: नया प्रोडक्ट जोड़ना</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-box-open" style="color: #059669;"></i> "+ Add New Product" दबाएं</h4>
+            <p class="step-box-desc">
+              ऊपर दाईं तरफ दिए गए हरे बटन <strong>"+ Add New Product"</strong> पर क्लिक करें। फॉर्म में प्रोडक्ट का नाम, कैटेगरी, बेचने की कीमत (₹), MRP (₹), यूनिट (जैसे 1kg, 500g, 1L) और फोटो का लिंक डालें।
+            </p>
+            <div class="step-box-tip">
+              <i class="fa-solid fa-circle-check" style="color: #059669; margin-top: 2px;"></i>
+              <span><strong>सबमिट करें:</strong> फॉर्म भरकर <em>"Submit for Approval"</em> दबाएं। यह तुरंत सुपर एडमिन के पास जांच के लिए पहुंच जाएगा।</span>
+            </div>
+          </div>
+
+          <div class="guide-step-box">
+            <span class="step-pill blue"><i class="fa-solid fa-pen-to-square"></i> STEP 2: भाव या स्टॉक बदलना</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-pen" style="color: #0284c7;"></i> "Propose Edit" दबाएं</h4>
+            <p class="step-box-desc">
+              नीचे दी गई लिस्ट में जिस प्रोडक्ट का भाव या स्टॉक बदलना है, उसके आगे बने नीले बटन <strong>"Propose Edit"</strong> पर क्लिक करें। नया Selling Price, MRP या Stock स्थिति बदलें।
+            </p>
+            <div class="step-box-tip">
+              <i class="fa-solid fa-shield-halved" style="color: #0284c7; margin-top: 2px;"></i>
+              <span><strong>सुरक्षा:</strong> जब तक सुपर एडमिन इसे स्वीकार (Approve) नहीं करते, तब तक वेबसाइट पर पुराना भाव ही दिखेगा।</span>
+            </div>
+          </div>
+
+          <div class="guide-step-box">
+            <span class="step-pill amber"><i class="fa-solid fa-image"></i> STEP 3: फोटो (Photo) कैसे डालें?</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-cloud-arrow-up" style="color: #d97706;"></i> FreeImage.host से लिंक लें</h4>
+            <p class="step-box-desc">
+              प्रोडक्ट की फोटो के लिए <a href="https://freeimage.host/" target="_blank" style="color: #0284c7; font-weight: 800; text-decoration: underline;">FreeImage.host</a> पर जाएं, फोटो अपलोड करें और <strong>"Direct Image Link"</strong> (जो .jpg या .png पर खत्म हो) कॉपी करके पेस्ट करें।
+            </p>
+            <div class="step-box-tip" style="background: #fffbeb; border-color: #fde68a; color: #b45309;">
+              <i class="fa-solid fa-lightbulb" style="color: #d97706; margin-top: 2px;"></i>
+              <span><strong>तुरंत प्रीव्यू:</strong> लिंक पेस्ट करते ही नीचे फोटो तुरंत दिखाई देने लगेगी।</span>
+            </div>
+          </div>
+
+          <div class="guide-step-box">
+            <span class="step-pill purple"><i class="fa-solid fa-clipboard-check"></i> STEP 4: वेबसाइट पर कब लाइव होगा?</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-clock-rotate-left" style="color: #7e22ce;"></i> "My Submissions" में देखें</h4>
+            <p class="step-box-desc">
+              ऊपर <strong>"My Submissions"</strong> टैब पर क्लिक करके आप अपने सबमिट किए गए सभी प्रोडक्ट्स का स्टेटस देख सकते हैं:
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.76rem; margin-top: 2px;">
+              <span style="color: #b45309; font-weight: 700;">🟡 Pending Review: सुपर एडमिन चेक कर रहे हैं</span>
+              <span style="color: #15803d; font-weight: 700;">🟢 Approved: मंजूर हो गया और वेबसाइट पर लाइव है</span>
+              <span style="color: #b91c1c; font-weight: 700;">🔴 Rejected: किसी गलती के कारण अस्वीकार हुआ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. ENGLISH VIEW -->
+        <div class="guide-steps-grid" id="guide-view-en" style="display: none;">
+          <div class="guide-step-box">
+            <span class="step-pill green"><i class="fa-solid fa-circle-plus"></i> STEP 1: Add New Product</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-box-open" style="color: #059669;"></i> Click "+ Add New Product"</h4>
+            <p class="step-box-desc">
+              Click the top-right green <strong>"+ Add New Product"</strong> button. Fill in Product Title, Category, Selling Price (₹), MRP (₹), Unit (e.g. 1kg, 500g, 1L), and Photo link.
+            </p>
+            <div class="step-box-tip">
+              <i class="fa-solid fa-circle-check" style="color: #059669; margin-top: 2px;"></i>
+              <span><strong>Submit:</strong> Click <em>"Submit for Approval"</em> to forward your submission to the Super Admin.</span>
+            </div>
+          </div>
+
+          <div class="guide-step-box">
+            <span class="step-pill blue"><i class="fa-solid fa-pen-to-square"></i> STEP 2: Edit Price or Stock</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-pen" style="color: #0284c7;"></i> Click "Propose Edit"</h4>
+            <p class="step-box-desc">
+              Locate any product in the list below and click the blue <strong>"Propose Edit"</strong> button. Change Selling Price, MRP, or Stock status (In Stock / Out of Stock).
+            </p>
+            <div class="step-box-tip">
+              <i class="fa-solid fa-shield-halved" style="color: #0284c7; margin-top: 2px;"></i>
+              <span><strong>Safety:</strong> Existing live prices remain active on customer storefront until Super Admin approves.</span>
+            </div>
+          </div>
+
+          <div class="guide-step-box">
+            <span class="step-pill amber"><i class="fa-solid fa-image"></i> STEP 3: Product Image URL</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-cloud-arrow-up" style="color: #d97706;"></i> FreeImage.host Direct Link</h4>
+            <p class="step-box-desc">
+              Go to <a href="https://freeimage.host/" target="_blank" style="color: #0284c7; font-weight: 800; text-decoration: underline;">FreeImage.host</a>, upload your photo, and copy the <strong>Direct Link</strong> (ending in .jpg or .png). Paste it into the form.
+            </p>
+            <div class="step-box-tip" style="background: #fffbeb; border-color: #fde68a; color: #b45309;">
+              <i class="fa-solid fa-lightbulb" style="color: #d97706; margin-top: 2px;"></i>
+              <span><strong>Instant Preview:</strong> The image preview box will immediately render your photo.</span>
+            </div>
+          </div>
+
+          <div class="guide-step-box">
+            <span class="step-pill purple"><i class="fa-solid fa-clipboard-check"></i> STEP 4: Live Store Approval</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-clock-rotate-left" style="color: #7e22ce;"></i> Track in "My Submissions"</h4>
+            <p class="step-box-desc">
+              Click the <strong>"My Submissions"</strong> tab at the top to track your pending additions and edits:
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.76rem; margin-top: 2px;">
+              <span style="color: #b45309; font-weight: 700;">🟡 Pending Review: Super Admin is reviewing</span>
+              <span style="color: #15803d; font-weight: 700;">🟢 Approved: Published live on customer storefront</span>
+              <span style="color: #b91c1c; font-weight: 700;">🔴 Rejected: Rejected with admin feedback remarks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. BILINGUAL BOTH VIEW (SIDE-BY-SIDE HINDI + ENGLISH) -->
+        <div class="guide-steps-grid" id="guide-view-both" style="display: none;">
+          <div class="guide-step-box">
+            <span class="step-pill green"><i class="fa-solid fa-circle-plus"></i> STEP 1: Add New Product / नया प्रोडक्ट जोड़ना</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-box-open" style="color: #059669;"></i> "+ Add New Product"</h4>
+            <div style="font-size: 0.82rem; color: #1e293b; line-height: 1.5; border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px;">
+              🇮🇳 <strong>हिंदी:</strong> ऊपर हरे बटन <strong>"+ Add New Product"</strong> पर क्लिक करें। नाम, भाव (₹), MRP (₹), यूनिट और फोटो लिंक डालकर <em>"Submit for Approval"</em> दबाएं।
+            </div>
+            <div style="font-size: 0.8rem; color: #475569; line-height: 1.5; padding-top: 4px;">
+              🇬🇧 <strong>English:</strong> Click <strong>"+ Add New Product"</strong> button. Enter Title, Price, MRP, Unit and Image Link, then click <em>"Submit for Approval"</em>.
+            </div>
+          </div>
+
+          <div class="guide-step-box">
+            <span class="step-pill blue"><i class="fa-solid fa-pen-to-square"></i> STEP 2: Edit Price or Stock / भाव बदलना</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-pen" style="color: #0284c7;"></i> "Propose Edit"</h4>
+            <div style="font-size: 0.82rem; color: #1e293b; line-height: 1.5; border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px;">
+              🇮🇳 <strong>हिंदी:</strong> लिस्ट में प्रोडक्ट के आगे <strong>"Propose Edit"</strong> दबाएं। नया भाव या स्टॉक बदलकर सबमिट करें। सुपर एडमिन अप्रूव करेंगे तभी लाइव होगा।
+            </div>
+            <div style="font-size: 0.8rem; color: #475569; line-height: 1.5; padding-top: 4px;">
+              🇬🇧 <strong>English:</strong> Click <strong>"Propose Edit"</strong> next to any product in table. Update price or stock and submit for Super Admin approval.
+            </div>
+          </div>
+
+          <div class="guide-step-box">
+            <span class="step-pill amber"><i class="fa-solid fa-image"></i> STEP 3: Image URL / फोटो लिंक</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-cloud-arrow-up" style="color: #d97706;"></i> FreeImage.host Link</h4>
+            <div style="font-size: 0.82rem; color: #1e293b; line-height: 1.5; border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px;">
+              🇮🇳 <strong>हिंदी:</strong> <a href="https://freeimage.host/" target="_blank" style="color: #0284c7; font-weight: 800; text-decoration: underline;">FreeImage.host</a> पर फोटो अपलोड करके <strong>Direct Link</strong> कॉपी करें और फॉर्म में पेस्ट करें।
+            </div>
+            <div style="font-size: 0.8rem; color: #475569; line-height: 1.5; padding-top: 4px;">
+              🇬🇧 <strong>English:</strong> Upload photo to <a href="https://freeimage.host/" target="_blank" style="color: #0284c7; font-weight: 800; text-decoration: underline;">FreeImage.host</a>, copy the <strong>Direct Link</strong> (.jpg/.png) and paste it.
+            </div>
+          </div>
+
+          <div class="guide-step-box">
+            <span class="step-pill purple"><i class="fa-solid fa-clipboard-check"></i> STEP 4: Live Store Status / लाइव ट्रैकिंग</span>
+            <h4 class="step-box-title"><i class="fa-solid fa-clock-rotate-left" style="color: #7e22ce;"></i> "My Submissions"</h4>
+            <div style="font-size: 0.82rem; color: #1e293b; line-height: 1.5; border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px;">
+              🇮🇳 <strong>हिंदी:</strong> <strong>"My Submissions"</strong> में देखें: 🟡 Pending (जांच जारी), 🟢 Approved (लाइव हो गया), 🔴 Rejected (अस्वीकार)।
+            </div>
+            <div style="font-size: 0.8rem; color: #475569; line-height: 1.5; padding-top: 4px;">
+              🇬🇧 <strong>English:</strong> Check in <strong>"My Submissions"</strong> tab: 🟡 Pending Review, 🟢 Approved & Live, 🔴 Rejected with reason.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inline Dedicated Guide Script (Synchronous & Bulletproof) -->
+    <script>
+      function switchGuideLang(lang) {
+        var viewHi = document.getElementById('guide-view-hi');
+        var viewEn = document.getElementById('guide-view-en');
+        var viewBoth = document.getElementById('guide-view-both');
+        var btnHi = document.getElementById('btn-guide-hi');
+        var btnEn = document.getElementById('btn-guide-en');
+        var btnBoth = document.getElementById('btn-guide-both');
+        var title = document.getElementById('guide-card-title');
+        var sub = document.getElementById('guide-card-sub');
+
+        if (btnHi) btnHi.classList.remove('active');
+        if (btnEn) btnEn.classList.remove('active');
+        if (btnBoth) btnBoth.classList.remove('active');
+
+        if (lang === 'en') {
+          if (viewHi) viewHi.style.display = 'none';
+          if (viewEn) viewEn.style.display = 'grid';
+          if (viewBoth) viewBoth.style.display = 'none';
+          if (btnEn) btnEn.classList.add('active');
+          if (title) title.innerHTML = '<i class="fa-solid fa-graduation-cap" style="color: #34d399; margin-right: 8px;"></i> Staff User Manual & Workflow Guide';
+          if (sub) sub.textContent = 'Step-by-step instructions on how to Add Products, Edit Prices/Stock & Upload Photos';
+        } else if (lang === 'both') {
+          if (viewHi) viewHi.style.display = 'none';
+          if (viewEn) viewEn.style.display = 'none';
+          if (viewBoth) viewBoth.style.display = 'grid';
+          if (btnBoth) btnBoth.classList.add('active');
+          if (title) title.innerHTML = '<i class="fa-solid fa-graduation-cap" style="color: #34d399; margin-right: 8px;"></i> स्टाफ यूजर गाइड & Workflow Guide (Bilingual)';
+          if (sub) sub.textContent = 'हिंदी और English दोनों भाषाओं में स्टेप-बाय-स्टेप जानकारी';
+        } else {
+          if (viewHi) viewHi.style.display = 'grid';
+          if (viewEn) viewEn.style.display = 'none';
+          if (viewBoth) viewBoth.style.display = 'none';
+          if (btnHi) btnHi.classList.add('active');
+          if (title) title.innerHTML = '<i class="fa-solid fa-graduation-cap" style="color: #34d399; margin-right: 8px;"></i> स्टाफ यूजर गाइड (Product Management Guide)';
+          if (sub) sub.textContent = 'नए प्रोडक्ट जोड़ने, भाव बदलने और फोटो अपलोड करने की पूरी जानकारी (Step-by-Step)';
+        }
+      }
+
+      function toggleStaffGuide() {
+        var wrapper = document.getElementById('guide-content-wrapper');
+        var icon = document.getElementById('btn-guide-toggle-icon');
+        if (!wrapper) return;
+        if (wrapper.style.display === 'none') {
+          wrapper.style.display = 'block';
+          if (icon) icon.className = 'fa-solid fa-chevron-up';
+        } else {
+          wrapper.style.display = 'none';
+          if (icon) icon.className = 'fa-solid fa-chevron-down';
+        }
+      }
+    </script>
 
     <!-- Segmented Navigation Tabs -->
     <div class="tabs-header-wrapper">
@@ -1004,7 +1362,7 @@
       <div class="registry-header-card">
         <div class="registry-title-box">
           <h2>My Submitted Product Requests</h2>
-          <p>Track the approval status of every new product and modification you have submitted.</p>
+          <p>Track the approval status of every new product and modification submitted by <strong id="my-submissions-email" style="color: #059669; font-weight: 800;">you</strong>.</p>
         </div>
         <div class="registry-actions">
           <select id="request-status-filter" class="filter-select" onchange="renderRequestsTable()">
@@ -1046,80 +1404,88 @@
   <div class="modal-overlay" id="modal-add-request">
     <div class="modal-box">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-plus-circle" style="color: var(--admin-accent);"></i> Propose New Product</h3>
+        <h3><i class="fa-solid fa-plus-circle" style="color: var(--admin-accent);"></i> Add New Product (नया प्रोडक्ट जोड़ें)</h3>
         <button class="modal-close-btn" onclick="closeModal('modal-add-request')"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <form id="form-add-request" onsubmit="submitNewProductRequest(event)">
         <div class="modal-body">
+          <div style="background: #f0fdf4; border: 1.5px solid #86efac; padding: 10px 14px; border-radius: 12px; margin-bottom: 16px; font-size: 0.82rem; color: #166534; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-shield-halved" style="font-size: 1.1rem; color: #10b981; flex-shrink: 0;"></i>
+            <span><strong>सुरक्षा सूचना:</strong> आपके सबमिट करते ही यह प्रोडक्ट सुपर एडमिन के पास जाएगा। अप्रूवल मिलते ही यह तुरंत लाइव वेबसाइट पर ग्राहकों को दिखेगा।</span>
+          </div>
+
           <div class="form-grid">
             <div class="form-group form-full">
-              <label>Product Name *</label>
-              <input type="text" id="add-req-name" class="form-control" placeholder="e.g. Fortune Sunlite Sunflower Oil 1L" required>
+              <label>Product Name (प्रोडक्ट का नाम) *</label>
+              <input type="text" id="add-req-name" class="form-control" placeholder="उदा. Fortune Sunlite Sunflower Oil 1L" required>
             </div>
 
             <div class="form-group">
-              <label>Department</label>
-              <input type="text" id="add-req-dept" class="form-control" placeholder="e.g. Grocery" value="Grocery">
+              <label>Department (विभाग)</label>
+              <input type="text" id="add-req-dept" class="form-control" placeholder="Grocery" value="Grocery">
             </div>
 
             <div class="form-group">
-              <label>Category *</label>
-              <input type="text" id="add-req-cat" class="form-control" placeholder="e.g. Edible Oils" required>
+              <label>Category (कैटेगरी) *</label>
+              <input type="text" id="add-req-cat" class="form-control" placeholder="उदा. Edible Oils, Spices, Snacks" required>
             </div>
 
             <div class="form-group">
-              <label>Sub Category</label>
-              <input type="text" id="add-req-subcat" class="form-control" placeholder="e.g. Cooking Oil">
+              <label>Sub Category (सब-कैटेगरी - Optional)</label>
+              <input type="text" id="add-req-subcat" class="form-control" placeholder="उदा. Cooking Oil, Refined">
             </div>
 
             <div class="form-group">
-              <label>Selling Price (₹) *</label>
-              <input type="number" step="0.01" id="add-req-price" class="form-control" placeholder="145" required>
+              <label>Selling Price (बिक्री मूल्य ₹) *</label>
+              <input type="number" step="0.01" id="add-req-price" class="form-control" placeholder="145 (जिस रेट पर बेचना है)" required>
             </div>
 
             <div class="form-group">
-              <label>MRP / Old Price (₹)</label>
-              <input type="number" step="0.01" id="add-req-mrp" class="form-control" placeholder="175">
+              <label>MRP / Old Price (पैकेट पर छपी MRP ₹)</label>
+              <input type="number" step="0.01" id="add-req-mrp" class="form-control" placeholder="175 (Optional - छूट दिखाने के लिए)">
             </div>
 
             <div class="form-group">
-              <label>Unit / Weight *</label>
-              <input type="text" id="add-req-unit" class="form-control" placeholder="e.g. 1 Litre or 500g" required>
+              <label>Unit / Weight (मात्रा/वजन) *</label>
+              <input type="text" id="add-req-unit" class="form-control" placeholder="उदा. 1 Litre, 500g, 1kg, 1 Piece" required>
             </div>
 
             <div class="form-group">
-              <label>Offer Badge</label>
-              <input type="text" id="add-req-offer" class="form-control" placeholder="e.g. 15% OFF">
+              <label>Offer Badge (ऑफर टैग - यदि कोई हो)</label>
+              <input type="text" id="add-req-offer" class="form-control" placeholder="उदा. 15% OFF, Buy 1 Get 1">
             </div>
 
             <div class="form-group">
-              <label>Stock Status</label>
-              <select id="add-req-stock" class="form-control">
-                <option value="true">In Stock</option>
-                <option value="false">Out of Stock</option>
+              <label>Stock Status (स्टॉक स्थिति)</label>
+              <select id="add-req-stock" class="form-control" style="font-weight: 700;">
+                <option value="true">🟢 In Stock (दुकान में उपलब्ध है)</option>
+                <option value="false">🔴 Out of Stock (खत्म हो गया है)</option>
               </select>
             </div>
 
             <div class="form-group form-full">
-              <label>Product Image URL *</label>
-              <input type="url" id="add-req-img" class="form-control" placeholder="Paste direct image link (e.g. FreeImage.host or CDN)..." required oninput="previewModalImg('add-req-img', 'add-img-preview')">
+              <label>Product Image URL (फोटो का लिंक) *</label>
+              <input type="url" id="add-req-img" class="form-control" placeholder="FreeImage.host से Direct Link पेस्ट करें (उदा. https://iili.io/...jpg)" required oninput="previewModalImg('add-req-img', 'add-img-preview')">
+              <span style="font-size: 0.73rem; color: #64748b; margin-top: 5px; display: block;">
+                💡 फोटो अपलोड करने के लिए <a href="https://freeimage.host/" target="_blank" style="color: #0284c7; font-weight: 800; text-decoration: underline;">FreeImage.host</a> पर जाएं और 'Direct Image Link' कॉपी करें।
+              </span>
               <div class="image-preview-box" id="add-img-preview">
-                <span style="color: #94a3b8; font-size: 0.8rem;"><i class="fa-regular fa-image"></i> Image Preview will appear here</span>
+                <span style="color: #94a3b8; font-size: 0.8rem;"><i class="fa-regular fa-image"></i> फोटो लिंक डालते ही प्रीव्यू यहाँ दिखेगा</span>
               </div>
             </div>
 
             <div class="form-group form-full">
-              <label>Product Description</label>
-              <textarea id="add-req-desc" class="form-control" placeholder="Key ingredients, benefits, storage tips..."></textarea>
+              <label>Product Description (विवरण/खासियत - यदि हो)</label>
+              <textarea id="add-req-desc" class="form-control" placeholder="प्रोडक्ट की सामग्री, फायदे या इस्तेमाल की जानकारी..."></textarea>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-modal-cancel" onclick="closeModal('modal-add-request')">
-            <i class="fa-solid fa-xmark"></i> Cancel
+            <i class="fa-solid fa-xmark"></i> Cancel (रद्द करें)
           </button>
           <button type="submit" class="btn-action-primary" id="btn-submit-add-req">
-            <i class="fa-solid fa-paper-plane"></i> Submit for Approval
+            <i class="fa-solid fa-paper-plane"></i> Submit for Approval (अप्रूवल के लिए भेजें)
           </button>
         </div>
       </form>
@@ -1130,61 +1496,62 @@
   <div class="modal-overlay" id="modal-edit-request">
     <div class="modal-box">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-pen-to-square" style="color: #0284c7;"></i> Propose Product Edits</h3>
+        <h3><i class="fa-solid fa-pen-to-square" style="color: #0284c7;"></i> Edit Product Details (प्रोडक्ट का भाव / स्टॉक बदलें)</h3>
         <button class="modal-close-btn" onclick="closeModal('modal-edit-request')"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <form id="form-edit-request" onsubmit="submitEditProductRequest(event)">
         <input type="hidden" id="edit-req-target-id">
         <div class="modal-body">
-          <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 10px 14px; border-radius: 10px; margin-bottom: 16px; font-size: 0.8rem; color: #1e40af;">
-            <i class="fa-solid fa-circle-info"></i> The live product will remain unchanged until Super Admin reviews and approves these updates.
+          <div style="background: #eff6ff; border: 1.5px solid #bfdbfe; padding: 10px 14px; border-radius: 12px; margin-bottom: 16px; font-size: 0.82rem; color: #1e40af; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-circle-info" style="font-size: 1.1rem; color: #0284c7; flex-shrink: 0;"></i>
+            <span><strong>सूचना:</strong> जब तक सुपर एडमिन इसे अप्रूव नहीं करते, वेबसाइट पर पुराना भाव ही रहेगा। अप्रूवल मिलते ही नया भाव लाइव हो जाएगा।</span>
           </div>
           <div class="form-grid">
             <div class="form-group form-full">
-              <label>Product Name *</label>
+              <label>Product Name (प्रोडक्ट का नाम) *</label>
               <input type="text" id="edit-req-name" class="form-control" required>
             </div>
 
             <div class="form-group">
-              <label>Category *</label>
+              <label>Category (कैटेगरी) *</label>
               <input type="text" id="edit-req-cat" class="form-control" required>
             </div>
 
             <div class="form-group">
-              <label>Sub Category</label>
+              <label>Sub Category (सब-कैटेगरी)</label>
               <input type="text" id="edit-req-subcat" class="form-control">
             </div>
 
             <div class="form-group">
-              <label>Selling Price (₹) *</label>
+              <label>Selling Price (नया बिक्री मूल्य ₹) *</label>
               <input type="number" step="0.01" id="edit-req-price" class="form-control" required>
             </div>
 
             <div class="form-group">
-              <label>MRP / Old Price (₹)</label>
+              <label>MRP / Old Price (पैकेट की MRP ₹)</label>
               <input type="number" step="0.01" id="edit-req-mrp" class="form-control">
             </div>
 
             <div class="form-group">
-              <label>Unit / Weight *</label>
+              <label>Unit / Weight (मात्रा/वजन) *</label>
               <input type="text" id="edit-req-unit" class="form-control" required>
             </div>
 
             <div class="form-group">
-              <label>Offer Badge</label>
+              <label>Offer Badge (ऑफर टैग)</label>
               <input type="text" id="edit-req-offer" class="form-control">
             </div>
 
             <div class="form-group">
-              <label>Stock Status</label>
-              <select id="edit-req-stock" class="form-control">
-                <option value="true">In Stock</option>
-                <option value="false">Out of Stock</option>
+              <label>Stock Status (स्टॉक स्थिति)</label>
+              <select id="edit-req-stock" class="form-control" style="font-weight: 700;">
+                <option value="true">🟢 In Stock (दुकान में उपलब्ध है)</option>
+                <option value="false">🔴 Out of Stock (खत्म हो गया है)</option>
               </select>
             </div>
 
             <div class="form-group form-full">
-              <label>Product Image URL *</label>
+              <label>Product Image URL (फोटो का लिंक) *</label>
               <input type="url" id="edit-req-img" class="form-control" required oninput="previewModalImg('edit-req-img', 'edit-img-preview')">
               <div class="image-preview-box" id="edit-img-preview">
                 <img id="edit-img-tag" src="" alt="Preview">
@@ -1192,17 +1559,17 @@
             </div>
 
             <div class="form-group form-full">
-              <label>Product Description</label>
+              <label>Product Description (विवरण/खासियत)</label>
               <textarea id="edit-req-desc" class="form-control"></textarea>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-modal-cancel" onclick="closeModal('modal-edit-request')">
-            <i class="fa-solid fa-xmark"></i> Cancel
+            <i class="fa-solid fa-xmark"></i> Cancel (रद्द करें)
           </button>
           <button type="submit" class="btn-action-primary" id="btn-submit-edit-req">
-            <i class="fa-solid fa-paper-plane"></i> Submit Changes for Approval
+            <i class="fa-solid fa-paper-plane"></i> Submit Changes for Approval (बदलाव अप्रूवल के लिए भेजें)
           </button>
         </div>
       </form>
@@ -1218,8 +1585,29 @@
     import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     let rawProducts = [];
+    let allRequests = [];
     let myRequests = [];
-    let currentUserEmail = sessionStorage.getItem('admin_user_email') || 'product_admin';
+    let currentUserEmail = (sessionStorage.getItem('admin_user_email') || '').trim().toLowerCase();
+
+    function filterMySubmissions() {
+      const normUser = (currentUserEmail || '').trim().toLowerCase();
+      if (!normUser || normUser === 'product_admin') {
+        myRequests = allRequests;
+      } else {
+        myRequests = allRequests.filter(r => {
+          const reqEmail = (r.submittedByEmail || '').trim().toLowerCase();
+          return reqEmail === normUser;
+        });
+      }
+
+      const emailLabel = document.getElementById('my-submissions-email');
+      if (emailLabel && normUser) {
+        emailLabel.textContent = normUser;
+      }
+
+      renderRequestsTable();
+      updateStats();
+    }
 
     // Show Toast
     window.showToast = (msg, type = 'success') => {
@@ -1277,8 +1665,9 @@
     // Auth verification
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        currentUserEmail = user.email || currentUserEmail;
+        currentUserEmail = (user.email || currentUserEmail || '').trim().toLowerCase();
         document.getElementById('user-display-email').textContent = currentUserEmail;
+        filterMySubmissions();
 
         const role = await getUserRole(user.uid, currentUserEmail);
         if (role === 'disabled') {
@@ -1536,6 +1925,9 @@
                 <div>
                   <div class="table-prod-title">${prod.name || 'Untitled Product'}</div>
                   <div class="table-prod-sub">${prod.category || 'General'} &bull; ₹${prod.price || 0} (${prod.unit || ''})</div>
+                  <div style="font-size: 0.72rem; color: #0284c7; margin-top: 3px; font-weight: 700;">
+                    <i class="fa-solid fa-user-circle"></i> Submitted by: <span style="color: #0f172a;">${r.submittedByEmail || 'My Account'}</span>
+                  </div>
                 </div>
               </div>
             </td>
@@ -1594,11 +1986,10 @@
         }
       });
 
-      // 2. Listen for requests
+      // 2. Listen for requests (storing all and filtering strictly for logged-in user)
       listenForProductRequests((reqs) => {
-        myRequests = reqs;
-        renderRequestsTable();
-        updateStats();
+        allRequests = reqs || [];
+        filterMySubmissions();
       });
     }
 
