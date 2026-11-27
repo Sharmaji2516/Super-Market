@@ -81,17 +81,24 @@
         </div>
       </div>
 
-      <!-- 2. Quick Category Highlights Grid (Blinkit / Zepto Inspired 4-col Grid) -->
+      <!-- 2. Quick Category Highlights Grid (Clean 3-Card Preview + Expandable) -->
       <div class="home-categories-box animate-on-scroll">
         <div class="home-categories-header">
           <h3>
             <i class="fa-solid fa-shapes" style="color: var(--primary);"></i> Explore Categories
           </h3>
-          <a href="products.html">See All Categories <i class="fa-solid fa-chevron-right"></i></a>
+          <a href="products.html">Catalog <i class="fa-solid fa-chevron-right"></i></a>
         </div>
 
-        <div id="home-categories-grid">
+        <div id="home-categories-grid" class="home-cat-grid-collapsed">
           <!-- Categories dynamically rendered by app.js -->
+        </div>
+
+        <div id="homeCategoriesToggleWrap" class="home-cat-toggle-wrap" style="display: none;">
+          <button type="button" id="toggleHomeCategoriesBtn" class="home-cat-toggle-btn" onclick="window.toggleHomeCategories()">
+            <span id="toggleHomeCategoriesText">View More Categories</span>
+            <i id="toggleHomeCategoriesIcon" class="fa-solid fa-chevron-down"></i>
+          </button>
         </div>
       </div>
 

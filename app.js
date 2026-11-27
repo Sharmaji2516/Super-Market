@@ -49,7 +49,7 @@ function getCategoryIcon(nameInput) {
 function resolveDirectImageUrl(url) {
   if (!url) return '';
   let trimmed = url.trim();
-  
+
   // 1. If string contains direct image URL
   const directMatch = trimmed.match(/https?:\/\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp|gif)/i);
   if (directMatch) {
@@ -65,8 +65,41 @@ function resolveDirectImageUrl(url) {
 }
 
 // Dynamic Home Categories Renderer
+let homeCategoriesExpanded = false;
+
+window.toggleHomeCategories = () => {
+  homeCategoriesExpanded = !homeCategoriesExpanded;
+  const homeGrid = document.getElementById('home-categories-grid');
+  const toggleText = document.getElementById('toggleHomeCategoriesText');
+  const toggleIcon = document.getElementById('toggleHomeCategoriesIcon');
+  if (!homeGrid) return;
+
+  const extraCards = homeGrid.querySelectorAll('.home-cat-extra');
+  extraCards.forEach(card => {
+    if (homeCategoriesExpanded) {
+      card.classList.remove('home-cat-hidden');
+    } else {
+      card.classList.add('home-cat-hidden');
+    }
+  });
+
+  if (homeCategoriesExpanded) {
+    homeGrid.classList.remove('home-cat-grid-collapsed');
+    if (toggleText) toggleText.textContent = 'Show Less';
+    if (toggleIcon) toggleIcon.className = 'fa-solid fa-chevron-up';
+  } else {
+    homeGrid.classList.add('home-cat-grid-collapsed');
+    const hiddenCount = extraCards.length;
+    if (toggleText) toggleText.textContent = `View More (${hiddenCount} More)`;
+    if (toggleIcon) toggleIcon.className = 'fa-solid fa-chevron-down';
+  }
+};
+
 function renderHomeCategories(products) {
   const homeGrid = document.getElementById('home-categories-grid');
+  const toggleWrap = document.getElementById('homeCategoriesToggleWrap');
+  const toggleText = document.getElementById('toggleHomeCategoriesText');
+  const toggleIcon = document.getElementById('toggleHomeCategoriesIcon');
   if (!homeGrid || !products || products.length === 0) return;
 
   const counts = {};
@@ -88,23 +121,45 @@ function renderHomeCategories(products) {
     const rawImg = categoryCustomImages[cat] || categoryCustomImages[cat.toUpperCase()] || categoryCustomImages[cat.toLowerCase()];
     const customImg = resolveDirectImageUrl(rawImg);
 
-    const innerContent = customImg 
-      ? `<img src="${customImg}" alt="${cat}" class="home-cat-thumb">` 
+    const innerContent = customImg
+      ? `<img src="${customImg}" alt="${cat}" class="home-cat-thumb" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"><i class="${iconClass}" style="display:none;"></i>`
       : `<i class="${iconClass}"></i>`;
 
     const idx = index % bgColors.length;
+    const isExtra = index >= 3;
+    const hiddenClass = (isExtra && !homeCategoriesExpanded) ? ' home-cat-extra home-cat-hidden' : (isExtra ? ' home-cat-extra' : '');
+    const itemCount = counts[cat] || 0;
 
     html += `
-      <a href="products.html" onclick="localStorage.setItem('redirectCategory', '${cat}')" class="home-cat-card" title="${cat}">
+      <a href="products.html" onclick="localStorage.setItem('redirectCategory', '${cat}')" class="home-cat-card${hiddenClass}" title="${cat}">
         <div class="home-cat-img-box" style="background: ${bgColors[idx]}; color: ${textColors[idx]};">
           ${innerContent}
         </div>
         <span class="home-cat-label">${cat}</span>
+        <span class="home-cat-count">${itemCount} ${itemCount === 1 ? 'Item' : 'Items'}</span>
       </a>
     `;
   });
 
   homeGrid.innerHTML = html;
+
+  if (toggleWrap) {
+    if (categories.length > 3) {
+      toggleWrap.style.display = 'flex';
+      const remaining = categories.length - 3;
+      if (homeCategoriesExpanded) {
+        homeGrid.classList.remove('home-cat-grid-collapsed');
+        if (toggleText) toggleText.textContent = 'Show Less';
+        if (toggleIcon) toggleIcon.className = 'fa-solid fa-chevron-up';
+      } else {
+        homeGrid.classList.add('home-cat-grid-collapsed');
+        if (toggleText) toggleText.textContent = `View More (${remaining} More)`;
+        if (toggleIcon) toggleIcon.className = 'fa-solid fa-chevron-down';
+      }
+    } else {
+      toggleWrap.style.display = 'none';
+    }
+  }
 }
 
 // Special In-Store Deals Renderer for Homepage
@@ -232,8 +287,8 @@ function renderCategoryPills(products, currentCategory) {
     const catImg = categoryCustomImages[cat] || (prodWithImg ? prodWithImg.image : '');
     const resolvedImg = resolveDirectImageUrl(catImg);
 
-    const innerImg = resolvedImg 
-      ? `<img src="${resolvedImg}" alt="${cat}" loading="lazy">` 
+    const innerImg = resolvedImg
+      ? `<img src="${resolvedImg}" alt="${cat}" loading="lazy">`
       : `<i class="${iconClass}"></i>`;
 
     html += `
@@ -336,8 +391,8 @@ function renderSubCategoryPills(products, currentCategory, currentSubCategory) {
     const iconClass = getCategoryIcon(subName);
     const resolvedImg = resolveDirectImageUrl(imgUrl);
 
-    const innerImg = resolvedImg 
-      ? `<img src="${resolvedImg}" alt="${subName}" loading="lazy">` 
+    const innerImg = resolvedImg
+      ? `<img src="${resolvedImg}" alt="${subName}" loading="lazy">`
       : `<i class="${iconClass}"></i>`;
 
     html += `
@@ -527,11 +582,11 @@ function performSearch() {
   const searchInput = document.getElementById('productSearch');
   const clearSearchBtn = document.getElementById('clearSearchBtn');
   const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
-  
+
   // Find selected category radio
   const selectedCategoryRadio = document.querySelector('input[name="categoryFilterRadio"]:checked');
   const selectedCategory = selectedCategoryRadio ? selectedCategoryRadio.value : (activeCategory || 'all');
-  
+
   // Find selected price radio
   const selectedPriceRadio = document.querySelector('input[name="priceFilter"]:checked');
   const selectedPrice = selectedPriceRadio ? selectedPriceRadio.value : 'all';
@@ -544,16 +599,16 @@ function performSearch() {
 
   const filtered = allProducts.filter(p => {
     // 1. Name match
-    const matchesName = !searchTerm || 
-                        p.name.toLowerCase().includes(searchTerm) || 
-                        (p.brand && p.brand.toLowerCase().includes(searchTerm)) ||
-                        (p.desc && p.desc.toLowerCase().includes(searchTerm)) ||
-                        (p.category && p.category.toLowerCase().includes(searchTerm)) ||
-                        ((p.subCategory || p.sub_category) && (p.subCategory || p.sub_category).toLowerCase().includes(searchTerm));
-    
+    const matchesName = !searchTerm ||
+      p.name.toLowerCase().includes(searchTerm) ||
+      (p.brand && p.brand.toLowerCase().includes(searchTerm)) ||
+      (p.desc && p.desc.toLowerCase().includes(searchTerm)) ||
+      (p.category && p.category.toLowerCase().includes(searchTerm)) ||
+      ((p.subCategory || p.sub_category) && (p.subCategory || p.sub_category).toLowerCase().includes(searchTerm));
+
     // 2. Category match
     const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
-    
+
     // 3. SubCategory match
     let matchesSubCategory = true;
     if (activeSubCategory !== 'all') {
@@ -589,7 +644,7 @@ function performSearch() {
 
     return matchesName && matchesCategory && matchesSubCategory && matchesPrice && matchesQuick;
   });
-  
+
   updateActiveFilterBadges();
   renderProductsUI(filtered);
 }
@@ -609,7 +664,7 @@ function getShoppingList() {
 function saveShoppingList(list) {
   try {
     localStorage.setItem('soni_shopping_list', JSON.stringify(list));
-  } catch (e) {}
+  } catch (e) { }
   updateParchiUI();
 }
 
@@ -785,7 +840,7 @@ function updateParchiUI() {
 function renderProductsUI(products) {
   const productsContainer = document.getElementById('products-container');
   if (!productsContainer) return;
-  
+
   const shoppingList = getShoppingList();
   let html = '';
 
@@ -795,7 +850,7 @@ function renderProductsUI(products) {
     const oldP = Number(product.oldPrice || 0);
     const curP = Number(product.price || 0);
     const customOffer = (product.offer || product.offerBadge || '').trim();
-    
+
     const inList = shoppingList.find(it => String(it.id) === String(product.id));
     const safeTitle = (product.name || '').replace(/'/g, "\\'");
     const safeImg = (product.image || '').replace(/'/g, "\\'");
@@ -889,7 +944,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     backdrop.className = 'filter-backdrop';
     document.body.appendChild(backdrop);
   }
-  
+
   const closeNavDrawer = () => {
     if (navLinks) navLinks.classList.remove('nav-active');
     if (backdrop) backdrop.classList.remove('active');
@@ -980,7 +1035,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       pSearchInput.value = searchParam;
       setTimeout(() => performSearch(), 100);
     }
-  } catch(e) {}
+  } catch (e) { }
 
   // Listen for real-time Category Order & Metadata from Firestore
   listenForCategoryOrder((savedData) => {
@@ -999,7 +1054,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       localStorage.setItem('cachedCategoryOrder', JSON.stringify(categoryCustomOrder));
       localStorage.setItem('cachedCategoryImages', JSON.stringify(categoryCustomImages));
-    } catch(e) {}
+    } catch (e) { }
     renderSidebarFilters(allProducts, activeCategory);
     renderCategoryPills(allProducts, activeCategory);
     renderSubCategoryPills(allProducts, activeCategory, activeSubCategory);
@@ -1009,20 +1064,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- 2. REAL-TIME SYNC: Listen for products from Firestore ---
   listenForProducts(async (products) => {
     const activeProducts = products.filter(p => p.isDeleted !== true);
-    
+
     activeProducts.forEach(p => {
       if (p.image) {
         p.image = resolveDirectImageUrl(p.image);
       }
     });
     allProducts = activeProducts;
-    
+
     try {
       localStorage.setItem('cachedProducts', JSON.stringify(activeProducts));
     } catch (e) {
       console.warn("Local storage cache write error:", e);
     }
-    
+
     renderSidebarFilters(activeProducts, activeCategory);
     renderCategoryPills(activeProducts, activeCategory);
     renderSubCategoryPills(activeProducts, activeCategory, activeSubCategory);
@@ -1165,7 +1220,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelectorAll('.quick-chip-btn').forEach(chip => {
     chip.addEventListener('click', () => {
       const filterKey = chip.getAttribute('data-filter');
-      
+
       if (activeQuickFilters.has(filterKey)) {
         activeQuickFilters.delete(filterKey);
         chip.classList.remove('active');
@@ -1178,7 +1233,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           activeQuickFilters.delete('in-stock');
           document.querySelector('.quick-chip-btn[data-filter="in-stock"]')?.classList.remove('active');
         }
-        
+
         activeQuickFilters.add(filterKey);
         chip.classList.add('active');
       }
@@ -1241,7 +1296,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- Smart Search System with Dropdown & History ---
   const MAX_HISTORY = 5;
   const getHistory = () => JSON.parse(localStorage.getItem('searchHistory') || '[]');
-  
+
   const saveHistory = (term) => {
     if (!term || term.length < 2) return;
     let history = getHistory();
@@ -1263,8 +1318,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const term = searchInput.value.toLowerCase().trim();
 
     if (term.length > 0) {
-      const matches = allProducts.filter(p => 
-        p.name.toLowerCase().includes(term) || 
+      const matches = allProducts.filter(p =>
+        p.name.toLowerCase().includes(term) ||
         (p.category && p.category.toLowerCase().includes(term)) ||
         (p.desc && p.desc.toLowerCase().includes(term))
       ).slice(0, 5);
@@ -1381,7 +1436,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       performSearch();
       renderSearchDropdown();
     });
-    
+
     searchInput.addEventListener('focus', () => {
       renderSearchDropdown();
     });
@@ -1428,18 +1483,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      
+
       const firstName = document.getElementById('firstName').value;
       const lastName = document.getElementById('lastName').value;
       const email = document.getElementById('email').value;
       const message = document.getElementById('message').value;
-      
-      const whatsappNumber = "917014974762"; 
+
+      const whatsappNumber = "917014974762";
       const fullText = `*Name:* ${firstName} ${lastName}%0A*Message:* ${message}`;
-      
+
       const waUrl = `https://wa.me/${whatsappNumber}?text=${fullText}`;
       window.open(waUrl, '_blank');
-      
+
       contactForm.reset();
       alert('Thank you! Redirecting to WhatsApp...');
     });
